@@ -24,7 +24,7 @@
   </script>
   <style>
     :root {
-      /* Standard 96 DPI: 2.5in = 240px, 3.5in = 336px (exact 5:7 Pokémon TCG ratio) */
+      /* Standard 96 DPI: 2.5in = 240px, 3.5in = 336px (exact 5:7 Pokémon TCG aspect ratio) */
       --dpi-scale: 1;
       --card-w: calc(240px * var(--dpi-scale));
       --card-h: calc(336px * var(--dpi-scale));
@@ -32,12 +32,11 @@
     }
 
     body {
-      background-color: #0e131f;
+      background-color: #0b101b;
       color: #f1f5f9;
-      /* Subtle tabletop playmat grid texture */
       background-image:
-        radial-gradient(circle at 20% 10%, rgba(234, 179, 8, 0.07) 0%, transparent 42%),
-        radial-gradient(circle at 80% 90%, rgba(59, 130, 246, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 18% 8%, rgba(250, 204, 21, 0.07) 0%, transparent 42%),
+        radial-gradient(circle at 82% 92%, rgba(56, 189, 248, 0.08) 0%, transparent 45%),
         linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
         linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
       background-size: 100% 100%, 100% 100%, 28px 28px, 28px 28px;
@@ -57,8 +56,8 @@
       user-select: none;
       transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
       box-shadow:
-        0 10px 25px -5px rgba(0, 0, 0, 0.65),
-        0 0 0 1px rgba(0, 0, 0, 0.5),
+        0 12px 26px -6px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(0, 0, 0, 0.55),
         inset 0 1px 1px rgba(255, 255, 255, 0.45);
       flex-shrink: 0;
     }
@@ -67,22 +66,21 @@
       transform: translateY(-6px) scale(1.02);
       z-index: 15;
       box-shadow:
-        0 20px 35px -8px rgba(0, 0, 0, 0.8),
-        0 0 22px rgba(250, 204, 21, 0.25);
+        0 22px 38px -8px rgba(0, 0, 0, 0.85),
+        0 0 24px rgba(250, 204, 21, 0.28);
     }
 
-    /* Classic Yellow vs Modern Silver/Gold Pokémon Border */
+    /* Classic Yellow, Modern Silver, and Secret Gold Borders */
     .border-classic-yellow {
       background: linear-gradient(145deg, #facc15 0%, #eab308 48%, #ca8a04 100%);
     }
     .border-silver-holo {
-      background: linear-gradient(145deg, #f1f5f9 0%, #cbd5e1 45%, #94a3b8 75%, #e2e8f0 100%);
+      background: linear-gradient(145deg, #f8fafc 0%, #cbd5e1 45%, #94a3b8 75%, #e2e8f0 100%);
     }
     .border-gold-ultra {
-      background: linear-gradient(145deg, #fde047 0%, #f59e0b 45%, #b45309 80%, #fef08a 100%);
+      background: linear-gradient(145deg, #fef08a 0%, #f59e0b 45%, #b45309 80%, #fde047 100%);
     }
 
-    /* Inner Card Body Textured Gradients by Energy Type */
     .pkmn-card-inner {
       width: 100%;
       height: 100%;
@@ -97,85 +95,56 @@
       box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
     }
 
+    /* Authentic Pokémon TCG Energy Type Card Backgrounds */
     .type-theme-Fire {
-      background:
-        radial-gradient(circle at 80% 15%, rgba(254, 215, 170, 0.65), transparent 50%),
-        linear-gradient(165deg, #fb923c 0%, #ea580c 52%, #9a3412 100%);
+      background: radial-gradient(circle at 80% 15%, rgba(254, 215, 170, 0.7), transparent 50%), linear-gradient(165deg, #fb923c 0%, #ea580c 52%, #9a3412 100%);
     }
     .type-theme-Water {
-      background:
-        radial-gradient(circle at 80% 15%, rgba(186, 230, 253, 0.7), transparent 50%),
-        linear-gradient(165deg, #38bdf8 0%, #0284c7 52%, #075985 100%);
+      background: radial-gradient(circle at 80% 15%, rgba(186, 230, 253, 0.72), transparent 50%), linear-gradient(165deg, #38bdf8 0%, #0284c7 52%, #075985 100%);
     }
     .type-theme-Grass {
-      background:
-        radial-gradient(circle at 80% 15%, rgba(187, 247, 208, 0.7), transparent 50%),
-        linear-gradient(165deg, #4ade80 0%, #16a34a 52%, #14532d 100%);
+      background: radial-gradient(circle at 80% 15%, rgba(187, 247, 208, 0.72), transparent 50%), linear-gradient(165deg, #4ade80 0%, #16a34a 52%, #14532d 100%);
     }
     .type-theme-Lightning {
-      background:
-        radial-gradient(circle at 80% 15%, rgba(254, 249, 195, 0.8), transparent 50%),
-        linear-gradient(165deg, #fde047 0%, #eab308 55%, #a16207 100%);
+      background: radial-gradient(circle at 80% 15%, rgba(254, 249, 195, 0.82), transparent 50%), linear-gradient(165deg, #fde047 0%, #eab308 55%, #a16207 100%);
     }
     .type-theme-Psychic {
-      background:
-        radial-gradient(circle at 80% 15%, rgba(243, 232, 255, 0.7), transparent 50%),
-        linear-gradient(165deg, #c084fc 0%, #9333ea 52%, #581c87 100%);
+      background: radial-gradient(circle at 80% 15%, rgba(243, 232, 255, 0.72), transparent 50%), linear-gradient(165deg, #c084fc 0%, #9333ea 52%, #581c87 100%);
     }
     .type-theme-Fighting {
-      background:
-        radial-gradient(circle at 80% 15%, rgba(254, 215, 170, 0.6), transparent 50%),
-        linear-gradient(165deg, #d97706 0%, #b45309 55%, #78350f 100%);
+      background: radial-gradient(circle at 80% 15%, rgba(254, 215, 170, 0.65), transparent 50%), linear-gradient(165deg, #d97706 0%, #b45309 55%, #78350f 100%);
     }
     .type-theme-Darkness {
-      background:
-        radial-gradient(circle at 80% 15%, rgba(148, 163, 184, 0.35), transparent 50%),
-        linear-gradient(165deg, #475569 0%, #1e293b 55%, #0f172a 100%);
+      background: radial-gradient(circle at 80% 15%, rgba(148, 163, 184, 0.35), transparent 50%), linear-gradient(165deg, #475569 0%, #1e293b 55%, #0f172a 100%);
       color: #f8fafc;
     }
     .type-theme-Metal {
-      background:
-        radial-gradient(circle at 80% 15%, rgba(255, 255, 255, 0.75), transparent 50%),
-        linear-gradient(165deg, #cbd5e1 0%, #94a3b8 52%, #475569 100%);
-    }
-    .type-theme-Fairy {
-      background:
-        radial-gradient(circle at 80% 15%, rgba(252, 231, 243, 0.75), transparent 50%),
-        linear-gradient(165deg, #f472b6 0%, #db2777 52%, #831843 100%);
+      background: radial-gradient(circle at 80% 15%, rgba(255, 255, 255, 0.75), transparent 50%), linear-gradient(165deg, #cbd5e1 0%, #94a3b8 52%, #475569 100%);
     }
     .type-theme-Dragon {
-      background:
-        radial-gradient(circle at 80% 15%, rgba(254, 240, 138, 0.65), transparent 50%),
-        linear-gradient(165deg, #ca8a04 0%, #854d0e 52%, #422006 100%);
+      background: radial-gradient(circle at 80% 15%, rgba(254, 240, 138, 0.65), transparent 50%), linear-gradient(165deg, #ca8a04 0%, #854d0e 52%, #422006 100%);
       color: #fefce8;
     }
     .type-theme-Colorless {
-      background:
-        radial-gradient(circle at 80% 15%, rgba(255, 255, 255, 0.85), transparent 50%),
-        linear-gradient(165deg, #f8fafc 0%, #e2e8f0 52%, #94a3b8 100%);
-    }
-    .type-theme-Trainer {
-      background:
-        radial-gradient(circle at 80% 15%, rgba(224, 242, 254, 0.7), transparent 50%),
-        linear-gradient(165deg, #93c5fd 0%, #3b82f6 52%, #1d4ed8 100%);
+      background: radial-gradient(circle at 80% 15%, rgba(255, 255, 255, 0.85), transparent 50%), linear-gradient(165deg, #f8fafc 0%, #e2e8f0 52%, #94a3b8 100%);
     }
 
-    /* Holographic Foil Shimmer Overlay for Rare Holo / Ultra Rare */
+    /* Holographic Foil Shimmer Overlay */
     .holo-shimmer::before {
       content: "";
       position: absolute;
       inset: 0;
       background: linear-gradient(
         115deg,
-        transparent 20%,
-        rgba(255, 255, 255, 0.25) 36%,
-        rgba(56, 189, 248, 0.22) 44%,
-        rgba(244, 114, 182, 0.22) 52%,
-        rgba(250, 204, 21, 0.25) 60%,
-        transparent 76%
+        transparent 18%,
+        rgba(255, 255, 255, 0.28) 34%,
+        rgba(56, 189, 248, 0.24) 44%,
+        rgba(244, 114, 182, 0.24) 52%,
+        rgba(250, 204, 21, 0.28) 62%,
+        transparent 78%
       );
       background-size: 220% 220%;
-      animation: holoShift 4.5s ease-in-out infinite;
+      animation: holoShift 4.2s ease-in-out infinite;
       pointer-events: none;
       z-index: 6;
       mix-blend-mode: overlay;
@@ -186,7 +155,6 @@
       50% { background-position: 100% 50%; }
     }
 
-    /* Full-Art / Full-Card Image Mode */
     .full-art-card-img {
       width: 100%;
       height: 100%;
@@ -195,7 +163,7 @@
       display: block;
     }
 
-    /* Zoomed Modal Card Override (Fixed Crisp Large Inspection Size: 350px x 490px = 5:7) */
+    /* Zoomed Inspection Card Override (Large crisp 340px x 476px = exact 5:7 ratio) */
     .zoomed-card-wrapper .pkmn-card-outer {
       width: 340px;
       height: 476px;
@@ -203,21 +171,10 @@
       transform: none !important;
     }
 
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar {
-      width: 7px;
-      height: 7px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #0e131f;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #2b354b;
-      border-radius: 9999px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: #475569;
-    }
+    ::-webkit-scrollbar { width: 7px; height: 7px; }
+    ::-webkit-scrollbar-track { background: #0b101b; }
+    ::-webkit-scrollbar-thumb { background: #2b354b; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #475569; }
   </style>
 </head>
 <body class="antialiased selection:bg-yellow-400/30 selection:text-yellow-200">
@@ -225,11 +182,13 @@
   <!-- Toast Notification Stack -->
   <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
 
-  <!-- Top Header -->
-  <header class="sticky top-0 z-40 bg-[#0e131f]/92 backdrop-blur-md border-b border-slate-800/90">
+  <!-- ===================================================================== -->
+  <!-- TOP NAVIGATION BAR                                                    -->
+  <!-- ===================================================================== -->
+  <header class="sticky top-0 z-40 bg-[#0b101b]/95 backdrop-blur-md border-b border-slate-800/90">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-wrap items-center justify-between py-3 gap-3">
-        <!-- Brand & Live Sync Pill -->
+        <!-- Brand & Live Status -->
         <div class="flex items-center gap-3">
           <div class="w-10 h-10 rounded-full bg-gradient-to-b from-rose-500 via-slate-900 to-white p-0.5 shadow-lg shadow-rose-500/20 flex items-center justify-center border border-slate-600">
             <div class="w-3.5 h-3.5 rounded-full bg-white border-2 border-slate-900"></div>
@@ -239,8 +198,8 @@
               <h1 class="font-display font-extrabold text-lg sm:text-xl tracking-tight text-white">
                 Poké<span class="text-yellow-400">Vault</span> Live
               </h1>
-              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span id="live-status-pill" class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-amber-500/10 text-amber-300 border border-amber-500/30">
+                <span id="live-status-dot" class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></span>
                 <span id="live-status-text">Connecting...</span>
               </span>
             </div>
@@ -248,45 +207,41 @@
           </div>
         </div>
 
-        <!-- Main Navigation Tabs -->
-        <nav class="flex items-center gap-1.5 bg-[#161e31] p-1 rounded-xl border border-slate-800 order-3 sm:order-2 w-full sm:w-auto justify-around sm:justify-start">
-          <button onclick="switchTab('vault')" id="tab-vault" class="nav-tab flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 bg-yellow-400 text-slate-950 shadow">
+        <!-- Primary Tabs -->
+        <nav class="flex items-center gap-1.5 bg-[#141c2e] p-1 rounded-xl border border-slate-800 order-3 sm:order-2 w-full sm:w-auto justify-around sm:justify-start">
+          <button type="button" id="tab-vault" data-tab="vault" class="nav-tab flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 bg-yellow-400 text-slate-950 shadow">
             <i class="fa-solid fa-id-card"></i>
             <span>Card Vault</span>
             <span id="badge-vault-count" class="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-950/20 font-extrabold">0</span>
           </button>
-          <button onclick="switchTab('my-decks')" id="tab-my-decks" class="nav-tab flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800/70 transition flex items-center justify-center gap-2">
+          <button type="button" id="tab-my-decks" data-tab="my-decks" class="nav-tab flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800/70 transition flex items-center justify-center gap-2">
             <i class="fa-solid fa-layer-group"></i>
             <span>My Decks</span>
             <span id="badge-my-decks-count" class="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-800 text-slate-300 font-bold">0</span>
           </button>
-          <button onclick="switchTab('friends-decks')" id="tab-friends-decks" class="nav-tab flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800/70 transition flex items-center justify-center gap-2">
+          <button type="button" id="tab-friends-decks" data-tab="friends-decks" class="nav-tab flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800/70 transition flex items-center justify-center gap-2">
             <i class="fa-solid fa-users"></i>
             <span>Friends' Decks</span>
             <span id="badge-friends-decks-count" class="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-800 text-slate-300 font-bold">0</span>
           </button>
         </nav>
 
-        <!-- Trainer Profile & Rules -->
+        <!-- Actions: Invite Friends, Rules, Trainer Profile -->
         <div class="flex items-center gap-2 order-2 sm:order-3">
-          <button onclick="openInviteModal()" id="invite-friends-btn" class="px-3 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/35 transition text-xs font-extrabold flex items-center gap-1.5 shadow-sm">
+          <button type="button" id="btn-invite-friends" class="px-3 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/35 transition text-xs font-extrabold flex items-center gap-1.5 shadow-sm">
             <i class="fa-solid fa-share-nodes"></i>
             <span>Invite Friends</span>
           </button>
-          <button onclick="openHostSetupModal(true)" title="Vault Connection & Setup" class="p-2.5 rounded-xl bg-[#161e31] hover:bg-slate-800 text-slate-300 hover:text-yellow-400 border border-slate-800 transition text-xs flex items-center gap-1.5">
-            <i class="fa-solid fa-plug"></i>
-            <span class="hidden lg:inline font-semibold">Vault Setup</span>
-          </button>
-          <button onclick="openModal('rules-modal')" title="Firestore Owner-Only Security Rules" class="p-2.5 rounded-xl bg-[#161e31] hover:bg-slate-800 text-slate-300 hover:text-yellow-400 border border-slate-800 transition text-xs flex items-center gap-1.5">
+          <button type="button" id="btn-open-rules" title="View Firestore Security Rules" class="p-2.5 rounded-xl bg-[#141c2e] hover:bg-slate-800 text-slate-300 hover:text-yellow-400 border border-slate-800 transition text-xs flex items-center gap-1.5">
             <i class="fa-solid fa-shield-halved"></i>
             <span class="hidden md:inline font-semibold">Rules</span>
           </button>
-          <button onclick="openProfileModal()" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#161e31] hover:bg-slate-800 border border-slate-700/80 transition">
+          <button type="button" id="btn-open-profile" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#141c2e] hover:bg-slate-800 border border-slate-700/80 transition">
             <div id="user-avatar" class="w-7 h-7 rounded-lg bg-gradient-to-tr from-yellow-400 to-amber-600 flex items-center justify-center text-xs font-extrabold text-slate-950 uppercase">
               TR
             </div>
             <div class="text-left">
-              <div id="user-display-name" class="text-xs font-bold text-white max-w-[105px] truncate">Trainer</div>
+              <div id="user-display-name" class="text-xs font-bold text-white max-w-[110px] truncate">Trainer</div>
               <div class="text-[10px] text-yellow-400 flex items-center gap-1">
                 <span>Trainer Card</span>
                 <i class="fa-solid fa-pen text-[8px]"></i>
@@ -298,45 +253,44 @@
     </div>
   </header>
 
-  <!-- Main Workspace -->
+  <!-- ===================================================================== -->
+  <!-- MAIN WORKSPACE                                                        -->
+  <!-- ===================================================================== -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-5">
 
-    <!-- Live Feed & True-to-Size 2.5" × 3.5" Calibration Bar -->
-    <div class="bg-[#161e31]/95 border border-slate-800 rounded-2xl p-3.5 flex flex-col lg:flex-row lg:items-center justify-between gap-3 text-xs">
-      <!-- Live Multiplayer Ticker -->
+    <!-- Live Sync Ticker & True-to-Size 2.5" × 3.5" DPI Calibration Bar -->
+    <div class="bg-[#141c2e]/95 border border-slate-800 rounded-2xl p-3.5 flex flex-col lg:flex-row lg:items-center justify-between gap-3 text-xs">
       <div class="flex items-center gap-2.5 min-w-0">
         <span class="px-2 py-0.5 rounded bg-yellow-400/15 text-yellow-300 border border-yellow-400/30 font-extrabold uppercase tracking-wider text-[10px] shrink-0">
-          Live Sync
+          Live Feed
         </span>
-        <span id="latest-activity-text" class="text-slate-300 truncate">Ready — upload custom cards to share live with friends!</span>
+        <span id="latest-activity-text" class="text-slate-300 truncate">Connecting to live PokéVault room...</span>
       </div>
 
-      <!-- Physical 2.5" x 3.5" Scale Calibrator -->
-      <div class="flex flex-wrap items-center gap-3 shrink-0 bg-[#0e131f] px-3 py-2 rounded-xl border border-slate-800">
+      <div class="flex flex-wrap items-center gap-3 shrink-0 bg-[#0b101b] px-3 py-2 rounded-xl border border-slate-800">
         <div class="flex items-center gap-1.5 text-yellow-400 font-bold">
           <i class="fa-solid fa-ruler-combined"></i>
           <span>2.5" × 3.5" True Scale:</span>
         </div>
         <div class="flex items-center gap-2">
-          <input id="dpi-slider" type="range" min="72" max="150" value="96" oninput="updateCardDpiScale(this.value)" class="w-24 sm:w-28 accent-yellow-400 cursor-pointer">
+          <input id="dpi-slider" type="range" min="72" max="150" value="96" class="w-24 sm:w-28 accent-yellow-400 cursor-pointer">
           <span id="dpi-readout" class="font-mono text-[11px] text-slate-300 w-36">96 DPI (240×336px)</span>
         </div>
-        <button onclick="resetDpiScale()" class="text-[11px] text-slate-400 hover:text-yellow-400 underline">Reset</button>
+        <button type="button" id="btn-reset-dpi" class="text-[11px] text-slate-400 hover:text-yellow-400 underline">Reset</button>
       </div>
     </div>
 
     <!-- =================================================================== -->
-    <!-- VIEW 1: CUSTOM CARD VAULT (NO PREMADE PLACEHOLDERS)                 -->
+    <!-- VIEW 1: SHARED CUSTOM CARD VAULT (ZERO PREMADE PLACEHOLDERS)        -->
     <!-- =================================================================== -->
     <section id="view-vault" class="space-y-5">
-      <!-- Filter & Prominent Upload Toolbar -->
-      <div class="bg-[#161e31] p-4 rounded-2xl border border-slate-800 flex flex-col lg:flex-row gap-3 justify-between items-stretch lg:items-center">
+      <div class="bg-[#141c2e] p-4 rounded-2xl border border-slate-800 flex flex-col lg:flex-row gap-3 justify-between items-stretch lg:items-center">
         <div class="flex flex-col sm:flex-row gap-2.5 flex-1">
           <div class="relative flex-1">
             <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
-            <input id="vault-search" type="text" oninput="renderVault()" placeholder="Search uploaded cards by name, attack, or trainer..." class="w-full pl-9 pr-4 py-2.5 rounded-xl bg-[#0e131f] border border-slate-700/80 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-yellow-400 transition">
+            <input id="vault-search" type="text" placeholder="Search uploaded cards by name, attack, or trainer..." class="w-full pl-9 pr-4 py-2.5 rounded-xl bg-[#0b101b] border border-slate-700/80 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-yellow-400 transition">
           </div>
-          <select id="vault-filter-type" onchange="renderVault()" class="px-3 py-2.5 rounded-xl bg-[#0e131f] border border-slate-700/80 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-yellow-400">
+          <select id="vault-filter-type" class="px-3 py-2.5 rounded-xl bg-[#0b101b] border border-slate-700/80 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-yellow-400">
             <option value="ALL">All Energy Types</option>
             <option value="Fire">Fire</option>
             <option value="Water">Water</option>
@@ -346,12 +300,10 @@
             <option value="Fighting">Fighting</option>
             <option value="Darkness">Darkness</option>
             <option value="Metal">Metal</option>
-            <option value="Fairy">Fairy</option>
             <option value="Dragon">Dragon</option>
             <option value="Colorless">Colorless</option>
-            <option value="Trainer">Trainer / Item</option>
           </select>
-          <select id="vault-filter-rarity" onchange="renderVault()" class="px-3 py-2.5 rounded-xl bg-[#0e131f] border border-slate-700/80 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-yellow-400">
+          <select id="vault-filter-rarity" class="px-3 py-2.5 rounded-xl bg-[#0b101b] border border-slate-700/80 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-yellow-400">
             <option value="ALL">All Rarities</option>
             <option value="Common">● Common</option>
             <option value="Uncommon">◆ Uncommon</option>
@@ -361,44 +313,42 @@
         </div>
 
         <div class="flex flex-wrap items-center gap-2">
-          <button onclick="openUploadModal('full-image')" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-yellow-300 border border-yellow-400/30 font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2">
+          <button type="button" id="btn-upload-full-image" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-yellow-300 border border-yellow-400/30 font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2">
             <i class="fa-solid fa-file-image"></i>
             <span>Upload Card Image</span>
           </button>
-          <button onclick="openUploadModal('card-maker')" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-yellow-500/20 transition flex items-center justify-center gap-2">
+          <button type="button" id="btn-upload-card-maker" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-yellow-500/20 transition flex items-center justify-center gap-2">
             <i class="fa-solid fa-wand-magic-sparkles"></i>
             <span>Design Custom Card</span>
           </button>
         </div>
       </div>
 
-      <!-- True-to-Size 2.5" x 3.5" Card Showcase Flex Grid -->
-      <div id="vault-grid" class="flex flex-wrap justify-center sm:justify-start gap-6">
-        <!-- Rendered dynamically (starts cleanly empty until users upload!) -->
-      </div>
+      <!-- True-to-Size 2.5" x 3.5" Card Showcase Grid -->
+      <div id="vault-grid" class="flex flex-wrap justify-center sm:justify-start gap-6"></div>
     </section>
 
     <!-- =================================================================== -->
     <!-- VIEW 2: MY DECKS (OWNER-ONLY EDITING)                               -->
     <!-- =================================================================== -->
     <section id="view-my-decks" class="hidden space-y-6">
-      <div class="bg-[#161e31] p-4 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+      <div class="bg-[#141c2e] p-4 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         <div>
           <h2 class="font-display text-lg font-extrabold text-white">My Specialized Decks</h2>
-          <p class="text-xs text-slate-400">Build your 60-card (or custom) decks from uploaded cards. Only you can modify your decks; friends view them live in read-only mode.</p>
+          <p class="text-xs text-slate-400">Build your decks from shared uploaded cards. Only you can modify your decks; friends view them live in read-only mode.</p>
         </div>
-        <button onclick="openCreateDeckModal()" class="px-4 py-2.5 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-yellow-500/15">
+        <button type="button" id="btn-create-deck" class="px-4 py-2.5 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-yellow-500/15">
           <i class="fa-solid fa-folder-plus"></i>
           <span>New Deck</span>
         </button>
       </div>
 
-      <!-- User's Deck List -->
+      <!-- User's Deck Cards -->
       <div id="my-decks-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
 
       <!-- Owner-Only Deck Builder Workspace -->
       <div id="deck-builder-workspace" class="hidden space-y-6 pt-5 border-t border-slate-800">
-        <div class="bg-[#161e31] p-5 rounded-2xl border border-yellow-400/35 shadow-xl">
+        <div class="bg-[#141c2e] p-5 rounded-2xl border border-yellow-400/35 shadow-xl">
           <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-800">
             <div>
               <div class="flex flex-wrap items-center gap-2">
@@ -412,39 +362,41 @@
             </div>
 
             <div class="flex flex-wrap items-center gap-2">
-              <button onclick="openEditDeckMetaModal()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 transition">
+              <button type="button" id="btn-edit-deck-meta" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 transition">
                 <i class="fa-solid fa-sliders mr-1"></i>Settings
               </button>
-              <button onclick="deleteActiveDeck()" class="px-3.5 py-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-400 border border-rose-500/30 text-xs font-bold transition">
+              <button type="button" id="btn-delete-deck" class="px-3.5 py-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-400 border border-rose-500/30 text-xs font-bold transition">
                 <i class="fa-solid fa-trash mr-1"></i>Delete Deck
               </button>
-              <button onclick="closeDeckBuilder()" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white text-xs font-bold border border-slate-700 transition">
+              <button type="button" id="btn-close-builder" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white text-xs font-bold border border-slate-700 transition">
                 Done
               </button>
             </div>
           </div>
 
-          <!-- Deck Energy & Count Summary -->
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
-            <div class="bg-[#0e131f] p-3.5 rounded-xl border border-slate-800">
+          <!-- Deck Energy & Stage Breakdown -->
+          <div class="grid grid-cols-1 md:grid-cols-12 gap-4 pt-4">
+            <div class="md:col-span-3 bg-[#0b101b] p-3.5 rounded-xl border border-slate-800">
               <div class="text-xs text-slate-400">Deck Card Count</div>
               <div class="flex items-baseline justify-between mt-1">
                 <span id="builder-total-cards" class="text-3xl font-display font-extrabold text-yellow-400">0</span>
-                <span id="builder-unique-cards" class="text-xs text-slate-400">0 unique cards</span>
+                <span id="builder-unique-cards" class="text-xs text-slate-400">0 unique</span>
               </div>
             </div>
-            <div class="md:col-span-2 bg-[#0e131f] p-3.5 rounded-xl border border-slate-800 flex flex-col justify-between">
-              <div class="text-xs text-slate-400 mb-2">Energy Type Distribution</div>
-              <div id="builder-type-breakdown" class="flex flex-wrap gap-2 text-xs">
-                <span class="text-slate-500 italic">Add cards below to see type breakdown</span>
-              </div>
+            <div class="md:col-span-5 bg-[#0b101b] p-3.5 rounded-xl border border-slate-800 flex flex-col justify-between">
+              <div class="text-xs text-slate-400 mb-2">Energy Type Breakdown</div>
+              <div id="builder-type-breakdown" class="flex flex-wrap gap-2 text-xs"></div>
+            </div>
+            <div class="md:col-span-4 bg-[#0b101b] p-3.5 rounded-xl border border-slate-800 flex flex-col justify-between">
+              <div class="text-xs text-slate-400 mb-2">Stage / Category Curve</div>
+              <div id="builder-stage-breakdown" class="flex flex-wrap gap-1.5 text-[11px]"></div>
             </div>
           </div>
         </div>
 
-        <!-- Split Pane: Deck Roster (Left) & Shared Vault Picker (Right) -->
+        <!-- Split Pane: Deck Roster (Left) & Vault Card Picker (Right) -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-          <div class="lg:col-span-5 bg-[#161e31] rounded-2xl border border-slate-800 p-4 flex flex-col h-[580px]">
+          <div class="lg:col-span-5 bg-[#141c2e] rounded-2xl border border-slate-800 p-4 flex flex-col h-[580px]">
             <div class="flex items-center justify-between pb-3 border-b border-slate-800">
               <h4 class="font-bold text-sm text-white">
                 <i class="fa-solid fa-layer-group text-yellow-400 mr-1.5"></i>Current Deck List
@@ -454,12 +406,12 @@
             <div id="builder-deck-roster" class="flex-1 overflow-y-auto space-y-2 py-3 pr-1"></div>
           </div>
 
-          <div class="lg:col-span-7 bg-[#161e31] rounded-2xl border border-slate-800 p-4 flex flex-col h-[580px]">
+          <div class="lg:col-span-7 bg-[#141c2e] rounded-2xl border border-slate-800 p-4 flex flex-col h-[580px]">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-800">
               <h4 class="font-bold text-sm text-white">
                 <i class="fa-solid fa-vault text-sky-400 mr-1.5"></i>Add Uploaded Cards to Deck
               </h4>
-              <input id="builder-vault-search" type="text" oninput="renderBuilderVaultPicker()" placeholder="Search uploaded cards..." class="px-3 py-1.5 rounded-lg bg-[#0e131f] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
+              <input id="builder-vault-search" type="text" placeholder="Search uploaded cards..." class="px-3 py-1.5 rounded-lg bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
             </div>
             <div id="builder-vault-picker" class="flex-1 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-3 py-3 pr-1"></div>
           </div>
@@ -468,10 +420,10 @@
     </section>
 
     <!-- =================================================================== -->
-    <!-- VIEW 3: FRIENDS' DECKS (LIVE READ-ONLY SHOWCASE)                    -->
+    <!-- VIEW 3: FRIENDS' DECKS (LIVE READ-ONLY DIRECTORY & INSPECTOR)       -->
     <!-- =================================================================== -->
     <section id="view-friends-decks" class="hidden space-y-6">
-      <div class="bg-[#161e31] p-4 rounded-2xl border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div class="bg-[#141c2e] p-4 rounded-2xl border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h2 class="font-display text-lg font-extrabold text-white flex items-center gap-2">
             <span>Friends' Live Decks</span>
@@ -479,80 +431,77 @@
               <i class="fa-solid fa-eye mr-1"></i>Live Read-Only
             </span>
           </h2>
-          <p class="text-xs text-slate-400">Inspect every card in your friends' decks in real time at true 2.5" × 3.5" card size. Editing is locked to each deck's owner.</p>
+          <p class="text-xs text-slate-400">Inspect every card in your friends' decks in real time at true 2.5" × 3.5" card size. Editing is strictly locked to each deck's owner.</p>
         </div>
-        <input id="friends-deck-search" type="text" oninput="renderFriendsDecks()" placeholder="Filter by friend or deck name..." class="w-full sm:w-64 px-3.5 py-2 rounded-xl bg-[#0e131f] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
+        <input id="friends-deck-search" type="text" placeholder="Filter by friend or deck name..." class="w-full sm:w-64 px-3.5 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
       </div>
 
       <div id="friends-decks-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
     </section>
-
   </main>
 
   <!-- ===================================================================== -->
   <!-- MODAL 1: CUSTOM CARD UPLOAD & POKÉMON-STYLE CARD MAKER                -->
   <!-- ===================================================================== -->
   <div id="card-upload-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
-    <div class="bg-[#161e31] border border-slate-700 rounded-2xl max-w-5xl w-full p-5 sm:p-6 shadow-2xl my-auto">
-      <!-- Modal Header & Mode Switcher -->
+    <div class="bg-[#141c2e] border border-slate-700 rounded-2xl max-w-5xl w-full p-5 sm:p-6 shadow-2xl my-auto">
       <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-800">
         <div>
           <h3 id="upload-modal-heading" class="font-display text-lg sm:text-xl font-extrabold text-white">Upload Custom Card</h3>
-          <p class="text-xs text-slate-400">Upload a pre-made card image or build a custom Pokémon-style card with live 2.5" × 3.5" preview.</p>
+          <p class="text-xs text-slate-400">Upload a pre-made card image or design a Pokémon-style card with live 2.5" × 3.5" preview.</p>
         </div>
         <div class="flex items-center gap-2">
-          <div class="bg-[#0e131f] p-1 rounded-xl border border-slate-800 flex text-xs font-bold">
-            <button type="button" id="mode-btn-full-image" onclick="setUploadMode('full-image')" class="px-3 py-1.5 rounded-lg transition">
+          <div class="bg-[#0b101b] p-1 rounded-xl border border-slate-800 flex text-xs font-bold">
+            <button type="button" id="mode-btn-full-image" class="px-3 py-1.5 rounded-lg transition bg-yellow-400 text-slate-950">
               <i class="fa-solid fa-file-image mr-1"></i>Full Card Image
             </button>
-            <button type="button" id="mode-btn-card-maker" onclick="setUploadMode('card-maker')" class="px-3 py-1.5 rounded-lg transition">
+            <button type="button" id="mode-btn-card-maker" class="px-3 py-1.5 rounded-lg transition text-slate-400">
               <i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Card Maker
             </button>
           </div>
-          <button onclick="closeModal('card-upload-modal')" class="text-slate-400 hover:text-white p-1.5">
+          <button type="button" data-close-modal="card-upload-modal" class="text-slate-400 hover:text-white p-1.5">
             <i class="fa-solid fa-xmark text-lg"></i>
           </button>
         </div>
       </div>
 
-      <!-- Two-Column Layout: Left = Form Inputs | Right = Live 2.5" x 3.5" Card Preview -->
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-5 items-start">
         <!-- Form Column (7 cols) -->
-        <form id="custom-card-form" onsubmit="handlePublishCard(event)" class="lg:col-span-7 space-y-4">
+        <form id="custom-card-form" class="lg:col-span-7 space-y-4">
           <input type="hidden" id="edit-card-id" value="">
 
-          <!-- Drag & Drop / File Upload Zone (Required for new cards) -->
-          <div id="drop-zone" onclick="document.getElementById('custom-image-input').click()" class="cursor-pointer rounded-2xl border-2 border-dashed border-yellow-400/50 hover:border-yellow-400 bg-[#0e131f]/90 hover:bg-[#0e131f] p-4 text-center transition">
-            <input id="custom-image-input" type="file" accept="image/*" onchange="handleCardImageSelect(event)" class="hidden">
+          <!-- Drag & Drop / File Upload Zone -->
+          <div id="drop-zone" class="cursor-pointer rounded-2xl border-2 border-dashed border-yellow-400/50 hover:border-yellow-400 bg-[#0b101b]/90 hover:bg-[#0b101b] p-4 text-center transition">
+            <input id="custom-image-input" type="file" accept="image/*" class="hidden">
             <div class="flex flex-col items-center gap-1.5">
               <div class="w-10 h-10 rounded-full bg-yellow-400/15 text-yellow-400 flex items-center justify-center text-base">
                 <i class="fa-solid fa-cloud-arrow-up"></i>
               </div>
               <div id="upload-zone-title" class="text-xs sm:text-sm font-bold text-white">
-                Click or Drag & Drop Your Custom Card / Artwork Image
+                Click or Drag & Drop Your Custom Card Image
               </div>
-              <div id="upload-zone-sub" class="text-[11px] text-slate-400">
-                Supports PNG, JPG, WEBP • Auto-fitted to exact 2.5" × 3.5" (5:7) ratio
+              <div class="text-[11px] text-slate-400">
+                Supports PNG, JPG, WEBP • Auto-compressed & fitted to 2.5" × 3.5" (5:7) ratio
               </div>
             </div>
           </div>
 
-          <!-- Core Card Metadata (Always shown for search/filtering & stats) -->
+          <!-- Core Card Metadata -->
           <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <div class="sm:col-span-2">
               <label class="block text-xs font-bold text-slate-300 mb-1">Card Name *</label>
-              <input id="field-name" type="text" required maxlength="32" oninput="updateLiveCardPreview()" placeholder="e.g., Charizard ex / Custom Ace" class="w-full px-3.5 py-2 rounded-xl bg-[#0e131f] border border-slate-700 text-sm text-white focus:outline-none focus:border-yellow-400">
+              <input id="field-name" type="text" required maxlength="32" placeholder="e.g., Charizard ex / Custom Ace" class="w-full px-3.5 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-sm text-white focus:outline-none focus:border-yellow-400">
             </div>
             <div>
               <label class="block text-xs font-bold text-rose-400 mb-1">HP</label>
-              <input id="field-hp" type="number" min="10" max="990" step="10" value="120" oninput="updateLiveCardPreview()" class="w-full px-3.5 py-2 rounded-xl bg-[#0e131f] border border-slate-700 text-sm text-white focus:outline-none focus:border-yellow-400">
+              <input id="field-hp" type="number" min="10" max="990" step="10" value="120" class="w-full px-3.5 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-sm text-white focus:outline-none focus:border-yellow-400">
             </div>
           </div>
 
           <div class="grid grid-cols-3 gap-3">
             <div>
               <label class="block text-xs font-bold text-slate-300 mb-1">Energy Type</label>
-              <select id="field-type" onchange="updateLiveCardPreview()" class="w-full px-3 py-2 rounded-xl bg-[#0e131f] border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-yellow-400">
+              <select id="field-type" class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-yellow-400">
                 <option value="Fire">Fire</option>
                 <option value="Water">Water</option>
                 <option value="Grass">Grass</option>
@@ -561,27 +510,25 @@
                 <option value="Fighting">Fighting</option>
                 <option value="Darkness">Darkness</option>
                 <option value="Metal">Metal</option>
-                <option value="Fairy">Fairy</option>
                 <option value="Dragon">Dragon</option>
                 <option value="Colorless">Colorless</option>
-                <option value="Trainer">Trainer / Item</option>
               </select>
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-300 mb-1">Stage / Category</label>
-              <select id="field-stage" onchange="updateLiveCardPreview()" class="w-full px-3 py-2 rounded-xl bg-[#0e131f] border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-yellow-400">
+              <select id="field-stage" class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-yellow-400">
                 <option value="BASIC">Basic</option>
                 <option value="STAGE 1">Stage 1</option>
                 <option value="STAGE 2">Stage 2</option>
                 <option value="EX / V">EX / V</option>
-                <option value="VMAX / MEGA">VMAX / Mega</option>
+                <option value="VMAX">VMAX</option>
                 <option value="TRAINER">Trainer</option>
                 <option value="ENERGY">Energy</option>
               </select>
             </div>
             <div>
               <label class="block text-xs font-bold text-slate-300 mb-1">Rarity & Foil</label>
-              <select id="field-rarity" onchange="updateLiveCardPreview()" class="w-full px-3 py-2 rounded-xl bg-[#0e131f] border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-yellow-400">
+              <select id="field-rarity" class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-yellow-400">
                 <option value="Common">● Common</option>
                 <option value="Uncommon">◆ Uncommon</option>
                 <option value="Rare Holo">★ Rare Holo</option>
@@ -590,38 +537,38 @@
             </div>
           </div>
 
-          <!-- Extra Fields Specific to Mode B (Pokémon-Style Card Maker) -->
-          <div id="card-maker-extra-fields" class="space-y-3 pt-1">
+          <!-- Extra Fields for Mode 2: Pokémon-Style Card Maker -->
+          <div id="card-maker-extra-fields" class="hidden space-y-3 pt-1">
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-xs font-bold text-slate-300 mb-1">Border Style</label>
-                <select id="field-border" onchange="updateLiveCardPreview()" class="w-full px-3 py-2 rounded-xl bg-[#0e131f] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
+                <label class="block text-xs font-bold text-slate-300 mb-1">Border Finish</label>
+                <select id="field-border" class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
                   <option value="classic-yellow">Classic Yellow Border</option>
                   <option value="silver-holo">Modern Silver Border</option>
                   <option value="gold-ultra">Gold Secret Rare Border</option>
                 </select>
               </div>
               <div>
-                <label class="block text-xs font-bold text-slate-300 mb-1">Dex / Spec Line</label>
-                <input id="field-spec" type="text" maxlength="42" oninput="updateLiveCardPreview()" value="NO. 001  Custom Pokémon  HT: 3'07&quot;  WT: 45 lbs" class="w-full px-3 py-2 rounded-xl bg-[#0e131f] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
+                <label class="block text-xs font-bold text-slate-300 mb-1">Pokédex Spec Strip</label>
+                <input id="field-spec" type="text" maxlength="44" value="NO. 001  Custom Pokémon  HT: 3'07&quot;  WT: 45 lbs" class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
               </div>
             </div>
 
-            <!-- Optional Ability -->
-            <div class="bg-[#0e131f] p-3 rounded-xl border border-slate-800 space-y-2">
+            <!-- Ability -->
+            <div class="bg-[#0b101b] p-3 rounded-xl border border-slate-800 space-y-2">
               <div class="text-[11px] font-bold text-rose-400 uppercase tracking-wider">Ability (Optional)</div>
               <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                <input id="field-ability-name" type="text" maxlength="24" oninput="updateLiveCardPreview()" placeholder="Ability Name" class="px-3 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white">
-                <input id="field-ability-desc" type="text" maxlength="110" oninput="updateLiveCardPreview()" placeholder="Ability passive effect..." class="sm:col-span-2 px-3 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white">
+                <input id="field-ability-name" type="text" maxlength="24" placeholder="Ability Name" class="px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
+                <input id="field-ability-desc" type="text" maxlength="110" placeholder="Ability passive effect..." class="sm:col-span-2 px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
               </div>
             </div>
 
-            <!-- Attack 1 -->
-            <div class="bg-[#0e131f] p-3 rounded-xl border border-slate-800 space-y-2">
+            <!-- Primary Attack -->
+            <div class="bg-[#0b101b] p-3 rounded-xl border border-slate-800 space-y-2">
               <div class="text-[11px] font-bold text-yellow-400 uppercase tracking-wider">Primary Attack</div>
               <div class="grid grid-cols-12 gap-2">
                 <div class="col-span-3">
-                  <select id="field-atk1-cost" onchange="updateLiveCardPreview()" class="w-full px-2 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white" title="Energy Cost">
+                  <select id="field-atk1-cost" class="w-full px-2 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
                     <option value="1">1 Energy</option>
                     <option value="2" selected>2 Energy</option>
                     <option value="3">3 Energy</option>
@@ -629,43 +576,43 @@
                   </select>
                 </div>
                 <div class="col-span-6">
-                  <input id="field-atk1-name" type="text" maxlength="24" oninput="updateLiveCardPreview()" value="Flare Blitz" placeholder="Attack Name" class="w-full px-3 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white">
+                  <input id="field-atk1-name" type="text" maxlength="24" value="Flare Blitz" placeholder="Attack Name" class="w-full px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
                 </div>
                 <div class="col-span-3">
-                  <input id="field-atk1-dmg" type="text" maxlength="6" oninput="updateLiveCardPreview()" value="80+" placeholder="Dmg" class="w-full px-2.5 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white text-right font-bold">
+                  <input id="field-atk1-dmg" type="text" maxlength="6" value="80+" placeholder="Dmg" class="w-full px-2.5 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white text-right font-bold">
                 </div>
               </div>
-              <input id="field-atk1-desc" type="text" maxlength="110" oninput="updateLiveCardPreview()" value="Flip a coin. If heads, this attack does 30 more damage." placeholder="Attack effect description..." class="w-full px-3 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white">
+              <input id="field-atk1-desc" type="text" maxlength="110" value="Flip a coin. If heads, this attack does 30 more damage." placeholder="Attack effect description..." class="w-full px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
             </div>
 
-            <!-- Attack 2 (Optional) -->
-            <div class="bg-[#0e131f] p-3 rounded-xl border border-slate-800 space-y-2">
+            <!-- Secondary Attack -->
+            <div class="bg-[#0b101b] p-3 rounded-xl border border-slate-800 space-y-2">
               <div class="text-[11px] font-bold text-sky-400 uppercase tracking-wider">Secondary Attack (Optional)</div>
               <div class="grid grid-cols-12 gap-2">
                 <div class="col-span-3">
-                  <select id="field-atk2-cost" onchange="updateLiveCardPreview()" class="w-full px-2 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white">
-                    <option value="0">None</option>
+                  <select id="field-atk2-cost" class="w-full px-2 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
+                    <option value="0" selected>None</option>
                     <option value="1">1 Energy</option>
                     <option value="2">2 Energy</option>
-                    <option value="3" selected>3 Energy</option>
+                    <option value="3">3 Energy</option>
                     <option value="4">4 Energy</option>
                   </select>
                 </div>
                 <div class="col-span-6">
-                  <input id="field-atk2-name" type="text" maxlength="24" oninput="updateLiveCardPreview()" placeholder="Second Attack Name" class="w-full px-3 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white">
+                  <input id="field-atk2-name" type="text" maxlength="24" placeholder="Second Attack Name" class="w-full px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
                 </div>
                 <div class="col-span-3">
-                  <input id="field-atk2-dmg" type="text" maxlength="6" oninput="updateLiveCardPreview()" placeholder="Dmg" class="w-full px-2.5 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white text-right font-bold">
+                  <input id="field-atk2-dmg" type="text" maxlength="6" placeholder="Dmg" class="w-full px-2.5 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white text-right font-bold">
                 </div>
               </div>
-              <input id="field-atk2-desc" type="text" maxlength="110" oninput="updateLiveCardPreview()" placeholder="Second attack effect..." class="w-full px-3 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white">
+              <input id="field-atk2-desc" type="text" maxlength="110" placeholder="Second attack effect..." class="w-full px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
             </div>
 
             <!-- Weakness, Resistance, Retreat & Flavor -->
             <div class="grid grid-cols-3 gap-2">
               <div>
                 <label class="block text-[11px] font-bold text-slate-400 mb-1">Weakness (×2)</label>
-                <select id="field-weakness" onchange="updateLiveCardPreview()" class="w-full px-2.5 py-1.5 rounded-lg bg-[#0e131f] border border-slate-700 text-xs text-white">
+                <select id="field-weakness" class="w-full px-2.5 py-1.5 rounded-lg bg-[#0b101b] border border-slate-700 text-xs text-white">
                   <option value="Water">Water ×2</option>
                   <option value="Fire">Fire ×2</option>
                   <option value="Grass">Grass ×2</option>
@@ -678,208 +625,275 @@
                 </select>
               </div>
               <div>
-        <pre id="rules-code-block" class="bg-[#0e131f] p-3.5 rounded-xl border border-slate-800 text-[11px] font-mono text-emerald-300 overflow-x-auto">rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /artifacts/{appId}/public/data/{collection}/{docId} {
-      allow read: if request.auth != null;
-      allow create: if request.auth != null
-                    && request.resource.data.ownerId == request.auth.uid;
-      allow update, delete: if request.auth != null
-                            && resource.data.ownerId == request.auth.uid;
-    }
-  }
-}</pre>
-      </div>
-      <div class="mt-4 flex justify-between items-center gap-2">
-        <button onclick="copySecurityRules()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 font-bold text-xs flex items-center gap-1.5">
-          <i class="fa-regular fa-copy"></i>
-          <span>Copy Rules</span>
-        </button>
-        <button onclick="closeModal('rules-modal')" class="px-5 py-2 rounded-xl bg-yellow-400 text-slate-950 font-extrabold text-xs">Close</button>
+                <label class="block text-[11px] font-bold text-slate-400 mb-1">Resistance (-30)</label>
+                <select id="field-resistance" class="w-full px-2.5 py-1.5 rounded-lg bg-[#0b101b] border border-slate-700 text-xs text-white">
+                  <option value="None" selected>None</option>
+                  <option value="Fighting">Fighting -30</option>
+                  <option value="Grass">Grass -30</option>
+                  <option value="Metal">Metal -30</option>
+                  <option value="Psychic">Psychic -30</option>
+                  <option value="Darkness">Darkness -30</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-400 mb-1">Retreat Cost</label>
+                <select id="field-retreat" class="w-full px-2.5 py-1.5 rounded-lg bg-[#0b101b] border border-slate-700 text-xs text-white">
+                  <option value="0">0 (Free)</option>
+                  <option value="1" selected>1 Energy</option>
+                  <option value="2">2 Energy</option>
+                  <option value="3">3 Energy</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-slate-400 mb-1">Pokédex Flavor Text (Optional)</label>
+              <input id="field-flavor" type="text" maxlength="95" placeholder="A legendary creature forged in custom battle..." class="w-full px-3 py-1.5 rounded-lg bg-[#0b101b] border border-slate-700 text-xs text-white">
+            </div>
+          </div>
+
+          <div class="pt-2 flex justify-end gap-2">
+            <button type="button" data-close-modal="card-upload-modal" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300">Cancel</button>
+            <button type="submit" id="publish-card-btn" class="px-5 py-2.5 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-yellow-500/20">
+              Publish Card to Live Vault
+            </button>
+          </div>
+        </form>
+
+        <!-- Live Side-by-Side 2.5" x 3.5" Card Preview Column (5 cols) -->
+        <div class="lg:col-span-5 bg-[#0b101b] border border-slate-800 rounded-2xl p-5 flex flex-col items-center justify-center">
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-400 mb-3 flex items-center gap-1.5">
+            <i class="fa-solid fa-eye"></i>
+            <span>Live 2.5" × 3.5" Card Preview</span>
+          </div>
+          <div id="live-card-preview-slot"></div>
+          <p class="text-[11px] text-slate-400 text-center mt-3 max-w-xs">
+            Rendered at exact 5:7 Pokémon TCG dimensions. Updates live as you type or upload!
+          </p>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- ===================================================================== -->
-  <!-- MODAL 7: ZERO-CODE HOST SETUP & FRIEND INVITE CODE CONNECTOR          -->
+  <!-- MODAL 2: DECK CREATE / EDIT METADATA                                  -->
   <!-- ===================================================================== -->
-  <div id="host-setup-modal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
-    <div class="bg-[#161e31] border border-slate-700 rounded-3xl max-w-2xl w-full p-6 sm:p-7 shadow-2xl my-auto">
-      <div class="flex items-start justify-between gap-3 pb-4 border-b border-slate-800">
-        <div class="flex items-center gap-3">
-          <div class="w-11 h-11 rounded-2xl bg-yellow-400/15 border border-yellow-400/30 text-yellow-400 flex items-center justify-center text-lg shrink-0">
-            <i class="fa-solid fa-bolt"></i>
+  <div id="deck-meta-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#141c2e] border border-slate-700 rounded-2xl max-w-md w-full p-6 shadow-2xl">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <h3 id="deck-meta-modal-title" class="font-display text-lg font-extrabold text-white">Create New Deck</h3>
+        <button type="button" data-close-modal="deck-meta-modal" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="deck-meta-form" class="mt-4 space-y-4">
+        <input type="hidden" id="deck-meta-mode" value="create">
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Deck Name *</label>
+          <input id="deck-meta-name" type="text" required maxlength="40" placeholder="e.g., Charizard Inferno Rush" class="w-full px-3.5 py-2.5 rounded-xl bg-[#0b101b] border border-slate-700 text-sm text-white focus:outline-none focus:border-yellow-400">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Format Tag</label>
+          <select id="deck-meta-format" class="w-full px-3.5 py-2.5 rounded-xl bg-[#0b101b] border border-slate-700 text-sm text-white focus:outline-none focus:border-yellow-400">
+            <option value="Standard 60-Card">Standard 60-Card</option>
+            <option value="Expanded Unlimited">Expanded Unlimited</option>
+            <option value="GLC (Gym Leader Challenge)">GLC (Gym Leader Challenge)</option>
+            <option value="Custom House Rules">Custom House Rules</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Deck Strategy / Notes</label>
+          <textarea id="deck-meta-desc" rows="3" maxlength="160" placeholder="Describe your combo or main attacker..." class="w-full px-3.5 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400"></textarea>
+        </div>
+        <div class="flex justify-end gap-2 pt-2">
+          <button type="button" data-close-modal="deck-meta-modal" class="px-4 py-2 rounded-xl bg-slate-800 text-xs font-bold text-slate-300">Cancel</button>
+          <button type="submit" class="px-5 py-2 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-xs">Save Deck</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 3: READ-ONLY FRIEND DECK INSPECTOR                              -->
+  <!-- ===================================================================== -->
+  <div id="friend-deck-inspector-modal" class="fixed inset-0 z-50 hidden bg-black/88 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto">
+    <div class="bg-[#141c2e] border border-slate-700 rounded-2xl max-w-6xl w-full p-5 sm:p-6 shadow-2xl my-auto">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-slate-800">
+        <div>
+          <div class="flex flex-wrap items-center gap-2">
+            <h3 id="inspector-deck-name" class="font-display text-xl font-extrabold text-white">Friend's Deck</h3>
+            <span id="inspector-deck-format" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-sky-500/15 text-sky-300 border border-sky-500/30">Standard</span>
+            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">
+              <i class="fa-solid fa-lock mr-1"></i>Read-Only View
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 mt-1">
+            Built by <strong id="inspector-owner-name" class="text-white">Friend</strong> • <span id="inspector-card-count" class="text-yellow-400 font-bold">0 Cards</span>
+          </p>
+          <p id="inspector-deck-desc" class="text-xs text-slate-300 mt-1.5"></p>
+        </div>
+        <button type="button" id="btn-close-inspector" class="self-end sm:self-center px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white">
+          Close Inspector
+        </button>
+      </div>
+
+      <div id="inspector-type-pills" class="flex flex-wrap gap-2 py-3 border-b border-slate-800 text-xs"></div>
+
+      <div id="inspector-cards-grid" class="flex flex-wrap justify-center sm:justify-start gap-6 py-5 max-h-[65vh] overflow-y-auto"></div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 4: FULL-SIZE CARD ZOOM MODAL                                    -->
+  <!-- ===================================================================== -->
+  <div id="card-zoom-modal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="flex flex-col items-center gap-4">
+      <div id="card-zoom-content" class="zoomed-card-wrapper"></div>
+      <button type="button" data-close-modal="card-zoom-modal" class="px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs border border-slate-600 shadow-lg">
+        Close Close-Up
+      </button>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 5: WELCOME TRAINER / TRAINER PROFILE MODAL                      -->
+  <!-- ===================================================================== -->
+  <div id="profile-modal" class="fixed inset-0 z-50 hidden bg-black/88 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-[#141c2e] border border-yellow-400/40 rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-yellow-400/15 text-yellow-400 border border-yellow-400/30 flex items-center justify-center">
+            <i class="fa-solid fa-id-card-clip"></i>
           </div>
           <div>
-            <h3 class="font-display text-lg sm:text-xl font-extrabold text-white">Connect Your Live TCG Vault</h3>
-            <p class="text-xs text-slate-400">No code editing required. Join via a Friend's Invite Link or connect your Firebase room once.</p>
+            <h3 id="profile-modal-heading" class="font-display text-lg font-extrabold text-white">Welcome, Trainer!</h3>
+            <p class="text-[11px] text-slate-400">Your name appears on cards & decks you create</p>
           </div>
         </div>
-        <button id="close-host-setup-btn" onclick="closeModal('host-setup-modal')" class="text-slate-400 hover:text-white p-1 hidden">
-          <i class="fa-solid fa-xmark text-lg"></i>
+        <button type="button" id="btn-close-profile" data-close-modal="profile-modal" class="text-slate-400 hover:text-white">
+          <i class="fa-solid fa-xmark"></i>
         </button>
       </div>
 
-      <!-- Mode Switch: Friend Joining vs Host Setting Up -->
-      <div class="grid grid-cols-2 gap-2 bg-[#0e131f] p-1.5 rounded-2xl border border-slate-800 mt-4">
-        <button type="button" id="setup-tab-friend" onclick="switchSetupTab('friend')" class="py-2 px-3 rounded-xl text-xs font-extrabold transition bg-emerald-500 text-slate-950">
-          <i class="fa-solid fa-user-plus mr-1.5"></i>I Have a Friend Invite
-        </button>
-        <button type="button" id="setup-tab-host" onclick="switchSetupTab('host')" class="py-2 px-3 rounded-xl text-xs font-extrabold transition text-slate-400 hover:text-white">
-          <i class="fa-solid fa-server mr-1.5"></i>I'm Hosting a New Vault
-        </button>
-      </div>
-
-      <!-- Panel A: Friend Joining with Invite Link / Code -->
-      <form id="setup-panel-friend" onsubmit="handleFriendInvitePaste(event)" class="mt-5 space-y-4">
-        <div class="bg-emerald-500/10 border border-emerald-500/25 rounded-2xl p-4 text-xs text-emerald-200 space-y-1">
-          <div class="font-bold text-emerald-300"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Tip for Friends:</div>
-          <p class="text-emerald-100/80">If your friend sent you a <strong>Magic Invite Link</strong>, clicking that link connects you automatically! Or paste their Invite Link / Code below:</p>
+      <form id="profile-form" class="mt-4 space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Trainer Name *</label>
+          <input id="profile-name-input" type="text" required maxlength="24" placeholder="e.g., Ash / Misty / Brock" class="w-full px-3.5 py-2.5 rounded-xl bg-[#0b101b] border border-slate-700 text-sm text-white focus:outline-none focus:border-yellow-400">
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1.5">Paste Magic Invite Link or Invite Code *</label>
-          <input id="friend-invite-input" type="text" required placeholder="Paste https://...#invite=... or Invite Code here" class="w-full px-3.5 py-3 rounded-xl bg-[#0e131f] border border-slate-700 text-xs font-mono text-white focus:outline-none focus:border-emerald-400">
+          <label class="block text-xs font-bold text-slate-300 mb-1.5">Avatar Badge Color</label>
+          <div id="avatar-color-picker" class="flex flex-wrap gap-2">
+            <button type="button" data-color="from-yellow-400 to-amber-600" class="avatar-color-btn w-8 h-8 rounded-lg bg-gradient-to-tr from-yellow-400 to-amber-600 ring-2 ring-white"></button>
+            <button type="button" data-color="from-rose-500 to-red-700" class="avatar-color-btn w-8 h-8 rounded-lg bg-gradient-to-tr from-rose-500 to-red-700"></button>
+            <button type="button" data-color="from-sky-400 to-blue-700" class="avatar-color-btn w-8 h-8 rounded-lg bg-gradient-to-tr from-sky-400 to-blue-700"></button>
+            <button type="button" data-color="from-emerald-400 to-green-700" class="avatar-color-btn w-8 h-8 rounded-lg bg-gradient-to-tr from-emerald-400 to-green-700"></button>
+            <button type="button" data-color="from-purple-400 to-indigo-700" class="avatar-color-btn w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-400 to-indigo-700"></button>
+          </div>
         </div>
 
-        <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1.5">Your Trainer Name *</label>
-          <input id="friend-join-name-input" type="text" required maxlength="24" placeholder="e.g., Ash / Misty / Brock" class="w-full px-3.5 py-2.5 rounded-xl bg-[#0e131f] border border-slate-700 text-sm text-white focus:outline-none focus:border-emerald-400">
+        <div class="bg-[#0b101b] p-3 rounded-xl border border-slate-800 text-[11px] text-slate-400">
+          <div class="font-bold text-slate-300 mb-0.5">Trainer ID (Owner Lock Key):</div>
+          <code id="profile-full-uid" class="text-yellow-400 break-all select-all">Signing in...</code>
         </div>
 
-        <button type="submit" class="w-full py-3 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-500/20 transition">
-          Connect to Friend's Live Vault
+        <button type="submit" class="w-full py-3 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-yellow-500/20">
+          Save Trainer Card & Enter Vault
         </button>
-      </form>
-
-      <!-- Panel B: Host 1-Click Firebase Config Importer -->
-      <form id="setup-panel-host" onsubmit="handleHostConfigSubmit(event)" class="hidden mt-5 space-y-4">
-        <div class="bg-[#0e131f] border border-slate-800 rounded-2xl p-4 space-y-2.5 text-xs">
-          <div class="font-extrabold text-yellow-400 uppercase tracking-wider text-[11px]">3-Step Free Setup (Host Only — Friends Never Do This)</div>
-          <ol class="list-decimal list-inside space-y-1.5 text-slate-300">
-            <li>Create a free project at <strong class="text-white">console.firebase.google.com</strong>, enable <strong class="text-yellow-300">Authentication → Anonymous</strong>, and create a <strong class="text-yellow-300">Firestore Database</strong>.</li>
-            <li>
-              Paste our Security Rules into <strong class="text-white">Firestore → Rules</strong>:
-              <button type="button" onclick="copySecurityRules()" class="ml-1.5 px-2.5 py-0.5 rounded bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 font-bold text-[11px]">
-                <i class="fa-regular fa-copy mr-1"></i>Copy Security Rules
-              </button>
-            </li>
-            <li>In <strong class="text-white">Project Settings → Web App (&lt;/&gt;)</strong>, copy the <code class="text-yellow-300">firebaseConfig</code> snippet and paste it straight below:</li>
-          </ol>
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1.5">Paste Firebase Config Snippet (JS Object or JSON) *</label>
-          <textarea id="host-firebase-snippet" rows="5" required placeholder='const firebaseConfig = {
-  apiKey: "AIzaSy...",
-  authDomain: "your-app.firebaseapp.com",
-  projectId: "your-app",
-  appId: "1:123456:web:abcdef"
-};' class="w-full px-3.5 py-2.5 rounded-xl bg-[#0e131f] border border-slate-700 text-xs font-mono text-emerald-300 focus:outline-none focus:border-yellow-400"></textarea>
-        </div>
-
-        <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
-          <button type="button" onclick="clearSavedVaultConfig()" class="px-3.5 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/25 text-xs font-bold">
-            Reset Saved Connection
-          </button>
-          <button type="submit" class="px-6 py-2.5 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-yellow-500/20 transition">
-            Save & Launch Live Vault
-          </button>
-        </div>
       </form>
     </div>
   </div>
 
   <!-- ===================================================================== -->
-  <!-- MODAL 8: MAGIC FRIEND INVITE LINK GENERATOR                           -->
+  <!-- MODAL 6: INVITE FRIENDS (CLEAN PAGE URL SHARE)                        -->
   <!-- ===================================================================== -->
-  <div id="invite-friends-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-    <div class="bg-[#161e31] border border-slate-700 rounded-3xl max-w-lg w-full p-6 shadow-2xl my-auto">
+  <div id="invite-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#141c2e] border border-slate-700 rounded-3xl max-w-lg w-full p-6 shadow-2xl">
       <div class="flex items-center justify-between pb-3 border-b border-slate-800">
         <div class="flex items-center gap-2.5">
           <div class="w-9 h-9 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
             <i class="fa-solid fa-share-nodes"></i>
           </div>
           <div>
-            <h3 class="font-display text-lg font-extrabold text-white">Invite Friends to Your Vault</h3>
-            <p class="text-[11px] text-slate-400">Zero setup for friends — one click connects them live!</p>
+            <h3 class="font-display text-lg font-extrabold text-white">Invite Friends to PokéVault</h3>
+            <p class="text-[11px] text-slate-400">Share this link — everyone connects to the live vault automatically!</p>
           </div>
         </div>
-        <button onclick="closeModal('invite-friends-modal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+        <button type="button" data-close-modal="invite-modal" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
-      <div class="mt-4 space-y-4 text-xs">
-        <div id="invite-local-file-warning" class="hidden bg-amber-500/15 border border-amber-500/35 rounded-xl p-3 text-amber-200 space-y-1">
-          <div class="font-bold text-amber-300"><i class="fa-solid fa-triangle-exclamation mr-1"></i>You are currently viewing a local file (file://)</div>
-          <p class="text-[11px] leading-relaxed">Upload this HTML file (renamed to <code class="text-white">index.html</code>) to <strong>Netlify Drop</strong> or <strong>GitHub Pages</strong> first, open your hosted URL, and copy the Magic Invite Link from there so your friends can open it over the web!</p>
+      <div class="mt-4 space-y-3 text-xs">
+        <label class="block font-bold text-slate-300">Direct Live Vault Link</label>
+        <div class="flex gap-2">
+          <input id="invite-link-input" type="text" readonly class="flex-1 px-3 py-2.5 rounded-xl bg-[#0b101b] border border-slate-700 font-mono text-[11px] text-emerald-300 select-all focus:outline-none">
+          <button type="button" id="btn-copy-invite" class="px-4 py-2.5 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-extrabold shrink-0 transition">
+            <i class="fa-regular fa-copy mr-1"></i>Copy Link
+          </button>
         </div>
-
-        <div>
-          <label class="block font-bold text-slate-300 mb-1.5">1. Magic Friend Invite Link (Recommended)</label>
-          <div class="flex gap-2">
-            <input id="magic-invite-link-output" type="text" readonly class="flex-1 px-3 py-2.5 rounded-xl bg-[#0e131f] border border-slate-700 font-mono text-[11px] text-emerald-300 select-all focus:outline-none">
-            <button onclick="copyTextFromInput('magic-invite-link-output', 'Magic Invite Link copied! Send it to your friends.')" class="px-4 py-2.5 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-extrabold shrink-0 transition">
-              <i class="fa-regular fa-copy mr-1"></i>Copy Link
-            </button>
-          </div>
-          <p class="text-[11px] text-slate-400 mt-1.5">When your friends click this link, it automatically connects their browser to your live Card Vault and asks only for their Trainer Name.</p>
-        </div>
-
-        <div class="pt-2 border-t border-slate-800">
-          <label class="block font-bold text-slate-300 mb-1.5">2. Short Invite Code (Fallback)</label>
-          <div class="flex gap-2">
-            <input id="magic-invite-code-output" type="text" readonly class="flex-1 px-3 py-2 rounded-xl bg-[#0e131f] border border-slate-700 font-mono text-[11px] text-yellow-300 select-all focus:outline-none">
-            <button onclick="copyTextFromInput('magic-invite-code-output', 'Invite Code copied!')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold shrink-0 transition">
-              Copy Code
-            </button>
-          </div>
-        </div>
+        <p class="text-[11px] text-slate-400 leading-relaxed">
+          When your friends open this URL, they are automatically signed into your shared Firebase vault and greeted with a simple <strong>Welcome, Trainer!</strong> prompt to pick their name.
+        </p>
       </div>
 
       <div class="mt-5 flex justify-end">
-        <button onclick="closeModal('invite-friends-modal')" class="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs">Done</button>
+        <button type="button" data-close-modal="invite-modal" class="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs">Done</button>
       </div>
     </div>
   </div>
 
   <!-- ===================================================================== -->
-  <!-- MODAL 9: 1-STEP FRIEND WELCOME ONBOARDING (AUTO-TRIGGERED ON INVITE)  -->
+  <!-- MODAL 7: FIRESTORE SECURITY RULES REFERENCE                           -->
   <!-- ===================================================================== -->
-  <div id="friend-welcome-modal" class="fixed inset-0 z-50 hidden bg-black/88 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="bg-[#161e31] border border-emerald-500/40 rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl text-center">
-      <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-yellow-400 to-amber-500 text-slate-950 flex items-center justify-center text-2xl mx-auto mb-4 shadow-lg shadow-yellow-500/20">
-        <i class="fa-solid fa-id-card-clip"></i>
+  <div id="rules-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-[#141c2e] border border-slate-700 rounded-2xl max-w-2xl w-full p-6 shadow-2xl my-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <h3 class="font-display text-lg font-extrabold text-white">
+          <i class="fa-solid fa-shield-halved text-yellow-400 mr-1.5"></i>Firestore Security Rules (Root Collections)
+        </h3>
+        <button type="button" data-close-modal="rules-modal" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <span class="px-3 py-1 rounded-full text-[11px] font-extrabold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
-        <i class="fa-solid fa-circle-check mr-1"></i>Connected to Friends' Live Vault!
-      </span>
-      <h3 class="font-display text-xl font-extrabold text-white mt-3">Welcome, Trainer!</h3>
-      <p class="text-xs text-slate-400 mt-1.5">Enter your Trainer Name below so your friends see who uploaded your cards and decks.</p>
+      <div class="mt-4 space-y-3 text-xs text-slate-300">
+        <p>These rules enforce that any signed-in friend can view all cards and decks live, while <strong>only the creator/owner</strong> can edit or delete their own cards and decks:</p>
+        <textarea id="rules-textarea" readonly rows="16" class="w-full bg-[#0b101b] p-3.5 rounded-xl border border-slate-800 text-[11px] font-mono text-emerald-300 focus:outline-none select-all">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /cards/{cardId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null
+                    && request.resource.data.ownerId == request.auth.uid;
+      allow update, delete: if request.auth != null
+                            && resource.data.ownerId == request.auth.uid;
+    }
 
-      <form onsubmit="handleFriendWelcomeSubmit(event)" class="mt-5 space-y-4 text-left">
-        <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1">Your Trainer Name *</label>
-          <input id="welcome-trainer-name-input" type="text" required maxlength="24" placeholder="Enter your name..." class="w-full px-4 py-3 rounded-xl bg-[#0e131f] border border-slate-700 text-sm text-white focus:outline-none focus:border-yellow-400">
-        </div>
-        <button type="submit" class="w-full py-3 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-sm shadow-lg shadow-yellow-500/20 transition">
-          Enter Card Vault
+    match /decks/{deckId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null
+                    && request.resource.data.ownerId == request.auth.uid;
+      allow update, delete: if request.auth != null
+                            && resource.data.ownerId == request.auth.uid;
+    }
+
+    match /users/{userId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}</textarea>
+      </div>
+      <div class="mt-4 flex justify-between items-center gap-2">
+        <button type="button" id="btn-copy-rules" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 font-bold text-xs flex items-center gap-1.5">
+          <i class="fa-regular fa-copy"></i>
+          <span>Copy Rules</span>
         </button>
-      </form>
+        <button type="button" data-close-modal="rules-modal" class="px-5 py-2 rounded-xl bg-yellow-400 text-slate-950 font-extrabold text-xs">Close</button>
+      </div>
     </div>
   </div>
 
   <!-- ===================================================================== -->
-  <!-- FIREBASE & APPLICATION SCRIPT                                         -->
+  <!-- APPLICATION LOGIC & PRE-WIRED FIREBASE v11.6.1 MODULE                 -->
   <!-- ===================================================================== -->
   <script type="module">
-    import { initializeApp, getApps, deleteApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-    import {
-      getAuth,
-      signInAnonymously,
-      signInWithCustomToken,
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
     import {
       getFirestore,
       doc,
@@ -891,43 +905,47 @@ service cloud.firestore {
       collection
     } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    const STORAGE_KEY_CONFIG = 'pokevault_firebase_config_v1';
-    const STORAGE_KEY_NAME = 'pokevault_trainer_name_v1';
-    const appId = typeof __app_id !== 'undefined' ? __app_id : 'pokevault-tcg-live';
+    // Pre-wired Firebase Configuration for pokevault-live
+    const firebaseConfig = {
+      apiKey: "AIzaSyA4LNcqEnwEslGwXmyCcxMy0w93X4j1j8I",
+      authDomain: "pokevault-live.firebaseapp.com",
+      projectId: "pokevault-live",
+      storageBucket: "pokevault-live.firebasestorage.app",
+      messagingSenderId: "350335169502",
+      appId: "1:350335169502:web:5b252b1f263bbe4bcb634f"
+    };
 
-    let activeFirebaseConfig = null;
-    let joinedViaMagicInvite = false;
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
 
-    let app = null;
-    let auth = null;
-    let db = null;
+    const STORAGE_KEY_NAME = 'pokevault_trainer_name_v2';
+    const STORAGE_KEY_AVATAR = 'pokevault_trainer_avatar_v2';
 
     const state = {
       user: null,
       displayName: localStorage.getItem(STORAGE_KEY_NAME) || 'Trainer',
+      avatarGradient: localStorage.getItem(STORAGE_KEY_AVATAR) || 'from-yellow-400 to-amber-600',
       cards: [],
       decks: [],
       activeTab: 'vault',
       activeDeckId: null,
       inspectedFriendDeckId: null,
-      uploadMode: 'full-image', // 'full-image' | 'card-maker'
+      uploadMode: 'full-image',
       currentImageDataUrl: ''
     };
 
-    // Authentic Pokémon TCG Energy Type Badges
     const ENERGY_META = {
-      Fire:      { bg: '#ef4444', icon: 'fa-fire',        text: '#fff' },
-      Water:     { bg: '#0ea5e9', icon: 'fa-droplet',     text: '#fff' },
-      Grass:     { bg: '#22c55e', icon: 'fa-leaf',        text: '#fff' },
-      Lightning: { bg: '#eab308', icon: 'fa-bolt',        text: '#111' },
-      Psychic:   { bg: '#a855f7', icon: 'fa-eye',         text: '#fff' },
-      Fighting:  { bg: '#c2410c', icon: 'fa-hand-fist',   text: '#fff' },
-      Darkness:  { bg: '#1e293b', icon: 'fa-moon',        text: '#fff' },
+      Fire:      { bg: '#ef4444', icon: 'fa-fire',          text: '#fff' },
+      Water:     { bg: '#0ea5e9', icon: 'fa-droplet',       text: '#fff' },
+      Grass:     { bg: '#22c55e', icon: 'fa-leaf',          text: '#fff' },
+      Lightning: { bg: '#eab308', icon: 'fa-bolt',          text: '#111' },
+      Psychic:   { bg: '#a855f7', icon: 'fa-eye',           text: '#fff' },
+      Fighting:  { bg: '#c2410c', icon: 'fa-hand-fist',     text: '#fff' },
+      Darkness:  { bg: '#1e293b', icon: 'fa-moon',          text: '#fff' },
       Metal:     { bg: '#64748b', icon: 'fa-shield-halved', text: '#fff' },
-      Fairy:     { bg: '#ec4899', icon: 'fa-sparkles',    text: '#fff' },
-      Dragon:    { bg: '#b45309', icon: 'fa-dragon',      text: '#fff' },
-      Colorless: { bg: '#e2e8f0', icon: 'fa-star-of-life', text: '#111' },
-      Trainer:   { bg: '#2563eb', icon: 'fa-suitcase',    text: '#fff' }
+      Dragon:    { bg: '#b45309', icon: 'fa-dragon',        text: '#fff' },
+      Colorless: { bg: '#e2e8f0', icon: 'fa-star-of-life',  text: '#111' }
     };
 
     function escapeHtml(str) {
@@ -940,8 +958,9 @@ service cloud.firestore {
         .replace(/'/g, '&#039;');
     }
 
-    window.showToast = (message, type = 'info') => {
+    function showToast(message, type = 'info') {
       const container = document.getElementById('toast-container');
+      if (!container) return;
       const toast = document.createElement('div');
       const colors = {
         success: 'bg-emerald-950/95 border-emerald-500/50 text-emerald-200',
@@ -961,13 +980,17 @@ service cloud.firestore {
         toast.style.transform = 'translateY(8px)';
         setTimeout(() => toast.remove(), 300);
       }, 3200);
-    };
+    }
 
-    window.openModal = (id) => document.getElementById(id)?.classList.remove('hidden');
-    window.closeModal = (id) => document.getElementById(id)?.classList.add('hidden');
+    function openModal(id) {
+      document.getElementById(id)?.classList.remove('hidden');
+    }
 
-    // Clipboard helper compatible with both HTTPS and sandboxed iframes
-    window.copyTextSafe = (text, successMsg = 'Copied to clipboard!') => {
+    function closeModal(id) {
+      document.getElementById(id)?.classList.add('hidden');
+    }
+
+    function copyTextSafe(text, successMsg = 'Copied to clipboard!') {
       const ta = document.createElement('textarea');
       ta.value = text;
       ta.style.position = 'fixed';
@@ -978,270 +1001,27 @@ service cloud.firestore {
         document.execCommand('copy');
         showToast(successMsg, 'success');
       } catch (e) {
-        showToast('Could not auto-copy — please select and copy manually.', 'error');
+        showToast('Auto-copy blocked — select the text box and press Ctrl+C / Cmd+C.', 'error');
       }
       ta.remove();
-    };
-
-    window.copyTextFromInput = (inputId, successMsg) => {
-      const el = document.getElementById(inputId);
-      if (!el) return;
-      el.select();
-      copyTextSafe(el.value, successMsg);
-    };
-
-    window.copySecurityRules = () => {
-      const rulesText = document.getElementById('rules-code-block')?.textContent || '';
-      copyTextSafe(rulesText, 'Firestore Security Rules copied!');
-    };
-
-    // -----------------------------------------------------------------------
-    // MAGIC INVITE LINK ENCODER / DECODER & ZERO-CODE CONFIG PARSER
-    // -----------------------------------------------------------------------
-    function encodeInvitePayload(configObj) {
-      const minimal = {
-        apiKey: configObj.apiKey,
-        authDomain: configObj.authDomain,
-        projectId: configObj.projectId,
-        storageBucket: configObj.storageBucket || '',
-        messagingSenderId: configObj.messagingSenderId || '',
-        appId: configObj.appId
-      };
-      const json = JSON.stringify(minimal);
-      return btoa(unescape(encodeURIComponent(json)))
-        .replace(/\+/g, '-')
-        .replace(/\//g, '_')
-        .replace(/=+$/, '');
     }
 
-    function decodeInvitePayload(rawInput) {
-      if (!rawInput) return null;
-      let token = rawInput.trim();
-      const hashMatch = token.match(/#invite=([A-Za-z0-9\-_]+)/);
-      if (hashMatch) {
-        token = hashMatch[1];
-      }
-      try {
-        const b64 = token.replace(/-/g, '+').replace(/_/g, '/');
-        const json = decodeURIComponent(escape(atob(b64)));
-        const parsed = JSON.parse(json);
-        if (parsed && parsed.apiKey && parsed.projectId && parsed.appId) {
-          return parsed;
-        }
-      } catch (e) {
-        return null;
-      }
-      return null;
-    }
-
-    function parseFirebaseSnippet(rawText) {
-      if (!rawText) return null;
-      // 1. Try direct JSON parse first
-      try {
-        const direct = JSON.parse(rawText.trim());
-        if (direct.apiKey && direct.projectId && direct.appId) return direct;
-      } catch (_) {}
-
-      // 2. Extract standard JS keys from pasted `const firebaseConfig = { ... };`
-      const keys = ['apiKey', 'authDomain', 'projectId', 'storageBucket', 'messagingSenderId', 'appId'];
-      const extracted = {};
-      for (const k of keys) {
-        const regex = new RegExp(`["']?${k}["']?\\s*:\\s*["']([^"']+)["']`);
-        const match = rawText.match(regex);
-        if (match && match[1]) {
-          extracted[k] = match[1].trim();
-        }
-      }
-      if (extracted.apiKey && extracted.projectId && extracted.appId) {
-        return extracted;
-      }
-      return null;
-    }
-
-    function resolveInitialFirebaseConfig() {
-      // Priority 1: Magic Friend Invite Link in URL Hash (#invite=...)
-      if (window.location.hash && window.location.hash.includes('invite=')) {
-        const invitedConfig = decodeInvitePayload(window.location.hash);
-        if (invitedConfig) {
-          localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(invitedConfig));
-          joinedViaMagicInvite = true;
-          // Clean hash from address bar so refreshing stays clean
-          try {
-            history.replaceState(null, '', window.location.pathname + window.location.search);
-          } catch (_) {}
-          return invitedConfig;
-        }
-      }
-
-      // Priority 2: Environment-injected Canvas config
-      if (typeof __firebase_config !== 'undefined' && __firebase_config) {
-        try {
-          return JSON.parse(__firebase_config);
-        } catch (_) {}
-      }
-
-      // Priority 3: Previously saved config in localStorage
-      const saved = localStorage.getItem(STORAGE_KEY_CONFIG);
-      if (saved) {
-        try {
-          const parsed = JSON.parse(saved);
-          if (parsed && parsed.apiKey && parsed.projectId) return parsed;
-        } catch (_) {}
-      }
-
-      return null;
-    }
-
-    window.switchSetupTab = (tab) => {
-      const friendBtn = document.getElementById('setup-tab-friend');
-      const hostBtn = document.getElementById('setup-tab-host');
-      const friendPanel = document.getElementById('setup-panel-friend');
-      const hostPanel = document.getElementById('setup-panel-host');
-
-      if (tab === 'friend') {
-        friendBtn.classList.add('bg-emerald-500', 'text-slate-950');
-        friendBtn.classList.remove('text-slate-400');
-        hostBtn.classList.remove('bg-yellow-400', 'text-slate-950');
-        hostBtn.classList.add('text-slate-400');
-        friendPanel.classList.remove('hidden');
-        hostPanel.classList.add('hidden');
-      } else {
-        hostBtn.classList.add('bg-yellow-400', 'text-slate-950');
-        hostBtn.classList.remove('text-slate-400');
-        friendBtn.classList.remove('bg-emerald-500', 'text-slate-950');
-        friendBtn.classList.add('text-slate-400');
-        hostPanel.classList.remove('hidden');
-        friendPanel.classList.add('hidden');
-      }
-    };
-
-    window.openHostSetupModal = (allowClose = true) => {
-      const closeBtn = document.getElementById('close-host-setup-btn');
-      if (allowClose && activeFirebaseConfig) {
-        closeBtn.classList.remove('hidden');
-      } else {
-        closeBtn.classList.add('hidden');
-      }
-      if (activeFirebaseConfig) {
-        document.getElementById('host-firebase-snippet').value = JSON.stringify(activeFirebaseConfig, null, 2);
-      }
-      openModal('host-setup-modal');
-    };
-
-    window.handleFriendInvitePaste = async (e) => {
-      e.preventDefault();
-      const rawInvite = document.getElementById('friend-invite-input').value;
-      const trainerName = document.getElementById('friend-join-name-input').value.trim();
-      const decoded = decodeInvitePayload(rawInvite);
-
-      if (!decoded) {
-        showToast('Invalid Invite Link or Code. Ask your friend to copy their Magic Invite Link again.', 'error');
-        return;
-      }
-
-      if (trainerName) {
-        state.displayName = trainerName;
-        localStorage.setItem(STORAGE_KEY_NAME, trainerName);
-      }
-
-      localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(decoded));
-      activeFirebaseConfig = decoded;
-      closeModal('host-setup-modal');
-      showToast('Invite accepted! Connecting to live vault...', 'success');
-      await connectToFirebase(decoded);
-    };
-
-    window.handleHostConfigSubmit = async (e) => {
-      e.preventDefault();
-      const rawSnippet = document.getElementById('host-firebase-snippet').value;
-      const parsed = parseFirebaseSnippet(rawSnippet);
-
-      if (!parsed) {
-        showToast('Could not detect apiKey, projectId, and appId. Paste the full firebaseConfig object.', 'error');
-        return;
-      }
-
-      localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(parsed));
-      activeFirebaseConfig = parsed;
-      closeModal('host-setup-modal');
-      showToast('Vault configuration saved! Connecting...', 'success');
-      await connectToFirebase(parsed);
-    };
-
-    window.clearSavedVaultConfig = () => {
-      localStorage.removeItem(STORAGE_KEY_CONFIG);
-      activeFirebaseConfig = null;
-      showToast('Saved connection cleared.', 'info');
-      window.location.reload();
-    };
-
-    window.openInviteModal = () => {
-      if (!activeFirebaseConfig) {
-        openHostSetupModal(false);
-        return;
-      }
-
-      const code = encodeInvitePayload(activeFirebaseConfig);
-      const baseUrl = window.location.origin && window.location.origin !== 'null'
-        ? `${window.location.origin}${window.location.pathname}`
-        : window.location.href.split('#')[0];
-      const magicLink = `${baseUrl}#invite=${code}`;
-
-      document.getElementById('magic-invite-link-output').value = magicLink;
-      document.getElementById('magic-invite-code-output').value = code;
-
-      const warnEl = document.getElementById('invite-local-file-warning');
-      if (window.location.protocol === 'file:') {
-        warnEl.classList.remove('hidden');
-      } else {
-        warnEl.classList.add('hidden');
-      }
-
-      openModal('invite-friends-modal');
-    };
-
-    window.handleFriendWelcomeSubmit = async (e) => {
-      e.preventDefault();
-      const name = document.getElementById('welcome-trainer-name-input').value.trim();
-      if (!name) return;
-
-      state.displayName = name;
-      localStorage.setItem(STORAGE_KEY_NAME, name);
-      updateHeaderProfileUI();
-      closeModal('friend-welcome-modal');
-      showToast(`Welcome to the Vault, ${name}!`, 'success');
-
-      if (state.user && db) {
-        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'profiles', state.user.uid), {
-          ownerId: state.user.uid,
-          displayName: name,
-          lastActive: Date.now()
-        }, { merge: true });
-      }
-    };
-
     // -----------------------------------------------------------------------
-    // TRUE-TO-SIZE 2.5" x 3.5" MONITOR DPI CALIBRATOR
+    // MONITOR DPI CALIBRATION (EXACT 2.5" x 3.5" / 5:7 SCALE)
     // -----------------------------------------------------------------------
-    window.updateCardDpiScale = (dpiVal) => {
+    function updateCardDpiScale(dpiVal) {
       const dpi = Number(dpiVal) || 96;
       const scale = dpi / 96;
       document.documentElement.style.setProperty('--dpi-scale', scale.toFixed(4));
       const wPx = Math.round(2.5 * dpi);
       const hPx = Math.round(3.5 * dpi);
       document.getElementById('dpi-readout').textContent = `${dpi} DPI (${wPx}×${hPx}px)`;
-    };
-
-    window.resetDpiScale = () => {
-      const slider = document.getElementById('dpi-slider');
-      slider.value = 96;
-      updateCardDpiScale(96);
-    };
+    }
 
     // -----------------------------------------------------------------------
-    // TAB NAVIGATION
+    // NAVIGATION TABS
     // -----------------------------------------------------------------------
-    window.switchTab = (tabName) => {
+    function switchTab(tabName) {
       state.activeTab = tabName;
       ['vault', 'my-decks', 'friends-decks'].forEach(t => {
         const view = document.getElementById(`view-${t}`);
@@ -1256,116 +1036,84 @@ service cloud.firestore {
           btn?.classList.add('text-slate-300', 'hover:text-white', 'hover:bg-slate-800/70');
         }
       });
-    };
-
-    // -----------------------------------------------------------------------
-    // AUTHENTICATION & REAL-TIME FIRESTORE SYNC (ZERO PREMADE PLACEHOLDERS)
-    // -----------------------------------------------------------------------
-    async function initApp() {
-      activeFirebaseConfig = resolveInitialFirebaseConfig();
-
-      if (!activeFirebaseConfig) {
-        document.getElementById('live-status-text').textContent = 'Setup Needed';
-        openHostSetupModal(false);
-        return;
-      }
-
-      await connectToFirebase(activeFirebaseConfig);
     }
 
-    async function connectToFirebase(configObj) {
-      try {
-        // Clean up any existing Firebase app instance before reconnecting
-        const existingApps = getApps();
-        for (const existing of existingApps) {
-          await deleteApp(existing);
-        }
-
-        app = initializeApp(configObj);
-        auth = getAuth(app);
-        db = getFirestore(app);
-
-        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
-          await signInWithCustomToken(auth, __initial_auth_token);
-        } else {
-          await signInAnonymously(auth);
-        }
-
-        onAuthStateChanged(auth, async (user) => {
-          if (!user) return;
-          state.user = user;
-
-          const savedName = localStorage.getItem(STORAGE_KEY_NAME);
-          state.displayName = savedName || user.displayName || `Trainer_${user.uid.slice(0, 5)}`;
-          updateHeaderProfileUI();
-
-          await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'profiles', user.uid), {
-            ownerId: user.uid,
-            displayName: state.displayName,
-            lastActive: Date.now()
-          }, { merge: true });
-
-          document.getElementById('live-status-text').textContent = 'Live Sync Active';
-          attachRealtimeListeners();
-
-          // If friend just clicked a Magic Invite Link and hasn't set their name yet, show 1-step welcome
-          if (joinedViaMagicInvite && !savedName) {
-            joinedViaMagicInvite = false;
-            openModal('friend-welcome-modal');
-          }
-        });
-      } catch (err) {
-        console.error('Firebase init error:', err);
-        document.getElementById('live-status-text').textContent = 'Connection Error';
-        showToast('Connection failed — verify Anonymous Auth & Firestore are enabled.', 'error');
-        openHostSetupModal(true);
-      }
-    }
-
+    // -----------------------------------------------------------------------
+    // TRAINER PROFILE & HEADER UI
+    // -----------------------------------------------------------------------
     function updateHeaderProfileUI() {
       document.getElementById('user-display-name').textContent = state.displayName;
-      document.getElementById('user-avatar').textContent = state.displayName.slice(0, 2).toUpperCase();
+      const avatarEl = document.getElementById('user-avatar');
+      avatarEl.textContent = state.displayName.slice(0, 2).toUpperCase();
+      avatarEl.className = `w-7 h-7 rounded-lg bg-gradient-to-tr ${state.avatarGradient} flex items-center justify-center text-xs font-extrabold text-slate-950 uppercase`;
     }
 
-    window.openProfileModal = () => {
-      if (!state.user) return;
-      document.getElementById('profile-name-input').value = state.displayName;
-      document.getElementById('profile-full-uid').textContent = state.user.uid;
+    function openProfileModal(isFirstVisit = false) {
+      document.getElementById('profile-modal-heading').textContent = isFirstVisit ? 'Welcome, Trainer!' : 'Edit Trainer Card';
+      document.getElementById('profile-name-input').value = isFirstVisit ? '' : state.displayName;
+      document.getElementById('profile-full-uid').textContent = state.user ? state.user.uid : 'Connecting...';
+
+      document.querySelectorAll('.avatar-color-btn').forEach(btn => {
+        if (btn.dataset.color === state.avatarGradient) {
+          btn.classList.add('ring-2', 'ring-white');
+        } else {
+          btn.classList.remove('ring-2', 'ring-white');
+        }
+      });
+
       openModal('profile-modal');
-    };
+    }
 
-    window.handleSaveProfile = async (e) => {
-      e.preventDefault();
-      if (!state.user || !db) return;
-      const newName = document.getElementById('profile-name-input').value.trim();
-      if (!newName) return;
-
-      state.displayName = newName;
-      localStorage.setItem(STORAGE_KEY_NAME, newName);
-      updateHeaderProfileUI();
-
-      await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'profiles', state.user.uid), {
-        ownerId: state.user.uid,
-        displayName: newName,
-        lastActive: Date.now()
-      }, { merge: true });
-
-      const myDecks = state.decks.filter(d => d.ownerId === state.user.uid);
-      for (const deck of myDecks) {
-        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'decks', deck.id), {
-          ownerName: newName
-        });
+    // -----------------------------------------------------------------------
+    // FIREBASE AUTH & REAL-TIME ROOT COLLECTIONS (cards, decks, users)
+    // -----------------------------------------------------------------------
+    async function initFirebaseLive() {
+      try {
+        await signInAnonymously(auth);
+      } catch (err) {
+        console.error('Anonymous sign-in failed:', err);
+        document.getElementById('live-status-text').textContent = 'Auth Error';
+        showToast('Sign-in failed. Check Firebase Anonymous Auth & Authorized Domains.', 'error');
       }
 
-      closeModal('profile-modal');
-      showToast(`Trainer name updated to "${newName}"!`, 'success');
-    };
+      onAuthStateChanged(auth, async (user) => {
+        if (!user) return;
+        state.user = user;
+
+        const savedName = localStorage.getItem(STORAGE_KEY_NAME);
+        state.displayName = savedName || `Trainer_${user.uid.slice(0, 5)}`;
+        updateHeaderProfileUI();
+
+        try {
+          await setDoc(doc(db, 'users', user.uid), {
+            uid: user.uid,
+            displayName: state.displayName,
+            avatarGradient: state.avatarGradient,
+            lastActive: Date.now()
+          }, { merge: true });
+        } catch (err) {
+          console.error('Profile write error:', err);
+        }
+
+        const pill = document.getElementById('live-status-pill');
+        pill.className = 'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/25';
+        document.getElementById('live-status-dot').className = 'w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse';
+        document.getElementById('live-status-text').textContent = 'Live Sync';
+
+        attachRealtimeListeners();
+
+        // Friendly 1-step welcome modal on first visit
+        if (!savedName) {
+          openProfileModal(true);
+        }
+      });
+    }
 
     function attachRealtimeListeners() {
-      if (!state.user || !db) return;
+      if (!state.user) return;
 
-      // 1. Live Uploaded Cards Listener (No premade cards seeded!)
-      onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'cards'), (snapshot) => {
+      // 1. Live Cards Collection (/cards)
+      onSnapshot(collection(db, 'cards'), (snapshot) => {
         const list = [];
         snapshot.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
         list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
@@ -1377,10 +1125,11 @@ service cloud.firestore {
         if (state.inspectedFriendDeckId) openFriendDeckInspector(state.inspectedFriendDeckId, true);
       }, (err) => {
         console.error('Cards listener error:', err);
+        showToast('Error syncing cards: ' + err.message, 'error');
       });
 
-      // 2. Live Decks Listener
-      onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'decks'), (snapshot) => {
+      // 2. Live Decks Collection (/decks)
+      onSnapshot(collection(db, 'decks'), (snapshot) => {
         const list = [];
         snapshot.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
         list.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
@@ -1398,9 +1147,9 @@ service cloud.firestore {
           const count = Object.values(latest.cards || {}).reduce((s, q) => s + q, 0);
           ticker.textContent = `${latest.ownerName || 'A Trainer'} updated "${latest.name}" (${count} cards)`;
         } else if (state.cards.length > 0) {
-          ticker.textContent = `${state.cards.length} custom card(s) uploaded to the live Vault!`;
+          ticker.textContent = `${state.cards.length} custom card(s) live in the Card Vault!`;
         } else {
-          ticker.textContent = 'Vault is empty — click "Upload Card Image" or "Design Custom Card" to begin!';
+          ticker.textContent = 'Vault ready — upload your first custom card to share live with friends!';
         }
 
         renderMyDecks();
@@ -1423,11 +1172,12 @@ service cloud.firestore {
         }
       }, (err) => {
         console.error('Decks listener error:', err);
+        showToast('Error syncing decks: ' + err.message, 'error');
       });
     }
 
     // -----------------------------------------------------------------------
-    // TRUE-TO-SIZE POKÉMON TCG CARD RENDERER (2.5" x 3.5" / 5:7 RATIO)
+    // TRUE-TO-SIZE 2.5" x 3.5" POKÉMON TCG CARD RENDERER
     // -----------------------------------------------------------------------
     function renderEnergyPip(type, sizeEm = 1) {
       const meta = ENERGY_META[type] || ENERGY_META.Colorless;
@@ -1446,6 +1196,16 @@ service cloud.firestore {
       return '●';
     }
 
+    function getBorderClassForCard(card) {
+      if (card.borderStyle === 'silver-holo') return 'border-silver-holo';
+      if (card.borderStyle === 'gold-ultra') return 'border-gold-ultra';
+      if (!card.borderStyle) {
+        if (card.rarity === 'Ultra Rare') return 'border-gold-ultra';
+        if (card.rarity === 'Rare Holo') return 'border-silver-holo';
+      }
+      return 'border-classic-yellow';
+    }
+
     function buildPokemonCardHTML(card, options = {}) {
       const {
         showOwnerControls = false,
@@ -1455,19 +1215,14 @@ service cloud.firestore {
 
       const isMine = state.user && card.ownerId === state.user.uid;
       const isHolo = card.rarity === 'Rare Holo' || card.rarity === 'Ultra Rare';
-      const borderClass = card.borderStyle === 'silver-holo'
-        ? 'border-silver-holo'
-        : card.borderStyle === 'gold-ultra'
-          ? 'border-gold-ultra'
-          : 'border-classic-yellow';
+      const borderClass = getBorderClassForCard(card);
+      const zoomAttr = disableClickZoom ? '' : `data-zoom-card-id="${escapeHtml(card.id)}"`;
 
-      const clickAttr = disableClickZoom ? '' : `onclick="zoomCard('${card.id}')"`;
-
-      // Mode A: Full Custom Card Image Upload (renders user's uploaded card image edge-to-edge inside 2.5"x3.5" card frame)
+      // Mode 1: Full Custom Card Image Upload
       if (card.uploadMode === 'full-image' && card.imageUrl) {
         return `
           <div class="flex flex-col items-center gap-2">
-            <div ${clickAttr} class="pkmn-card-outer ${borderClass} ${isHolo ? 'holo-shimmer' : ''} cursor-pointer group">
+            <div ${zoomAttr} class="pkmn-card-outer ${borderClass} ${isHolo ? 'holo-shimmer' : ''} ${disableClickZoom ? '' : 'card-zoom-trigger cursor-pointer'}">
               <div class="pkmn-card-inner bg-slate-950 !p-0">
                 <img src="${escapeHtml(card.imageUrl)}" alt="${escapeHtml(card.name)}" class="full-art-card-img">
                 ${quantityBadge !== null ? `
@@ -1479,17 +1234,16 @@ service cloud.firestore {
               </div>
             </div>
 
-            <!-- Subtle Caption & Owner Actions Below Physical Card -->
             <div style="width: var(--card-w);" class="flex items-center justify-between px-1 text-[11px]">
               <div class="truncate text-slate-300 font-semibold" title="${escapeHtml(card.name)}">
                 ${escapeHtml(card.name)} <span class="text-slate-500 font-normal">• ${escapeHtml(card.creatorName || 'Trainer')}</span>
               </div>
               ${showOwnerControls && isMine ? `
                 <div class="flex items-center gap-1 shrink-0">
-                  <button onclick="openEditCardModal('${card.id}')" class="p-1 text-slate-400 hover:text-yellow-400 transition" title="Edit Card">
+                  <button type="button" data-edit-card-id="${escapeHtml(card.id)}" class="btn-edit-card p-1 text-slate-400 hover:text-yellow-400 transition" title="Edit Card">
                     <i class="fa-solid fa-pen"></i>
                   </button>
-                  <button onclick="deleteCard('${card.id}')" class="p-1 text-slate-400 hover:text-rose-400 transition" title="Delete Card">
+                  <button type="button" data-delete-card-id="${escapeHtml(card.id)}" class="btn-delete-card p-1 text-slate-400 hover:text-rose-400 transition" title="Delete Card">
                     <i class="fa-solid fa-trash"></i>
                   </button>
                 </div>
@@ -1499,7 +1253,7 @@ service cloud.firestore {
         `;
       }
 
-      // Mode B: Authentic Pokémon TCG Structured Card Layout (2.5" x 3.5" proportional scaling)
+      // Mode 2: Structured Pokémon TCG Card Layout
       const isDarkText = card.type === 'Darkness' || card.type === 'Dragon';
       const atk1CostCount = Math.max(0, Number(card.atk1Cost) || 0);
       const atk2CostCount = Math.max(0, Number(card.atk2Cost) || 0);
@@ -1519,7 +1273,7 @@ service cloud.firestore {
 
       return `
         <div class="flex flex-col items-center gap-2">
-          <div ${clickAttr} class="pkmn-card-outer ${borderClass} ${isHolo ? 'holo-shimmer' : ''} cursor-pointer">
+          <div ${zoomAttr} class="pkmn-card-outer ${borderClass} ${isHolo ? 'holo-shimmer' : ''} ${disableClickZoom ? '' : 'card-zoom-trigger cursor-pointer'}">
             <div class="pkmn-card-inner type-theme-${escapeHtml(card.type || 'Fire')}">
               ${quantityBadge !== null ? `
                 <span style="font-size:calc(11px * var(--card-font-scale)); padding:calc(2px * var(--card-font-scale)) calc(7px * var(--card-font-scale));"
@@ -1528,12 +1282,11 @@ service cloud.firestore {
                 </span>
               ` : ''}
 
-              <!-- TOP HEADER: Stage Pill + Name + HP + Energy Icon -->
               <div>
                 <div class="flex items-center justify-between gap-1 mb-0.5">
                   <div class="flex items-center gap-1 min-w-0">
                     <span style="font-size:calc(6.5px * var(--card-font-scale)); padding:calc(1px * var(--card-font-scale)) calc(4px * var(--card-font-scale));"
-                          class="rounded font-black uppercase tracking-tight bg-gradient-to-b from-slate-100 to-slate-300 text-slate-900 border border-slate-500/60 shadow-xs shrink-0">
+                          class="rounded font-black uppercase tracking-tight bg-gradient-to-b from-slate-100 to-slate-300 text-slate-900 border border-slate-500/60 shrink-0">
                       ${escapeHtml(card.stage || 'BASIC')}
                     </span>
                     <span style="font-size:calc(11.5px * var(--card-font-scale));"
@@ -1543,7 +1296,7 @@ service cloud.firestore {
                   </div>
 
                   <div class="flex items-center gap-1 shrink-0">
-                    ${card.type !== 'Trainer' ? `
+                    ${card.stage !== 'TRAINER' && card.stage !== 'ENERGY' ? `
                       <div class="flex items-baseline">
                         <span style="font-size:calc(6.5px * var(--card-font-scale));" class="font-extrabold mr-0.5 ${isDarkText ? 'text-rose-300' : 'text-rose-700'}">HP</span>
                         <span style="font-size:calc(12px * var(--card-font-scale));" class="font-black leading-none ${isDarkText ? 'text-white' : 'text-slate-950'}">${Number(card.hp) || 100}</span>
@@ -1553,26 +1306,26 @@ service cloud.firestore {
                   </div>
                 </div>
 
-                <!-- FRAMED ARTWORK WINDOW (Metallic Bevel) -->
+                <!-- Artwork Frame -->
                 <div style="height:calc(126px * var(--card-font-scale)); border-width:calc(2.5px * var(--card-font-scale));"
                      class="w-full rounded-sm border-slate-300/90 bg-slate-950 overflow-hidden shadow-inner relative">
                   ${card.imageUrl
                     ? `<img src="${escapeHtml(card.imageUrl)}" alt="${escapeHtml(card.name)}" class="w-full h-full object-cover">`
                     : `<div class="w-full h-full flex flex-col items-center justify-center text-slate-500 bg-slate-900">
                          <i style="font-size:calc(18px * var(--card-font-scale));" class="fa-regular fa-image mb-1"></i>
-                         <span style="font-size:calc(8px * var(--card-font-scale));">No Artwork Uploaded</span>
+                         <span style="font-size:calc(8px * var(--card-font-scale));">Upload Artwork</span>
                        </div>`
                   }
                 </div>
 
-                <!-- DEX / SPEC STRIP UNDER ARTWORK -->
+                <!-- Pokédex Spec Strip -->
                 <div style="font-size:calc(6px * var(--card-font-scale)); padding:calc(1.5px * var(--card-font-scale)) calc(4px * var(--card-font-scale)); margin-top:calc(2px * var(--card-font-scale));"
                      class="w-full bg-gradient-to-r from-slate-200 via-white to-slate-200 text-slate-800 font-bold text-center rounded-xs border border-slate-400/60 truncate">
                   ${escapeHtml(card.specLine || 'Custom TCG Edition')}
                 </div>
               </div>
 
-              <!-- MIDDLE: ABILITY & ATTACKS SECTION -->
+              <!-- Ability & Attacks -->
               <div class="flex-1 flex flex-col justify-center gap-1.5 my-1 overflow-hidden">
                 ${card.abilityName ? `
                   <div style="padding:calc(2px * var(--card-font-scale)) calc(3px * var(--card-font-scale));"
@@ -1588,7 +1341,6 @@ service cloud.firestore {
                   </div>
                 ` : ''}
 
-                <!-- Primary Attack -->
                 ${card.atk1Name ? `
                   <div style="padding:calc(2px * var(--card-font-scale)) calc(2px * var(--card-font-scale));">
                     <div class="flex items-center justify-between gap-1">
@@ -1607,7 +1359,6 @@ service cloud.firestore {
                   </div>
                 ` : ''}
 
-                <!-- Secondary Attack -->
                 ${(card.atk2Name && atk2CostCount > 0) ? `
                   <div style="padding:calc(2px * var(--card-font-scale)) calc(2px * var(--card-font-scale));"
                        class="border-t border-black/15 pt-1">
@@ -1628,7 +1379,7 @@ service cloud.firestore {
                 ` : ''}
               </div>
 
-              <!-- BOTTOM: WEAKNESS / RESISTANCE / RETREAT BAR + FLAVOR + ILLUSTRATOR -->
+              <!-- Footer Bar -->
               <div>
                 <div style="font-size:calc(6.5px * var(--card-font-scale)); padding:calc(2px * var(--card-font-scale)) calc(5px * var(--card-font-scale));"
                      class="w-full rounded-full bg-white/75 text-slate-900 font-bold flex items-center justify-between border border-black/15">
@@ -1662,15 +1413,14 @@ service cloud.firestore {
             </div>
           </div>
 
-          <!-- Owner Controls Below Card -->
           <div style="width: var(--card-w);" class="flex items-center justify-between px-1 text-[11px]">
             <span class="truncate text-slate-400">by <strong class="text-slate-200">${escapeHtml(card.creatorName || 'Trainer')}</strong></span>
             ${showOwnerControls && isMine ? `
               <div class="flex items-center gap-1.5 shrink-0">
-                <button onclick="openEditCardModal('${card.id}')" class="p-1 text-slate-400 hover:text-yellow-400 transition" title="Edit Card">
+                <button type="button" data-edit-card-id="${escapeHtml(card.id)}" class="btn-edit-card p-1 text-slate-400 hover:text-yellow-400 transition" title="Edit Card">
                   <i class="fa-solid fa-pen"></i>
                 </button>
-                <button onclick="deleteCard('${card.id}')" class="p-1 text-slate-400 hover:text-rose-400 transition" title="Delete Card">
+                <button type="button" data-delete-card-id="${escapeHtml(card.id)}" class="btn-delete-card p-1 text-slate-400 hover:text-rose-400 transition" title="Delete Card">
                   <i class="fa-solid fa-trash"></i>
                 </button>
               </div>
@@ -1680,17 +1430,17 @@ service cloud.firestore {
       `;
     }
 
-    window.zoomCard = (cardId) => {
+    function zoomCard(cardId) {
       const card = state.cards.find(c => c.id === cardId);
       if (!card) return;
       document.getElementById('card-zoom-content').innerHTML = buildPokemonCardHTML(card, { disableClickZoom: true });
       openModal('card-zoom-modal');
-    };
+    }
 
     // -----------------------------------------------------------------------
-    // VAULT RENDERING (NO PREMADE PLACEHOLDERS — CLEAN UPLOAD PROMPT)
+    // VAULT VIEW RENDERING (EMPTY STATE WHEN NO CARDS UPLOADED YET)
     // -----------------------------------------------------------------------
-    window.renderVault = () => {
+    function renderVault() {
       const grid = document.getElementById('vault-grid');
       if (!grid) return;
 
@@ -1700,26 +1450,28 @@ service cloud.firestore {
 
       if (state.cards.length === 0) {
         grid.innerHTML = `
-          <div class="w-full bg-[#161e31]/90 border-2 border-dashed border-slate-700 rounded-3xl p-10 sm:p-14 text-center flex flex-col items-center">
+          <div class="w-full bg-[#141c2e]/90 border-2 border-dashed border-slate-700 rounded-3xl p-10 sm:p-14 text-center flex flex-col items-center">
             <div class="w-16 h-16 rounded-2xl bg-yellow-400/15 border border-yellow-400/30 text-yellow-400 flex items-center justify-center text-2xl mb-4">
               <i class="fa-solid fa-cloud-arrow-up"></i>
             </div>
-            <h3 class="font-display text-xl font-extrabold text-white">Your Shared Card Vault is Empty</h3>
+            <h3 class="font-display text-xl font-extrabold text-white">Your Shared Card Vault is Ready</h3>
             <p class="text-xs sm:text-sm text-slate-400 max-w-lg mt-2 leading-relaxed">
-              No premade placeholder cards here! Upload your own custom Pokémon-style card images or build cards from scratch—every card appears live in true <strong class="text-yellow-400">2.5" × 3.5"</strong> TCG dimensions for you and your friends.
+              No premade placeholder cards! Upload your own custom card images or design custom Pokémon-style cards—every card appears live in true <strong class="text-yellow-400">2.5" × 3.5"</strong> TCG dimensions for you and your friends.
             </p>
             <div class="flex flex-wrap justify-center gap-3 mt-6">
-              <button onclick="openUploadModal('full-image')" class="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-yellow-300 border border-yellow-400/30 font-bold text-xs sm:text-sm transition flex items-center gap-2">
+              <button type="button" id="empty-btn-full-image" class="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-yellow-300 border border-yellow-400/30 font-bold text-xs sm:text-sm transition flex items-center gap-2">
                 <i class="fa-solid fa-file-image"></i>
                 <span>Upload Full Card Image</span>
               </button>
-              <button onclick="openUploadModal('card-maker')" class="px-5 py-3 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-yellow-500/20 transition flex items-center gap-2">
+              <button type="button" id="empty-btn-card-maker" class="px-5 py-3 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-yellow-500/20 transition flex items-center gap-2">
                 <i class="fa-solid fa-wand-magic-sparkles"></i>
                 <span>Design Custom Pokémon Card</span>
               </button>
             </div>
           </div>
         `;
+        document.getElementById('empty-btn-full-image')?.addEventListener('click', () => openUploadModal('full-image'));
+        document.getElementById('empty-btn-card-maker')?.addEventListener('click', () => openUploadModal('card-maker'));
         return;
       }
 
@@ -1736,7 +1488,7 @@ service cloud.firestore {
 
       if (filtered.length === 0) {
         grid.innerHTML = `
-          <div class="w-full bg-[#161e31] border border-slate-800 rounded-2xl p-10 text-center">
+          <div class="w-full bg-[#141c2e] border border-slate-800 rounded-2xl p-10 text-center">
             <p class="text-sm font-bold text-white">No uploaded cards match your current filter.</p>
           </div>
         `;
@@ -1744,12 +1496,12 @@ service cloud.firestore {
       }
 
       grid.innerHTML = filtered.map(card => buildPokemonCardHTML(card, { showOwnerControls: true })).join('');
-    };
+    }
 
     // -----------------------------------------------------------------------
-    // CUSTOM CARD UPLOAD MODAL & LIVE 2.5" x 3.5" PREVIEW
+    // CUSTOM CARD UPLOAD MODAL & LIVE PREVIEW
     // -----------------------------------------------------------------------
-    window.setUploadMode = (mode) => {
+    function setUploadMode(mode) {
       state.uploadMode = mode;
       const btnFull = document.getElementById('mode-btn-full-image');
       const btnMaker = document.getElementById('mode-btn-card-maker');
@@ -1762,19 +1514,19 @@ service cloud.firestore {
         btnMaker.classList.remove('bg-yellow-400', 'text-slate-950');
         btnMaker.classList.add('text-slate-400');
         extraFields.classList.add('hidden');
-        zoneTitle.textContent = 'Upload Full Custom Card Image (2.5" × 3.5" Ratio)';
+        zoneTitle.textContent = 'Click or Drag & Drop Your Full Card Image (2.5" × 3.5" Ratio)';
       } else {
         btnMaker.classList.add('bg-yellow-400', 'text-slate-950');
         btnMaker.classList.remove('text-slate-400');
         btnFull.classList.remove('bg-yellow-400', 'text-slate-950');
         btnFull.classList.add('text-slate-400');
         extraFields.classList.remove('hidden');
-        zoneTitle.textContent = 'Upload Custom Pokémon Artwork for Card Frame';
+        zoneTitle.textContent = 'Click or Drag & Drop Artwork for Your Custom Card';
       }
       updateLiveCardPreview();
-    };
+    }
 
-    window.openUploadModal = (mode = 'full-image') => {
+    function openUploadModal(mode = 'full-image') {
       document.getElementById('upload-modal-heading').textContent = 'Upload Custom Card to Live Vault';
       document.getElementById('publish-card-btn').textContent = 'Publish Card to Live Vault';
       document.getElementById('edit-card-id').value = '';
@@ -1782,9 +1534,9 @@ service cloud.firestore {
       state.currentImageDataUrl = '';
       setUploadMode(mode);
       openModal('card-upload-modal');
-    };
+    }
 
-    window.openEditCardModal = (cardId) => {
+    function openEditCardModal(cardId) {
       const card = state.cards.find(c => c.id === cardId);
       if (!card || card.ownerId !== state.user?.uid) {
         showToast('Only the card creator can edit this card.', 'error');
@@ -1820,9 +1572,8 @@ service cloud.firestore {
 
       setUploadMode(card.uploadMode || 'card-maker');
       openModal('card-upload-modal');
-    };
+    }
 
-    // Compress uploaded file via HTML5 Canvas so it fits cleanly inside Firestore (< 350KB)
     function processImageFile(file) {
       if (!file || !file.type.startsWith('image/')) {
         showToast('Please select a valid PNG, JPG, or WEBP image file.', 'error');
@@ -1834,7 +1585,6 @@ service cloud.firestore {
         const img = new Image();
         img.onload = () => {
           const canvas = document.createElement('canvas');
-          // Full card images get higher resolution (500x700 = exact 5:7 ratio); artwork gets 480px max width
           const maxDim = state.uploadMode === 'full-image' ? 700 : 480;
           const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
           canvas.width = Math.round(img.width * scale);
@@ -1842,14 +1592,11 @@ service cloud.firestore {
 
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
           state.currentImageDataUrl = canvas.toDataURL('image/jpeg', 0.82);
 
-          // Auto-fill card name from filename if blank
           const nameInput = document.getElementById('field-name');
           if (!nameInput.value.trim()) {
-            const cleanName = file.name.replace(/\.[^/.]+$/, '').replace(/[_-]+/g, ' ').slice(0, 30);
-            nameInput.value = cleanName;
+            nameInput.value = file.name.replace(/\.[^/.]+$/, '').replace(/[_-]+/g, ' ').slice(0, 30);
           }
 
           updateLiveCardPreview();
@@ -1858,29 +1605,6 @@ service cloud.firestore {
         img.src = e.target.result;
       };
       reader.readAsDataURL(file);
-    }
-
-    window.handleCardImageSelect = (event) => {
-      const file = event.target.files?.[0];
-      if (file) processImageFile(file);
-    };
-
-    // Drag & Drop support on the upload box
-    const dropZone = document.getElementById('drop-zone');
-    if (dropZone) {
-      dropZone.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        dropZone.classList.add('border-yellow-400', 'bg-slate-900');
-      });
-      dropZone.addEventListener('dragleave', () => {
-        dropZone.classList.remove('border-yellow-400', 'bg-slate-900');
-      });
-      dropZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropZone.classList.remove('border-yellow-400', 'bg-slate-900');
-        const file = e.dataTransfer?.files?.[0];
-        if (file) processImageFile(file);
-      });
     }
 
     function collectFormCardData() {
@@ -1912,16 +1636,18 @@ service cloud.firestore {
       };
     }
 
-    window.updateLiveCardPreview = () => {
+    function updateLiveCardPreview() {
       const previewSlot = document.getElementById('live-card-preview-slot');
       if (!previewSlot) return;
-      const draftCard = collectFormCardData();
-      previewSlot.innerHTML = buildPokemonCardHTML(draftCard, { disableClickZoom: true });
-    };
+      previewSlot.innerHTML = buildPokemonCardHTML(collectFormCardData(), { disableClickZoom: true });
+    }
 
-    window.handlePublishCard = async (e) => {
+    async function handlePublishCard(e) {
       e.preventDefault();
-      if (!state.user || !db) return;
+      if (!state.user) {
+        showToast('Still connecting to Firebase — try again in a second.', 'info');
+        return;
+      }
 
       const data = collectFormCardData();
       if (!data.imageUrl) {
@@ -1938,10 +1664,10 @@ service cloud.firestore {
             showToast('Unauthorized: Only the creator can edit this card.', 'error');
             return;
           }
-          await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cards', editId), data);
+          await updateDoc(doc(db, 'cards', editId), data);
           showToast(`Updated "${data.name}" live!`, 'success');
         } else {
-          await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'cards'), {
+          await addDoc(collection(db, 'cards'), {
             ...data,
             ownerId: state.user.uid,
             createdAt: Date.now()
@@ -1953,37 +1679,42 @@ service cloud.firestore {
         console.error('Publish card error:', err);
         showToast('Upload failed: ' + err.message, 'error');
       }
-    };
+    }
 
-    window.deleteCard = async (cardId) => {
-      if (!state.user || !db) return;
+    async function deleteCard(cardId) {
+      if (!state.user) return;
       const card = state.cards.find(c => c.id === cardId);
       if (!card || card.ownerId !== state.user.uid) {
         showToast('Only the creator can delete this card.', 'error');
         return;
       }
-      await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cards', cardId));
-      showToast(`Deleted "${card.name}".`, 'info');
-    };
+      try {
+        await deleteDoc(doc(db, 'cards', cardId));
+        showToast(`Deleted "${card.name}".`, 'info');
+      } catch (err) {
+        showToast('Delete failed: ' + err.message, 'error');
+      }
+    }
 
     // -----------------------------------------------------------------------
     // MY DECKS & OWNER-ONLY DECK BUILDER
     // -----------------------------------------------------------------------
-    window.renderMyDecks = () => {
+    function renderMyDecks() {
       const container = document.getElementById('my-decks-list');
       if (!container || !state.user) return;
 
       const myDecks = state.decks.filter(d => d.ownerId === state.user.uid);
       if (myDecks.length === 0) {
         container.innerHTML = `
-          <div class="col-span-full bg-[#161e31] border border-dashed border-slate-700 rounded-2xl p-8 text-center">
+          <div class="col-span-full bg-[#141c2e] border border-dashed border-slate-700 rounded-2xl p-8 text-center">
             <h3 class="font-display text-base font-bold text-white">No Decks Created Yet</h3>
-            <p class="text-xs text-slate-400 mt-1 mb-4">Create your specialized deck and add your uploaded cards.</p>
-            <button onclick="openCreateDeckModal()" class="px-4 py-2 rounded-xl bg-yellow-400 text-slate-950 font-extrabold text-xs">
+            <p class="text-xs text-slate-400 mt-1 mb-4">Create your specialized deck and add uploaded cards from the shared Vault.</p>
+            <button type="button" id="empty-create-deck-btn" class="px-4 py-2 rounded-xl bg-yellow-400 text-slate-950 font-extrabold text-xs">
               + Create First Deck
             </button>
           </div>
         `;
+        document.getElementById('empty-create-deck-btn')?.addEventListener('click', openCreateDeckModal);
         return;
       }
 
@@ -1991,7 +1722,7 @@ service cloud.firestore {
         const totalCards = Object.values(deck.cards || {}).reduce((s, q) => s + q, 0);
         const isSelected = state.activeDeckId === deck.id;
         return `
-          <div onclick="selectDeckForBuilding('${deck.id}')" class="cursor-pointer rounded-2xl bg-[#161e31] border ${isSelected ? 'border-yellow-400 ring-2 ring-yellow-400/25' : 'border-slate-800 hover:border-slate-600'} p-4 transition">
+          <div data-select-deck-id="${escapeHtml(deck.id)}" class="btn-select-deck cursor-pointer rounded-2xl bg-[#141c2e] border ${isSelected ? 'border-yellow-400 ring-2 ring-yellow-400/25' : 'border-slate-800 hover:border-slate-600'} p-4 transition">
             <div class="flex items-center justify-between gap-2">
               <h4 class="font-display font-extrabold text-sm text-white truncate">${escapeHtml(deck.name)}</h4>
               <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-yellow-400/15 text-yellow-300 shrink-0">${totalCards} Cards</span>
@@ -2001,18 +1732,18 @@ service cloud.firestore {
           </div>
         `;
       }).join('');
-    };
+    }
 
-    window.openCreateDeckModal = () => {
+    function openCreateDeckModal() {
       document.getElementById('deck-meta-modal-title').textContent = 'Create New Deck';
       document.getElementById('deck-meta-mode').value = 'create';
       document.getElementById('deck-meta-name').value = '';
       document.getElementById('deck-meta-format').value = 'Standard 60-Card';
       document.getElementById('deck-meta-desc').value = '';
       openModal('deck-meta-modal');
-    };
+    }
 
-    window.openEditDeckMetaModal = () => {
+    function openEditDeckMetaModal() {
       const deck = state.decks.find(d => d.id === state.activeDeckId);
       if (!deck || deck.ownerId !== state.user?.uid) return;
       document.getElementById('deck-meta-modal-title').textContent = 'Deck Settings';
@@ -2021,80 +1752,91 @@ service cloud.firestore {
       document.getElementById('deck-meta-format').value = deck.format || 'Standard 60-Card';
       document.getElementById('deck-meta-desc').value = deck.description || '';
       openModal('deck-meta-modal');
-    };
+    }
 
-    window.handleSaveDeckMeta = async (e) => {
+    async function handleSaveDeckMeta(e) {
       e.preventDefault();
-      if (!state.user || !db) return;
+      if (!state.user) return;
 
       const mode = document.getElementById('deck-meta-mode').value;
       const name = document.getElementById('deck-meta-name').value.trim();
       const format = document.getElementById('deck-meta-format').value;
       const description = document.getElementById('deck-meta-desc').value.trim();
 
-      if (mode === 'edit' && state.activeDeckId) {
-        const deck = state.decks.find(d => d.id === state.activeDeckId);
-        if (!deck || deck.ownerId !== state.user.uid) return;
-        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'decks', deck.id), {
-          name, format, description, updatedAt: Date.now()
-        });
-        showToast('Deck updated!', 'success');
-      } else {
-        const docRef = await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'decks'), {
-          name,
-          format,
-          description,
-          ownerId: state.user.uid,
-          ownerName: state.displayName,
-          cards: {},
-          updatedAt: Date.now()
-        });
-        state.activeDeckId = docRef.id;
-        showToast(`Created deck "${name}"!`, 'success');
+      try {
+        if (mode === 'edit' && state.activeDeckId) {
+          const deck = state.decks.find(d => d.id === state.activeDeckId);
+          if (!deck || deck.ownerId !== state.user.uid) return;
+          await updateDoc(doc(db, 'decks', deck.id), {
+            name, format, description, updatedAt: Date.now()
+          });
+          showToast('Deck updated!', 'success');
+        } else {
+          const docRef = await addDoc(collection(db, 'decks'), {
+            name,
+            format,
+            description,
+            ownerId: state.user.uid,
+            ownerName: state.displayName,
+            cards: {},
+            updatedAt: Date.now()
+          });
+          state.activeDeckId = docRef.id;
+          showToast(`Created deck "${name}"!`, 'success');
+        }
+        closeModal('deck-meta-modal');
+      } catch (err) {
+        showToast('Could not save deck: ' + err.message, 'error');
       }
-      closeModal('deck-meta-modal');
-    };
+    }
 
-    window.selectDeckForBuilding = (deckId) => {
+    function selectDeckForBuilding(deckId) {
       const deck = state.decks.find(d => d.id === deckId);
       if (!deck || deck.ownerId !== state.user?.uid) return;
       state.activeDeckId = deckId;
       renderMyDecks();
       renderDeckBuilder();
       document.getElementById('deck-builder-workspace').scrollIntoView({ behavior: 'smooth', block: 'start' });
-    };
+    }
 
-    window.closeDeckBuilder = () => {
+    function closeDeckBuilder() {
       state.activeDeckId = null;
       document.getElementById('deck-builder-workspace').classList.add('hidden');
       renderMyDecks();
-    };
+    }
 
-    window.deleteActiveDeck = async () => {
-      if (!state.activeDeckId || !state.user || !db) return;
+    async function deleteActiveDeck() {
+      if (!state.activeDeckId || !state.user) return;
       const deck = state.decks.find(d => d.id === state.activeDeckId);
       if (!deck || deck.ownerId !== state.user.uid) return;
-      await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'decks', deck.id));
-      showToast(`Deleted "${deck.name}".`, 'info');
-      closeDeckBuilder();
-    };
+      try {
+        await deleteDoc(doc(db, 'decks', deck.id));
+        showToast(`Deleted "${deck.name}".`, 'info');
+        closeDeckBuilder();
+      } catch (err) {
+        showToast('Delete failed: ' + err.message, 'error');
+      }
+    }
 
-    function getDeckTypeBreakdown(cardsMap) {
+    function getDeckStats(cardsMap) {
       let total = 0;
       let unique = 0;
-      const counts = {};
+      const typeCounts = {};
+      const stageCounts = {};
       for (const [cid, qty] of Object.entries(cardsMap || {})) {
         if (qty <= 0) continue;
         const card = state.cards.find(c => c.id === cid);
         if (!card) continue;
         unique++;
         total += qty;
-        counts[card.type] = (counts[card.type] || 0) + qty;
+        typeCounts[card.type] = (typeCounts[card.type] || 0) + qty;
+        const stg = card.stage || 'BASIC';
+        stageCounts[stg] = (stageCounts[stg] || 0) + qty;
       }
-      return { total, unique, counts };
+      return { total, unique, typeCounts, stageCounts };
     }
 
-    window.renderDeckBuilder = () => {
+    function renderDeckBuilder() {
       const workspace = document.getElementById('deck-builder-workspace');
       const deck = state.decks.find(d => d.id === state.activeDeckId);
       if (!deck || deck.ownerId !== state.user?.uid) {
@@ -2107,17 +1849,24 @@ service cloud.firestore {
       document.getElementById('builder-deck-format').textContent = deck.format || 'Standard 60-Card';
       document.getElementById('builder-deck-desc').textContent = deck.description || '';
 
-      const stats = getDeckTypeBreakdown(deck.cards);
+      const stats = getDeckStats(deck.cards);
       document.getElementById('builder-total-cards').textContent = stats.total;
       document.getElementById('builder-unique-cards').textContent = `${stats.unique} unique`;
 
-      const pills = Object.entries(stats.counts).map(([t, c]) => `
+      const typePills = Object.entries(stats.typeCounts).map(([t, c]) => `
         <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800 text-slate-200 font-semibold">
           ${renderEnergyPip(t, 0.85)}
           <span>${escapeHtml(t)}: <strong>${c}</strong></span>
         </span>
       `).join('');
-      document.getElementById('builder-type-breakdown').innerHTML = pills || '<span class="text-slate-500 text-xs">No cards added yet</span>';
+      document.getElementById('builder-type-breakdown').innerHTML = typePills || '<span class="text-slate-500 text-xs">Add cards below to see type breakdown</span>';
+
+      const stagePills = Object.entries(stats.stageCounts).map(([s, c]) => `
+        <span class="px-2 py-1 rounded-lg bg-slate-800/90 text-slate-200 font-semibold border border-slate-700">
+          ${escapeHtml(s)}: <strong class="text-yellow-400">${c}</strong>
+        </span>
+      `).join('');
+      document.getElementById('builder-stage-breakdown').innerHTML = stagePills || '<span class="text-slate-500 text-xs">No stages yet</span>';
 
       // Deck Roster
       const rosterEl = document.getElementById('builder-deck-roster');
@@ -2129,8 +1878,8 @@ service cloud.firestore {
           const card = state.cards.find(c => c.id === cid);
           if (!card) return '';
           return `
-            <div class="flex items-center justify-between gap-2 p-2 rounded-xl bg-[#0e131f] border border-slate-800">
-              <div onclick="zoomCard('${card.id}')" class="flex items-center gap-2.5 min-w-0 cursor-pointer flex-1">
+            <div class="flex items-center justify-between gap-2 p-2 rounded-xl bg-[#0b101b] border border-slate-800">
+              <div data-zoom-card-id="${escapeHtml(card.id)}" class="card-zoom-trigger flex items-center gap-2.5 min-w-0 cursor-pointer flex-1">
                 ${renderEnergyPip(card.type, 1.1)}
                 <img src="${escapeHtml(card.imageUrl)}" class="w-8 h-11 rounded object-cover border border-slate-700 shrink-0">
                 <div class="min-w-0">
@@ -2139,9 +1888,9 @@ service cloud.firestore {
                 </div>
               </div>
               <div class="flex items-center gap-1.5 shrink-0">
-                <button onclick="updateDeckCardQty('${card.id}', -1)" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-rose-500/20 hover:text-rose-400 text-xs font-bold">-</button>
+                <button type="button" data-qty-card-id="${escapeHtml(card.id)}" data-qty-delta="-1" class="btn-deck-qty w-7 h-7 rounded-lg bg-slate-800 hover:bg-rose-500/20 hover:text-rose-400 text-xs font-bold">-</button>
                 <span class="w-6 text-center text-xs font-extrabold text-yellow-400">${qty}×</span>
-                <button onclick="updateDeckCardQty('${card.id}', 1)" ${qty >= 4 ? 'disabled' : ''} class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-emerald-500/20 hover:text-emerald-400 disabled:opacity-30 text-xs font-bold">+</button>
+                <button type="button" data-qty-card-id="${escapeHtml(card.id)}" data-qty-delta="1" ${qty >= 4 ? 'disabled' : ''} class="btn-deck-qty w-7 h-7 rounded-lg bg-slate-800 hover:bg-emerald-500/20 hover:text-emerald-400 disabled:opacity-30 text-xs font-bold">+</button>
               </div>
             </div>
           `;
@@ -2149,9 +1898,9 @@ service cloud.firestore {
       }
 
       renderBuilderVaultPicker();
-    };
+    }
 
-    window.renderBuilderVaultPicker = () => {
+    function renderBuilderVaultPicker() {
       const pickerEl = document.getElementById('builder-vault-picker');
       const deck = state.decks.find(d => d.id === state.activeDeckId);
       if (!pickerEl || !deck) return;
@@ -2167,8 +1916,8 @@ service cloud.firestore {
       pickerEl.innerHTML = filtered.map(card => {
         const qty = (deck.cards && deck.cards[card.id]) || 0;
         return `
-          <div class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-[#0e131f] border border-slate-800">
-            <div onclick="zoomCard('${card.id}')" class="flex items-center gap-2.5 min-w-0 cursor-pointer flex-1">
+          <div class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-[#0b101b] border border-slate-800">
+            <div data-zoom-card-id="${escapeHtml(card.id)}" class="card-zoom-trigger flex items-center gap-2.5 min-w-0 cursor-pointer flex-1">
               <img src="${escapeHtml(card.imageUrl)}" class="w-9 h-12 rounded object-cover border border-slate-700 shrink-0">
               <div class="min-w-0">
                 <div class="text-xs font-bold text-white truncate">${escapeHtml(card.name)}</div>
@@ -2179,16 +1928,16 @@ service cloud.firestore {
                 <div class="text-[10px] text-yellow-400 mt-0.5">In Deck: ${qty}/4</div>
               </div>
             </div>
-            <button onclick="updateDeckCardQty('${card.id}', 1)" ${qty >= 4 ? 'disabled' : ''} class="px-3 py-1.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 disabled:bg-slate-800 disabled:text-slate-500 text-slate-950 font-extrabold text-xs shrink-0">
+            <button type="button" data-qty-card-id="${escapeHtml(card.id)}" data-qty-delta="1" ${qty >= 4 ? 'disabled' : ''} class="btn-deck-qty px-3 py-1.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 disabled:bg-slate-800 disabled:text-slate-500 text-slate-950 font-extrabold text-xs shrink-0">
               ${qty >= 4 ? 'Max' : '+ Add'}
             </button>
           </div>
         `;
       }).join('');
-    };
+    }
 
-    window.updateDeckCardQty = async (cardId, delta) => {
-      if (!state.user || !db || !state.activeDeckId) return;
+    async function updateDeckCardQty(cardId, delta) {
+      if (!state.user || !state.activeDeckId) return;
       const deck = state.decks.find(d => d.id === state.activeDeckId);
       if (!deck || deck.ownerId !== state.user.uid) {
         showToast('Unauthorized: Only the deck owner can edit this deck.', 'error');
@@ -2203,16 +1952,20 @@ service cloud.firestore {
         updatedCards[cardId] = nextQty;
       }
 
-      await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'decks', deck.id), {
-        cards: updatedCards,
-        updatedAt: Date.now()
-      });
-    };
+      try {
+        await updateDoc(doc(db, 'decks', deck.id), {
+          cards: updatedCards,
+          updatedAt: Date.now()
+        });
+      } catch (err) {
+        showToast('Failed to update deck: ' + err.message, 'error');
+      }
+    }
 
     // -----------------------------------------------------------------------
-    // FRIENDS' DECKS DIRECTORY & READ-ONLY LIVE 2.5" x 3.5" SHOWCASE
+    // FRIENDS' DECKS DIRECTORY & LIVE READ-ONLY INSPECTOR
     // -----------------------------------------------------------------------
-    window.renderFriendsDecks = () => {
+    function renderFriendsDecks() {
       const grid = document.getElementById('friends-decks-grid');
       if (!grid || !state.user) return;
 
@@ -2224,11 +1977,11 @@ service cloud.firestore {
 
       if (friendDecks.length === 0) {
         grid.innerHTML = `
-          <div class="col-span-full bg-[#161e31] border border-slate-800 rounded-2xl p-10 text-center">
+          <div class="col-span-full bg-[#141c2e] border border-slate-800 rounded-2xl p-10 text-center">
             <i class="fa-solid fa-users text-3xl text-sky-400 mb-3"></i>
             <h3 class="font-display text-base font-extrabold text-white">No Friends' Decks Online Yet</h3>
             <p class="text-xs text-slate-400 max-w-md mx-auto mt-1">
-              Have your friends open this app—as soon as they build a deck, it will appear here live for you to inspect at full 2.5" × 3.5" card size.
+              Click <strong>Invite Friends</strong> at the top to share your link—as soon as a friend creates a deck, it appears here live in read-only mode!
             </p>
           </div>
         `;
@@ -2236,11 +1989,15 @@ service cloud.firestore {
       }
 
       grid.innerHTML = friendDecks.map(deck => {
-        const totalCards = Object.values(deck.cards || {}).reduce((s, q) => s + q, 0);
+        const entries = Object.entries(deck.cards || {}).filter(([, qty]) => qty > 0);
+        const totalCards = entries.reduce((s, [, qty]) => s + qty, 0);
+        const firstCardId = entries[0]?.[0];
+        const coverCard = firstCardId ? state.cards.find(c => c.id === firstCardId) : null;
+
         return `
-          <div onclick="openFriendDeckInspector('${deck.id}')" class="group cursor-pointer bg-[#161e31] hover:bg-[#1c263e] border border-slate-800 hover:border-sky-500/50 rounded-2xl p-5 transition shadow-lg flex flex-col justify-between">
+          <div data-inspect-deck-id="${escapeHtml(deck.id)}" class="btn-inspect-friend-deck group cursor-pointer bg-[#141c2e] hover:bg-[#1a243b] border border-slate-800 hover:border-sky-500/50 rounded-2xl p-5 transition shadow-lg flex flex-col justify-between">
             <div>
-              <div class="flex items-center justify-between gap-2 mb-2">
+              <div class="flex items-center justify-between gap-2 mb-3">
                 <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sky-500/15 text-sky-300 border border-sky-500/30">
                   <i class="fa-solid fa-user mr-1"></i>${escapeHtml(deck.ownerName || 'Friend')}
                 </span>
@@ -2248,25 +2005,33 @@ service cloud.firestore {
                   ${totalCards} Cards
                 </span>
               </div>
-              <h3 class="font-display text-lg font-extrabold text-white group-hover:text-yellow-400 transition">${escapeHtml(deck.name)}</h3>
-              <div class="text-[11px] text-slate-400 mt-0.5">${escapeHtml(deck.format || 'Standard 60-Card')}</div>
-              <p class="text-xs text-slate-300 mt-2 line-clamp-2">${escapeHtml(deck.description || 'No strategy description provided.')}</p>
+              <div class="flex items-start gap-3">
+                ${coverCard?.imageUrl
+                  ? `<img src="${escapeHtml(coverCard.imageUrl)}" class="w-12 h-16 rounded-lg object-cover border border-slate-700 shrink-0 shadow">`
+                  : `<div class="w-12 h-16 rounded-lg bg-slate-900 border border-slate-800 flex items-center justify-center text-slate-600 shrink-0"><i class="fa-solid fa-layer-group"></i></div>`
+                }
+                <div class="min-w-0">
+                  <h3 class="font-display text-lg font-extrabold text-white group-hover:text-yellow-400 transition truncate">${escapeHtml(deck.name)}</h3>
+                  <div class="text-[11px] text-slate-400 mt-0.5">${escapeHtml(deck.format || 'Standard 60-Card')}</div>
+                  <p class="text-xs text-slate-300 mt-1.5 line-clamp-2">${escapeHtml(deck.description || 'No strategy notes provided.')}</p>
+                </div>
+              </div>
             </div>
             <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
               <span class="text-slate-400"><i class="fa-solid fa-lock text-yellow-400 mr-1"></i>Read-Only Deck</span>
-              <span class="text-sky-400 font-bold">View All Cards <i class="fa-solid fa-arrow-right ml-1"></i></span>
+              <span class="text-sky-400 font-bold">Inspect All Cards <i class="fa-solid fa-arrow-right ml-1"></i></span>
             </div>
           </div>
         `;
       }).join('');
-    };
+    }
 
-    window.openFriendDeckInspector = (deckId, isLiveRefresh = false) => {
+    function openFriendDeckInspector(deckId, isLiveRefresh = false) {
       const deck = state.decks.find(d => d.id === deckId);
       if (!deck) return;
 
       state.inspectedFriendDeckId = deckId;
-      const stats = getDeckTypeBreakdown(deck.cards);
+      const stats = getDeckStats(deck.cards);
 
       document.getElementById('inspector-deck-name').textContent = deck.name;
       document.getElementById('inspector-deck-format').textContent = deck.format || 'Standard 60-Card';
@@ -2274,8 +2039,8 @@ service cloud.firestore {
       document.getElementById('inspector-card-count').textContent = `${stats.total} Cards (${stats.unique} Unique)`;
       document.getElementById('inspector-deck-desc').textContent = deck.description || '';
 
-      document.getElementById('inspector-type-pills').innerHTML = Object.entries(stats.counts).map(([t, c]) => `
-        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#0e131f] border border-slate-800 text-slate-200 font-semibold">
+      document.getElementById('inspector-type-pills').innerHTML = Object.entries(stats.typeCounts).map(([t, c]) => `
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#0b101b] border border-slate-800 text-slate-200 font-semibold">
           ${renderEnergyPip(t, 0.85)}
           <span>${escapeHtml(t)}: <strong>${c}</strong></span>
         </span>
@@ -2287,7 +2052,7 @@ service cloud.firestore {
       if (entries.length === 0) {
         grid.innerHTML = `<div class="w-full text-center py-12 text-slate-400 text-xs">This deck has no cards yet—updates will appear here live!</div>`;
       } else {
-        // Strictly Read-Only: showOwnerControls is false; zero edit or delete controls rendered
+        // Strictly Read-Only: showOwnerControls is false; zero edit or delete buttons rendered
         grid.innerHTML = entries.map(([cid, qty]) => {
           const card = state.cards.find(c => c.id === cid);
           if (!card) return '';
@@ -2298,16 +2063,199 @@ service cloud.firestore {
       if (!isLiveRefresh) {
         openModal('friend-deck-inspector-modal');
       }
-    };
+    }
 
-    window.closeFriendInspector = () => {
+    function closeFriendInspector() {
       state.inspectedFriendDeckId = null;
       closeModal('friend-deck-inspector-modal');
-    };
+    }
 
+    // -----------------------------------------------------------------------
+    // EVENT LISTENER REGISTRATION (RELIABLE & DELEGATED)
+    // -----------------------------------------------------------------------
+    function bindAllEventListeners() {
+      // Navigation Tabs
+      document.querySelectorAll('.nav-tab').forEach(btn => {
+        btn.addEventListener('click', () => switchTab(btn.dataset.tab));
+      });
+
+      // Top Header Buttons
+      document.getElementById('btn-invite-friends')?.addEventListener('click', () => {
+        const cleanUrl = `${window.location.origin}${window.location.pathname}`;
+        document.getElementById('invite-link-input').value = cleanUrl;
+        openModal('invite-modal');
+      });
+      document.getElementById('btn-open-rules')?.addEventListener('click', () => openModal('rules-modal'));
+      document.getElementById('btn-open-profile')?.addEventListener('click', () => openProfileModal(false));
+
+      // Copy Buttons inside Modals
+      document.getElementById('btn-copy-invite')?.addEventListener('click', () => {
+        const input = document.getElementById('invite-link-input');
+        input.select();
+        copyTextSafe(input.value, 'Live Vault link copied! Send it to your friends.');
+      });
+      document.getElementById('btn-copy-rules')?.addEventListener('click', () => {
+        const ta = document.getElementById('rules-textarea');
+        ta.select();
+        copyTextSafe(ta.value, 'Firestore Security Rules copied!');
+      });
+
+      // DPI Slider & Reset
+      const dpiSlider = document.getElementById('dpi-slider');
+      dpiSlider?.addEventListener('input', (e) => updateCardDpiScale(e.target.value));
+      document.getElementById('btn-reset-dpi')?.addEventListener('click', () => {
+        if (dpiSlider) dpiSlider.value = 96;
+        updateCardDpiScale(96);
+      });
+
+      // Vault Search & Filters
+      document.getElementById('vault-search')?.addEventListener('input', renderVault);
+      document.getElementById('vault-filter-type')?.addEventListener('change', renderVault);
+      document.getElementById('vault-filter-rarity')?.addEventListener('change', renderVault);
+      document.getElementById('btn-upload-full-image')?.addEventListener('click', () => openUploadModal('full-image'));
+      document.getElementById('btn-upload-card-maker')?.addEventListener('click', () => openUploadModal('card-maker'));
+
+      // Card Upload Modal Controls & Live Preview Listeners
+      document.getElementById('mode-btn-full-image')?.addEventListener('click', () => setUploadMode('full-image'));
+      document.getElementById('mode-btn-card-maker')?.addEventListener('click', () => setUploadMode('card-maker'));
+      document.getElementById('custom-card-form')?.addEventListener('submit', handlePublishCard);
+
+      const dropZone = document.getElementById('drop-zone');
+      const fileInput = document.getElementById('custom-image-input');
+      dropZone?.addEventListener('click', () => fileInput?.click());
+      fileInput?.addEventListener('change', (e) => {
+        const file = e.target.files?.[0];
+        if (file) processImageFile(file);
+      });
+      dropZone?.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('border-yellow-400', 'bg-slate-900');
+      });
+      dropZone?.addEventListener('dragleave', () => {
+        dropZone.classList.remove('border-yellow-400', 'bg-slate-900');
+      });
+      dropZone?.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('border-yellow-400', 'bg-slate-900');
+        const file = e.dataTransfer?.files?.[0];
+        if (file) processImageFile(file);
+      });
+
+      [
+        'field-name', 'field-hp', 'field-type', 'field-stage', 'field-rarity',
+        'field-border', 'field-spec', 'field-ability-name', 'field-ability-desc',
+        'field-atk1-cost', 'field-atk1-name', 'field-atk1-dmg', 'field-atk1-desc',
+        'field-atk2-cost', 'field-atk2-name', 'field-atk2-dmg', 'field-atk2-desc',
+        'field-weakness', 'field-resistance', 'field-retreat', 'field-flavor'
+      ].forEach(id => {
+        const el = document.getElementById(id);
+        el?.addEventListener('input', updateLiveCardPreview);
+        el?.addEventListener('change', updateLiveCardPreview);
+      });
+
+      // My Decks & Builder Controls
+      document.getElementById('btn-create-deck')?.addEventListener('click', openCreateDeckModal);
+      document.getElementById('deck-meta-form')?.addEventListener('submit', handleSaveDeckMeta);
+      document.getElementById('btn-edit-deck-meta')?.addEventListener('click', openEditDeckMetaModal);
+      document.getElementById('btn-delete-deck')?.addEventListener('click', deleteActiveDeck);
+      document.getElementById('btn-close-builder')?.addEventListener('click', closeDeckBuilder);
+      document.getElementById('builder-vault-search')?.addEventListener('input', renderBuilderVaultPicker);
+
+      // Friends' Decks Controls
+      document.getElementById('friends-deck-search')?.addEventListener('input', renderFriendsDecks);
+      document.getElementById('btn-close-inspector')?.addEventListener('click', closeFriendInspector);
+
+      // Trainer Profile Form & Avatar Picker
+      document.querySelectorAll('.avatar-color-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          state.avatarGradient = btn.dataset.color;
+          document.querySelectorAll('.avatar-color-btn').forEach(b => b.classList.remove('ring-2', 'ring-white'));
+          btn.classList.add('ring-2', 'ring-white');
+        });
+      });
+
+      document.getElementById('profile-form')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const newName = document.getElementById('profile-name-input').value.trim();
+        if (!newName) return;
+
+        state.displayName = newName;
+        localStorage.setItem(STORAGE_KEY_NAME, newName);
+        localStorage.setItem(STORAGE_KEY_AVATAR, state.avatarGradient);
+        updateHeaderProfileUI();
+        closeModal('profile-modal');
+        showToast(`Trainer Card saved as "${newName}"!`, 'success');
+
+        if (state.user) {
+          try {
+            await setDoc(doc(db, 'users', state.user.uid), {
+              uid: state.user.uid,
+              displayName: newName,
+              avatarGradient: state.avatarGradient,
+              lastActive: Date.now()
+            }, { merge: true });
+
+            const myDecks = state.decks.filter(d => d.ownerId === state.user.uid);
+            for (const deck of myDecks) {
+              await updateDoc(doc(db, 'decks', deck.id), { ownerName: newName });
+            }
+          } catch (err) {
+            console.error('Profile sync error:', err);
+          }
+        }
+      });
+
+      // Generic Modal Close Buttons
+      document.querySelectorAll('[data-close-modal]').forEach(btn => {
+        btn.addEventListener('click', () => closeModal(btn.dataset.closeModal));
+      });
+
+      // Delegated Clicks for Dynamic Cards, Deck Cards, and Roster Quantity Buttons
+      document.addEventListener('click', (e) => {
+        const editCardBtn = e.target.closest('.btn-edit-card');
+        if (editCardBtn) {
+          e.stopPropagation();
+          openEditCardModal(editCardBtn.dataset.editCardId);
+          return;
+        }
+
+        const deleteCardBtn = e.target.closest('.btn-delete-card');
+        if (deleteCardBtn) {
+          e.stopPropagation();
+          deleteCard(deleteCardBtn.dataset.deleteCardId);
+          return;
+        }
+
+        const zoomTrigger = e.target.closest('.card-zoom-trigger');
+        if (zoomTrigger) {
+          zoomCard(zoomTrigger.dataset.zoomCardId);
+          return;
+        }
+
+        const selectDeckBtn = e.target.closest('.btn-select-deck');
+        if (selectDeckBtn) {
+          selectDeckForBuilding(selectDeckBtn.dataset.selectDeckId);
+          return;
+        }
+
+        const qtyBtn = e.target.closest('.btn-deck-qty');
+        if (qtyBtn && !qtyBtn.disabled) {
+          updateDeckCardQty(qtyBtn.dataset.qtyCardId, Number(qtyBtn.dataset.qtyDelta));
+          return;
+        }
+
+        const inspectDeckBtn = e.target.closest('.btn-inspect-friend-deck');
+        if (inspectDeckBtn) {
+          openFriendDeckInspector(inspectDeckBtn.dataset.inspectDeckId);
+        }
+      });
+    }
+
+    // Boot Application
     window.addEventListener('DOMContentLoaded', () => {
-      initApp();
+      bindAllEventListeners();
       updateLiveCardPreview();
+      initFirebaseLive();
     });
   </script>
 </body>
