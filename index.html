@@ -1,0 +1,2314 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PokéVault Live — True-to-Size 2.5"×3.5" Multiplayer TCG Deck Collector</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            display: ['Plus Jakarta Sans', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      /* Standard 96 DPI: 2.5in = 240px, 3.5in = 336px (exact 5:7 Pokémon TCG ratio) */
+      --dpi-scale: 1;
+      --card-w: calc(240px * var(--dpi-scale));
+      --card-h: calc(336px * var(--dpi-scale));
+      --card-font-scale: var(--dpi-scale);
+    }
+
+    body {
+      background-color: #0e131f;
+      color: #f1f5f9;
+      /* Subtle tabletop playmat grid texture */
+      background-image:
+        radial-gradient(circle at 20% 10%, rgba(234, 179, 8, 0.07) 0%, transparent 42%),
+        radial-gradient(circle at 80% 90%, rgba(59, 130, 246, 0.08) 0%, transparent 45%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 28px 28px, 28px 28px;
+      min-height: 100vh;
+    }
+
+    /* ===================================================================== */
+    /* TRUE-TO-SIZE POKÉMON TCG CARD SHELL (2.5" x 3.5" / 5:7 ASPECT RATIO)  */
+    /* ===================================================================== */
+    .pkmn-card-outer {
+      width: var(--card-w);
+      height: var(--card-h);
+      aspect-ratio: 5 / 7;
+      border-radius: calc(13px * var(--card-font-scale));
+      padding: calc(9px * var(--card-font-scale));
+      position: relative;
+      user-select: none;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+      box-shadow:
+        0 10px 25px -5px rgba(0, 0, 0, 0.65),
+        0 0 0 1px rgba(0, 0, 0, 0.5),
+        inset 0 1px 1px rgba(255, 255, 255, 0.45);
+      flex-shrink: 0;
+    }
+
+    .pkmn-card-outer:hover {
+      transform: translateY(-6px) scale(1.02);
+      z-index: 15;
+      box-shadow:
+        0 20px 35px -8px rgba(0, 0, 0, 0.8),
+        0 0 22px rgba(250, 204, 21, 0.25);
+    }
+
+    /* Classic Yellow vs Modern Silver/Gold Pokémon Border */
+    .border-classic-yellow {
+      background: linear-gradient(145deg, #facc15 0%, #eab308 48%, #ca8a04 100%);
+    }
+    .border-silver-holo {
+      background: linear-gradient(145deg, #f1f5f9 0%, #cbd5e1 45%, #94a3b8 75%, #e2e8f0 100%);
+    }
+    .border-gold-ultra {
+      background: linear-gradient(145deg, #fde047 0%, #f59e0b 45%, #b45309 80%, #fef08a 100%);
+    }
+
+    /* Inner Card Body Textured Gradients by Energy Type */
+    .pkmn-card-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: calc(7px * var(--card-font-scale));
+      padding: calc(6px * var(--card-font-scale)) calc(7px * var(--card-font-scale));
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+      color: #111827;
+      box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
+    }
+
+    .type-theme-Fire {
+      background:
+        radial-gradient(circle at 80% 15%, rgba(254, 215, 170, 0.65), transparent 50%),
+        linear-gradient(165deg, #fb923c 0%, #ea580c 52%, #9a3412 100%);
+    }
+    .type-theme-Water {
+      background:
+        radial-gradient(circle at 80% 15%, rgba(186, 230, 253, 0.7), transparent 50%),
+        linear-gradient(165deg, #38bdf8 0%, #0284c7 52%, #075985 100%);
+    }
+    .type-theme-Grass {
+      background:
+        radial-gradient(circle at 80% 15%, rgba(187, 247, 208, 0.7), transparent 50%),
+        linear-gradient(165deg, #4ade80 0%, #16a34a 52%, #14532d 100%);
+    }
+    .type-theme-Lightning {
+      background:
+        radial-gradient(circle at 80% 15%, rgba(254, 249, 195, 0.8), transparent 50%),
+        linear-gradient(165deg, #fde047 0%, #eab308 55%, #a16207 100%);
+    }
+    .type-theme-Psychic {
+      background:
+        radial-gradient(circle at 80% 15%, rgba(243, 232, 255, 0.7), transparent 50%),
+        linear-gradient(165deg, #c084fc 0%, #9333ea 52%, #581c87 100%);
+    }
+    .type-theme-Fighting {
+      background:
+        radial-gradient(circle at 80% 15%, rgba(254, 215, 170, 0.6), transparent 50%),
+        linear-gradient(165deg, #d97706 0%, #b45309 55%, #78350f 100%);
+    }
+    .type-theme-Darkness {
+      background:
+        radial-gradient(circle at 80% 15%, rgba(148, 163, 184, 0.35), transparent 50%),
+        linear-gradient(165deg, #475569 0%, #1e293b 55%, #0f172a 100%);
+      color: #f8fafc;
+    }
+    .type-theme-Metal {
+      background:
+        radial-gradient(circle at 80% 15%, rgba(255, 255, 255, 0.75), transparent 50%),
+        linear-gradient(165deg, #cbd5e1 0%, #94a3b8 52%, #475569 100%);
+    }
+    .type-theme-Fairy {
+      background:
+        radial-gradient(circle at 80% 15%, rgba(252, 231, 243, 0.75), transparent 50%),
+        linear-gradient(165deg, #f472b6 0%, #db2777 52%, #831843 100%);
+    }
+    .type-theme-Dragon {
+      background:
+        radial-gradient(circle at 80% 15%, rgba(254, 240, 138, 0.65), transparent 50%),
+        linear-gradient(165deg, #ca8a04 0%, #854d0e 52%, #422006 100%);
+      color: #fefce8;
+    }
+    .type-theme-Colorless {
+      background:
+        radial-gradient(circle at 80% 15%, rgba(255, 255, 255, 0.85), transparent 50%),
+        linear-gradient(165deg, #f8fafc 0%, #e2e8f0 52%, #94a3b8 100%);
+    }
+    .type-theme-Trainer {
+      background:
+        radial-gradient(circle at 80% 15%, rgba(224, 242, 254, 0.7), transparent 50%),
+        linear-gradient(165deg, #93c5fd 0%, #3b82f6 52%, #1d4ed8 100%);
+    }
+
+    /* Holographic Foil Shimmer Overlay for Rare Holo / Ultra Rare */
+    .holo-shimmer::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        115deg,
+        transparent 20%,
+        rgba(255, 255, 255, 0.25) 36%,
+        rgba(56, 189, 248, 0.22) 44%,
+        rgba(244, 114, 182, 0.22) 52%,
+        rgba(250, 204, 21, 0.25) 60%,
+        transparent 76%
+      );
+      background-size: 220% 220%;
+      animation: holoShift 4.5s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 6;
+      mix-blend-mode: overlay;
+    }
+
+    @keyframes holoShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    /* Full-Art / Full-Card Image Mode */
+    .full-art-card-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: calc(7px * var(--card-font-scale));
+      display: block;
+    }
+
+    /* Zoomed Modal Card Override (Fixed Crisp Large Inspection Size: 350px x 490px = 5:7) */
+    .zoomed-card-wrapper .pkmn-card-outer {
+      width: 340px;
+      height: 476px;
+      --card-font-scale: 1.416;
+      transform: none !important;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 7px;
+      height: 7px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0e131f;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #2b354b;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-yellow-400/30 selection:text-yellow-200">
+
+  <!-- Toast Notification Stack -->
+  <div id="toast-container" class="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+  <!-- Top Header -->
+  <header class="sticky top-0 z-40 bg-[#0e131f]/92 backdrop-blur-md border-b border-slate-800/90">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-wrap items-center justify-between py-3 gap-3">
+        <!-- Brand & Live Sync Pill -->
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-gradient-to-b from-rose-500 via-slate-900 to-white p-0.5 shadow-lg shadow-rose-500/20 flex items-center justify-center border border-slate-600">
+            <div class="w-3.5 h-3.5 rounded-full bg-white border-2 border-slate-900"></div>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <h1 class="font-display font-extrabold text-lg sm:text-xl tracking-tight text-white">
+                Poké<span class="text-yellow-400">Vault</span> Live
+              </h1>
+              <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/25">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span id="live-status-text">Connecting...</span>
+              </span>
+            </div>
+            <p class="text-[11px] text-slate-400 hidden sm:block">True-to-Size 2.5" × 3.5" Custom TCG Vault & Live Deck Showcase</p>
+          </div>
+        </div>
+
+        <!-- Main Navigation Tabs -->
+        <nav class="flex items-center gap-1.5 bg-[#161e31] p-1 rounded-xl border border-slate-800 order-3 sm:order-2 w-full sm:w-auto justify-around sm:justify-start">
+          <button onclick="switchTab('vault')" id="tab-vault" class="nav-tab flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold transition flex items-center justify-center gap-2 bg-yellow-400 text-slate-950 shadow">
+            <i class="fa-solid fa-id-card"></i>
+            <span>Card Vault</span>
+            <span id="badge-vault-count" class="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-950/20 font-extrabold">0</span>
+          </button>
+          <button onclick="switchTab('my-decks')" id="tab-my-decks" class="nav-tab flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800/70 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-layer-group"></i>
+            <span>My Decks</span>
+            <span id="badge-my-decks-count" class="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-800 text-slate-300 font-bold">0</span>
+          </button>
+          <button onclick="switchTab('friends-decks')" id="tab-friends-decks" class="nav-tab flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800/70 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-users"></i>
+            <span>Friends' Decks</span>
+            <span id="badge-friends-decks-count" class="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-800 text-slate-300 font-bold">0</span>
+          </button>
+        </nav>
+
+        <!-- Trainer Profile & Rules -->
+        <div class="flex items-center gap-2 order-2 sm:order-3">
+          <button onclick="openInviteModal()" id="invite-friends-btn" class="px-3 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/35 transition text-xs font-extrabold flex items-center gap-1.5 shadow-sm">
+            <i class="fa-solid fa-share-nodes"></i>
+            <span>Invite Friends</span>
+          </button>
+          <button onclick="openHostSetupModal(true)" title="Vault Connection & Setup" class="p-2.5 rounded-xl bg-[#161e31] hover:bg-slate-800 text-slate-300 hover:text-yellow-400 border border-slate-800 transition text-xs flex items-center gap-1.5">
+            <i class="fa-solid fa-plug"></i>
+            <span class="hidden lg:inline font-semibold">Vault Setup</span>
+          </button>
+          <button onclick="openModal('rules-modal')" title="Firestore Owner-Only Security Rules" class="p-2.5 rounded-xl bg-[#161e31] hover:bg-slate-800 text-slate-300 hover:text-yellow-400 border border-slate-800 transition text-xs flex items-center gap-1.5">
+            <i class="fa-solid fa-shield-halved"></i>
+            <span class="hidden md:inline font-semibold">Rules</span>
+          </button>
+          <button onclick="openProfileModal()" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#161e31] hover:bg-slate-800 border border-slate-700/80 transition">
+            <div id="user-avatar" class="w-7 h-7 rounded-lg bg-gradient-to-tr from-yellow-400 to-amber-600 flex items-center justify-center text-xs font-extrabold text-slate-950 uppercase">
+              TR
+            </div>
+            <div class="text-left">
+              <div id="user-display-name" class="text-xs font-bold text-white max-w-[105px] truncate">Trainer</div>
+              <div class="text-[10px] text-yellow-400 flex items-center gap-1">
+                <span>Trainer Card</span>
+                <i class="fa-solid fa-pen text-[8px]"></i>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 space-y-5">
+
+    <!-- Live Feed & True-to-Size 2.5" × 3.5" Calibration Bar -->
+    <div class="bg-[#161e31]/95 border border-slate-800 rounded-2xl p-3.5 flex flex-col lg:flex-row lg:items-center justify-between gap-3 text-xs">
+      <!-- Live Multiplayer Ticker -->
+      <div class="flex items-center gap-2.5 min-w-0">
+        <span class="px-2 py-0.5 rounded bg-yellow-400/15 text-yellow-300 border border-yellow-400/30 font-extrabold uppercase tracking-wider text-[10px] shrink-0">
+          Live Sync
+        </span>
+        <span id="latest-activity-text" class="text-slate-300 truncate">Ready — upload custom cards to share live with friends!</span>
+      </div>
+
+      <!-- Physical 2.5" x 3.5" Scale Calibrator -->
+      <div class="flex flex-wrap items-center gap-3 shrink-0 bg-[#0e131f] px-3 py-2 rounded-xl border border-slate-800">
+        <div class="flex items-center gap-1.5 text-yellow-400 font-bold">
+          <i class="fa-solid fa-ruler-combined"></i>
+          <span>2.5" × 3.5" True Scale:</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <input id="dpi-slider" type="range" min="72" max="150" value="96" oninput="updateCardDpiScale(this.value)" class="w-24 sm:w-28 accent-yellow-400 cursor-pointer">
+          <span id="dpi-readout" class="font-mono text-[11px] text-slate-300 w-36">96 DPI (240×336px)</span>
+        </div>
+        <button onclick="resetDpiScale()" class="text-[11px] text-slate-400 hover:text-yellow-400 underline">Reset</button>
+      </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- VIEW 1: CUSTOM CARD VAULT (NO PREMADE PLACEHOLDERS)                 -->
+    <!-- =================================================================== -->
+    <section id="view-vault" class="space-y-5">
+      <!-- Filter & Prominent Upload Toolbar -->
+      <div class="bg-[#161e31] p-4 rounded-2xl border border-slate-800 flex flex-col lg:flex-row gap-3 justify-between items-stretch lg:items-center">
+        <div class="flex flex-col sm:flex-row gap-2.5 flex-1">
+          <div class="relative flex-1">
+            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+            <input id="vault-search" type="text" oninput="renderVault()" placeholder="Search uploaded cards by name, attack, or trainer..." class="w-full pl-9 pr-4 py-2.5 rounded-xl bg-[#0e131f] border border-slate-700/80 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-yellow-400 transition">
+          </div>
+          <select id="vault-filter-type" onchange="renderVault()" class="px-3 py-2.5 rounded-xl bg-[#0e131f] border border-slate-700/80 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-yellow-400">
+            <option value="ALL">All Energy Types</option>
+            <option value="Fire">Fire</option>
+            <option value="Water">Water</option>
+            <option value="Grass">Grass</option>
+            <option value="Lightning">Lightning</option>
+            <option value="Psychic">Psychic</option>
+            <option value="Fighting">Fighting</option>
+            <option value="Darkness">Darkness</option>
+            <option value="Metal">Metal</option>
+            <option value="Fairy">Fairy</option>
+            <option value="Dragon">Dragon</option>
+            <option value="Colorless">Colorless</option>
+            <option value="Trainer">Trainer / Item</option>
+          </select>
+          <select id="vault-filter-rarity" onchange="renderVault()" class="px-3 py-2.5 rounded-xl bg-[#0e131f] border border-slate-700/80 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-yellow-400">
+            <option value="ALL">All Rarities</option>
+            <option value="Common">● Common</option>
+            <option value="Uncommon">◆ Uncommon</option>
+            <option value="Rare Holo">★ Rare Holo</option>
+            <option value="Ultra Rare">★★ Ultra Rare</option>
+          </select>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="openUploadModal('full-image')" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-yellow-300 border border-yellow-400/30 font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-file-image"></i>
+            <span>Upload Card Image</span>
+          </button>
+          <button onclick="openUploadModal('card-maker')" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-yellow-500/20 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span>Design Custom Card</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- True-to-Size 2.5" x 3.5" Card Showcase Flex Grid -->
+      <div id="vault-grid" class="flex flex-wrap justify-center sm:justify-start gap-6">
+        <!-- Rendered dynamically (starts cleanly empty until users upload!) -->
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- VIEW 2: MY DECKS (OWNER-ONLY EDITING)                               -->
+    <!-- =================================================================== -->
+    <section id="view-my-decks" class="hidden space-y-6">
+      <div class="bg-[#161e31] p-4 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="font-display text-lg font-extrabold text-white">My Specialized Decks</h2>
+          <p class="text-xs text-slate-400">Build your 60-card (or custom) decks from uploaded cards. Only you can modify your decks; friends view them live in read-only mode.</p>
+        </div>
+        <button onclick="openCreateDeckModal()" class="px-4 py-2.5 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow-lg shadow-yellow-500/15">
+          <i class="fa-solid fa-folder-plus"></i>
+          <span>New Deck</span>
+        </button>
+      </div>
+
+      <!-- User's Deck List -->
+      <div id="my-decks-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+
+      <!-- Owner-Only Deck Builder Workspace -->
+      <div id="deck-builder-workspace" class="hidden space-y-6 pt-5 border-t border-slate-800">
+        <div class="bg-[#161e31] p-5 rounded-2xl border border-yellow-400/35 shadow-xl">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <h3 id="builder-deck-name" class="font-display text-xl font-extrabold text-white">Deck Name</h3>
+                <span id="builder-deck-format" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-yellow-400/15 text-yellow-300 border border-yellow-400/30">Standard 60</span>
+                <span class="px-2 py-0.5 rounded text-[11px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-semibold">
+                  <i class="fa-solid fa-lock-open mr-1"></i>Owner Edit Unlocked
+                </span>
+              </div>
+              <p id="builder-deck-desc" class="text-xs text-slate-400 mt-1"></p>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2">
+              <button onclick="openEditDeckMetaModal()" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-200 transition">
+                <i class="fa-solid fa-sliders mr-1"></i>Settings
+              </button>
+              <button onclick="deleteActiveDeck()" class="px-3.5 py-2 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-rose-400 border border-rose-500/30 text-xs font-bold transition">
+                <i class="fa-solid fa-trash mr-1"></i>Delete Deck
+              </button>
+              <button onclick="closeDeckBuilder()" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white text-xs font-bold border border-slate-700 transition">
+                Done
+              </button>
+            </div>
+          </div>
+
+          <!-- Deck Energy & Count Summary -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-4">
+            <div class="bg-[#0e131f] p-3.5 rounded-xl border border-slate-800">
+              <div class="text-xs text-slate-400">Deck Card Count</div>
+              <div class="flex items-baseline justify-between mt-1">
+                <span id="builder-total-cards" class="text-3xl font-display font-extrabold text-yellow-400">0</span>
+                <span id="builder-unique-cards" class="text-xs text-slate-400">0 unique cards</span>
+              </div>
+            </div>
+            <div class="md:col-span-2 bg-[#0e131f] p-3.5 rounded-xl border border-slate-800 flex flex-col justify-between">
+              <div class="text-xs text-slate-400 mb-2">Energy Type Distribution</div>
+              <div id="builder-type-breakdown" class="flex flex-wrap gap-2 text-xs">
+                <span class="text-slate-500 italic">Add cards below to see type breakdown</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Split Pane: Deck Roster (Left) & Shared Vault Picker (Right) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div class="lg:col-span-5 bg-[#161e31] rounded-2xl border border-slate-800 p-4 flex flex-col h-[580px]">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+              <h4 class="font-bold text-sm text-white">
+                <i class="fa-solid fa-layer-group text-yellow-400 mr-1.5"></i>Current Deck List
+              </h4>
+              <span class="text-[11px] text-slate-400">Up to 4 copies / card</span>
+            </div>
+            <div id="builder-deck-roster" class="flex-1 overflow-y-auto space-y-2 py-3 pr-1"></div>
+          </div>
+
+          <div class="lg:col-span-7 bg-[#161e31] rounded-2xl border border-slate-800 p-4 flex flex-col h-[580px]">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-slate-800">
+              <h4 class="font-bold text-sm text-white">
+                <i class="fa-solid fa-vault text-sky-400 mr-1.5"></i>Add Uploaded Cards to Deck
+              </h4>
+              <input id="builder-vault-search" type="text" oninput="renderBuilderVaultPicker()" placeholder="Search uploaded cards..." class="px-3 py-1.5 rounded-lg bg-[#0e131f] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
+            </div>
+            <div id="builder-vault-picker" class="flex-1 overflow-y-auto grid grid-cols-1 sm:grid-cols-2 gap-3 py-3 pr-1"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================================== -->
+    <!-- VIEW 3: FRIENDS' DECKS (LIVE READ-ONLY SHOWCASE)                    -->
+    <!-- =================================================================== -->
+    <section id="view-friends-decks" class="hidden space-y-6">
+      <div class="bg-[#161e31] p-4 rounded-2xl border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 class="font-display text-lg font-extrabold text-white flex items-center gap-2">
+            <span>Friends' Live Decks</span>
+            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sky-500/15 text-sky-300 border border-sky-500/30">
+              <i class="fa-solid fa-eye mr-1"></i>Live Read-Only
+            </span>
+          </h2>
+          <p class="text-xs text-slate-400">Inspect every card in your friends' decks in real time at true 2.5" × 3.5" card size. Editing is locked to each deck's owner.</p>
+        </div>
+        <input id="friends-deck-search" type="text" oninput="renderFriendsDecks()" placeholder="Filter by friend or deck name..." class="w-full sm:w-64 px-3.5 py-2 rounded-xl bg-[#0e131f] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
+      </div>
+
+      <div id="friends-decks-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </section>
+
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 1: CUSTOM CARD UPLOAD & POKÉMON-STYLE CARD MAKER                -->
+  <!-- ===================================================================== -->
+  <div id="card-upload-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+    <div class="bg-[#161e31] border border-slate-700 rounded-2xl max-w-5xl w-full p-5 sm:p-6 shadow-2xl my-auto">
+      <!-- Modal Header & Mode Switcher -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-800">
+        <div>
+          <h3 id="upload-modal-heading" class="font-display text-lg sm:text-xl font-extrabold text-white">Upload Custom Card</h3>
+          <p class="text-xs text-slate-400">Upload a pre-made card image or build a custom Pokémon-style card with live 2.5" × 3.5" preview.</p>
+        </div>
+        <div class="flex items-center gap-2">
+          <div class="bg-[#0e131f] p-1 rounded-xl border border-slate-800 flex text-xs font-bold">
+            <button type="button" id="mode-btn-full-image" onclick="setUploadMode('full-image')" class="px-3 py-1.5 rounded-lg transition">
+              <i class="fa-solid fa-file-image mr-1"></i>Full Card Image
+            </button>
+            <button type="button" id="mode-btn-card-maker" onclick="setUploadMode('card-maker')" class="px-3 py-1.5 rounded-lg transition">
+              <i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Card Maker
+            </button>
+          </div>
+          <button onclick="closeModal('card-upload-modal')" class="text-slate-400 hover:text-white p-1.5">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Two-Column Layout: Left = Form Inputs | Right = Live 2.5" x 3.5" Card Preview -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-5 items-start">
+        <!-- Form Column (7 cols) -->
+        <form id="custom-card-form" onsubmit="handlePublishCard(event)" class="lg:col-span-7 space-y-4">
+          <input type="hidden" id="edit-card-id" value="">
+
+          <!-- Drag & Drop / File Upload Zone (Required for new cards) -->
+          <div id="drop-zone" onclick="document.getElementById('custom-image-input').click()" class="cursor-pointer rounded-2xl border-2 border-dashed border-yellow-400/50 hover:border-yellow-400 bg-[#0e131f]/90 hover:bg-[#0e131f] p-4 text-center transition">
+            <input id="custom-image-input" type="file" accept="image/*" onchange="handleCardImageSelect(event)" class="hidden">
+            <div class="flex flex-col items-center gap-1.5">
+              <div class="w-10 h-10 rounded-full bg-yellow-400/15 text-yellow-400 flex items-center justify-center text-base">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+              </div>
+              <div id="upload-zone-title" class="text-xs sm:text-sm font-bold text-white">
+                Click or Drag & Drop Your Custom Card / Artwork Image
+              </div>
+              <div id="upload-zone-sub" class="text-[11px] text-slate-400">
+                Supports PNG, JPG, WEBP • Auto-fitted to exact 2.5" × 3.5" (5:7) ratio
+              </div>
+            </div>
+          </div>
+
+          <!-- Core Card Metadata (Always shown for search/filtering & stats) -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="sm:col-span-2">
+              <label class="block text-xs font-bold text-slate-300 mb-1">Card Name *</label>
+              <input id="field-name" type="text" required maxlength="32" oninput="updateLiveCardPreview()" placeholder="e.g., Charizard ex / Custom Ace" class="w-full px-3.5 py-2 rounded-xl bg-[#0e131f] border border-slate-700 text-sm text-white focus:outline-none focus:border-yellow-400">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-rose-400 mb-1">HP</label>
+              <input id="field-hp" type="number" min="10" max="990" step="10" value="120" oninput="updateLiveCardPreview()" class="w-full px-3.5 py-2 rounded-xl bg-[#0e131f] border border-slate-700 text-sm text-white focus:outline-none focus:border-yellow-400">
+            </div>
+          </div>
+
+          <div class="grid grid-cols-3 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">Energy Type</label>
+              <select id="field-type" onchange="updateLiveCardPreview()" class="w-full px-3 py-2 rounded-xl bg-[#0e131f] border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-yellow-400">
+                <option value="Fire">Fire</option>
+                <option value="Water">Water</option>
+                <option value="Grass">Grass</option>
+                <option value="Lightning">Lightning</option>
+                <option value="Psychic">Psychic</option>
+                <option value="Fighting">Fighting</option>
+                <option value="Darkness">Darkness</option>
+                <option value="Metal">Metal</option>
+                <option value="Fairy">Fairy</option>
+                <option value="Dragon">Dragon</option>
+                <option value="Colorless">Colorless</option>
+                <option value="Trainer">Trainer / Item</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">Stage / Category</label>
+              <select id="field-stage" onchange="updateLiveCardPreview()" class="w-full px-3 py-2 rounded-xl bg-[#0e131f] border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-yellow-400">
+                <option value="BASIC">Basic</option>
+                <option value="STAGE 1">Stage 1</option>
+                <option value="STAGE 2">Stage 2</option>
+                <option value="EX / V">EX / V</option>
+                <option value="VMAX / MEGA">VMAX / Mega</option>
+                <option value="TRAINER">Trainer</option>
+                <option value="ENERGY">Energy</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">Rarity & Foil</label>
+              <select id="field-rarity" onchange="updateLiveCardPreview()" class="w-full px-3 py-2 rounded-xl bg-[#0e131f] border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-yellow-400">
+                <option value="Common">● Common</option>
+                <option value="Uncommon">◆ Uncommon</option>
+                <option value="Rare Holo">★ Rare Holo</option>
+                <option value="Ultra Rare">★★ Ultra Rare</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Extra Fields Specific to Mode B (Pokémon-Style Card Maker) -->
+          <div id="card-maker-extra-fields" class="space-y-3 pt-1">
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="block text-xs font-bold text-slate-300 mb-1">Border Style</label>
+                <select id="field-border" onchange="updateLiveCardPreview()" class="w-full px-3 py-2 rounded-xl bg-[#0e131f] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
+                  <option value="classic-yellow">Classic Yellow Border</option>
+                  <option value="silver-holo">Modern Silver Border</option>
+                  <option value="gold-ultra">Gold Secret Rare Border</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-xs font-bold text-slate-300 mb-1">Dex / Spec Line</label>
+                <input id="field-spec" type="text" maxlength="42" oninput="updateLiveCardPreview()" value="NO. 001  Custom Pokémon  HT: 3'07&quot;  WT: 45 lbs" class="w-full px-3 py-2 rounded-xl bg-[#0e131f] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
+              </div>
+            </div>
+
+            <!-- Optional Ability -->
+            <div class="bg-[#0e131f] p-3 rounded-xl border border-slate-800 space-y-2">
+              <div class="text-[11px] font-bold text-rose-400 uppercase tracking-wider">Ability (Optional)</div>
+              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                <input id="field-ability-name" type="text" maxlength="24" oninput="updateLiveCardPreview()" placeholder="Ability Name" class="px-3 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white">
+                <input id="field-ability-desc" type="text" maxlength="110" oninput="updateLiveCardPreview()" placeholder="Ability passive effect..." class="sm:col-span-2 px-3 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white">
+              </div>
+            </div>
+
+            <!-- Attack 1 -->
+            <div class="bg-[#0e131f] p-3 rounded-xl border border-slate-800 space-y-2">
+              <div class="text-[11px] font-bold text-yellow-400 uppercase tracking-wider">Primary Attack</div>
+              <div class="grid grid-cols-12 gap-2">
+                <div class="col-span-3">
+                  <select id="field-atk1-cost" onchange="updateLiveCardPreview()" class="w-full px-2 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white" title="Energy Cost">
+                    <option value="1">1 Energy</option>
+                    <option value="2" selected>2 Energy</option>
+                    <option value="3">3 Energy</option>
+                    <option value="4">4 Energy</option>
+                  </select>
+                </div>
+                <div class="col-span-6">
+                  <input id="field-atk1-name" type="text" maxlength="24" oninput="updateLiveCardPreview()" value="Flare Blitz" placeholder="Attack Name" class="w-full px-3 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white">
+                </div>
+                <div class="col-span-3">
+                  <input id="field-atk1-dmg" type="text" maxlength="6" oninput="updateLiveCardPreview()" value="80+" placeholder="Dmg" class="w-full px-2.5 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white text-right font-bold">
+                </div>
+              </div>
+              <input id="field-atk1-desc" type="text" maxlength="110" oninput="updateLiveCardPreview()" value="Flip a coin. If heads, this attack does 30 more damage." placeholder="Attack effect description..." class="w-full px-3 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white">
+            </div>
+
+            <!-- Attack 2 (Optional) -->
+            <div class="bg-[#0e131f] p-3 rounded-xl border border-slate-800 space-y-2">
+              <div class="text-[11px] font-bold text-sky-400 uppercase tracking-wider">Secondary Attack (Optional)</div>
+              <div class="grid grid-cols-12 gap-2">
+                <div class="col-span-3">
+                  <select id="field-atk2-cost" onchange="updateLiveCardPreview()" class="w-full px-2 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white">
+                    <option value="0">None</option>
+                    <option value="1">1 Energy</option>
+                    <option value="2">2 Energy</option>
+                    <option value="3" selected>3 Energy</option>
+                    <option value="4">4 Energy</option>
+                  </select>
+                </div>
+                <div class="col-span-6">
+                  <input id="field-atk2-name" type="text" maxlength="24" oninput="updateLiveCardPreview()" placeholder="Second Attack Name" class="w-full px-3 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white">
+                </div>
+                <div class="col-span-3">
+                  <input id="field-atk2-dmg" type="text" maxlength="6" oninput="updateLiveCardPreview()" placeholder="Dmg" class="w-full px-2.5 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white text-right font-bold">
+                </div>
+              </div>
+              <input id="field-atk2-desc" type="text" maxlength="110" oninput="updateLiveCardPreview()" placeholder="Second attack effect..." class="w-full px-3 py-1.5 rounded-lg bg-[#161e31] border border-slate-700 text-xs text-white">
+            </div>
+
+            <!-- Weakness, Resistance, Retreat & Flavor -->
+            <div class="grid grid-cols-3 gap-2">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-400 mb-1">Weakness (×2)</label>
+                <select id="field-weakness" onchange="updateLiveCardPreview()" class="w-full px-2.5 py-1.5 rounded-lg bg-[#0e131f] border border-slate-700 text-xs text-white">
+                  <option value="Water">Water ×2</option>
+                  <option value="Fire">Fire ×2</option>
+                  <option value="Grass">Grass ×2</option>
+                  <option value="Lightning">Lightning ×2</option>
+                  <option value="Psychic">Psychic ×2</option>
+                  <option value="Fighting">Fighting ×2</option>
+                  <option value="Darkness">Darkness ×2</option>
+                  <option value="Metal">Metal ×2</option>
+                  <option value="None">None</option>
+                </select>
+              </div>
+              <div>
+        <pre id="rules-code-block" class="bg-[#0e131f] p-3.5 rounded-xl border border-slate-800 text-[11px] font-mono text-emerald-300 overflow-x-auto">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /artifacts/{appId}/public/data/{collection}/{docId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null
+                    && request.resource.data.ownerId == request.auth.uid;
+      allow update, delete: if request.auth != null
+                            && resource.data.ownerId == request.auth.uid;
+    }
+  }
+}</pre>
+      </div>
+      <div class="mt-4 flex justify-between items-center gap-2">
+        <button onclick="copySecurityRules()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 font-bold text-xs flex items-center gap-1.5">
+          <i class="fa-regular fa-copy"></i>
+          <span>Copy Rules</span>
+        </button>
+        <button onclick="closeModal('rules-modal')" class="px-5 py-2 rounded-xl bg-yellow-400 text-slate-950 font-extrabold text-xs">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 7: ZERO-CODE HOST SETUP & FRIEND INVITE CODE CONNECTOR          -->
+  <!-- ===================================================================== -->
+  <div id="host-setup-modal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-[#161e31] border border-slate-700 rounded-3xl max-w-2xl w-full p-6 sm:p-7 shadow-2xl my-auto">
+      <div class="flex items-start justify-between gap-3 pb-4 border-b border-slate-800">
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-2xl bg-yellow-400/15 border border-yellow-400/30 text-yellow-400 flex items-center justify-center text-lg shrink-0">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <div>
+            <h3 class="font-display text-lg sm:text-xl font-extrabold text-white">Connect Your Live TCG Vault</h3>
+            <p class="text-xs text-slate-400">No code editing required. Join via a Friend's Invite Link or connect your Firebase room once.</p>
+          </div>
+        </div>
+        <button id="close-host-setup-btn" onclick="closeModal('host-setup-modal')" class="text-slate-400 hover:text-white p-1 hidden">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Mode Switch: Friend Joining vs Host Setting Up -->
+      <div class="grid grid-cols-2 gap-2 bg-[#0e131f] p-1.5 rounded-2xl border border-slate-800 mt-4">
+        <button type="button" id="setup-tab-friend" onclick="switchSetupTab('friend')" class="py-2 px-3 rounded-xl text-xs font-extrabold transition bg-emerald-500 text-slate-950">
+          <i class="fa-solid fa-user-plus mr-1.5"></i>I Have a Friend Invite
+        </button>
+        <button type="button" id="setup-tab-host" onclick="switchSetupTab('host')" class="py-2 px-3 rounded-xl text-xs font-extrabold transition text-slate-400 hover:text-white">
+          <i class="fa-solid fa-server mr-1.5"></i>I'm Hosting a New Vault
+        </button>
+      </div>
+
+      <!-- Panel A: Friend Joining with Invite Link / Code -->
+      <form id="setup-panel-friend" onsubmit="handleFriendInvitePaste(event)" class="mt-5 space-y-4">
+        <div class="bg-emerald-500/10 border border-emerald-500/25 rounded-2xl p-4 text-xs text-emerald-200 space-y-1">
+          <div class="font-bold text-emerald-300"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Tip for Friends:</div>
+          <p class="text-emerald-100/80">If your friend sent you a <strong>Magic Invite Link</strong>, clicking that link connects you automatically! Or paste their Invite Link / Code below:</p>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1.5">Paste Magic Invite Link or Invite Code *</label>
+          <input id="friend-invite-input" type="text" required placeholder="Paste https://...#invite=... or Invite Code here" class="w-full px-3.5 py-3 rounded-xl bg-[#0e131f] border border-slate-700 text-xs font-mono text-white focus:outline-none focus:border-emerald-400">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1.5">Your Trainer Name *</label>
+          <input id="friend-join-name-input" type="text" required maxlength="24" placeholder="e.g., Ash / Misty / Brock" class="w-full px-3.5 py-2.5 rounded-xl bg-[#0e131f] border border-slate-700 text-sm text-white focus:outline-none focus:border-emerald-400">
+        </div>
+
+        <button type="submit" class="w-full py-3 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-emerald-500/20 transition">
+          Connect to Friend's Live Vault
+        </button>
+      </form>
+
+      <!-- Panel B: Host 1-Click Firebase Config Importer -->
+      <form id="setup-panel-host" onsubmit="handleHostConfigSubmit(event)" class="hidden mt-5 space-y-4">
+        <div class="bg-[#0e131f] border border-slate-800 rounded-2xl p-4 space-y-2.5 text-xs">
+          <div class="font-extrabold text-yellow-400 uppercase tracking-wider text-[11px]">3-Step Free Setup (Host Only — Friends Never Do This)</div>
+          <ol class="list-decimal list-inside space-y-1.5 text-slate-300">
+            <li>Create a free project at <strong class="text-white">console.firebase.google.com</strong>, enable <strong class="text-yellow-300">Authentication → Anonymous</strong>, and create a <strong class="text-yellow-300">Firestore Database</strong>.</li>
+            <li>
+              Paste our Security Rules into <strong class="text-white">Firestore → Rules</strong>:
+              <button type="button" onclick="copySecurityRules()" class="ml-1.5 px-2.5 py-0.5 rounded bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 font-bold text-[11px]">
+                <i class="fa-regular fa-copy mr-1"></i>Copy Security Rules
+              </button>
+            </li>
+            <li>In <strong class="text-white">Project Settings → Web App (&lt;/&gt;)</strong>, copy the <code class="text-yellow-300">firebaseConfig</code> snippet and paste it straight below:</li>
+          </ol>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1.5">Paste Firebase Config Snippet (JS Object or JSON) *</label>
+          <textarea id="host-firebase-snippet" rows="5" required placeholder='const firebaseConfig = {
+  apiKey: "AIzaSy...",
+  authDomain: "your-app.firebaseapp.com",
+  projectId: "your-app",
+  appId: "1:123456:web:abcdef"
+};' class="w-full px-3.5 py-2.5 rounded-xl bg-[#0e131f] border border-slate-700 text-xs font-mono text-emerald-300 focus:outline-none focus:border-yellow-400"></textarea>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+          <button type="button" onclick="clearSavedVaultConfig()" class="px-3.5 py-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/25 text-xs font-bold">
+            Reset Saved Connection
+          </button>
+          <button type="submit" class="px-6 py-2.5 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-yellow-500/20 transition">
+            Save & Launch Live Vault
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 8: MAGIC FRIEND INVITE LINK GENERATOR                           -->
+  <!-- ===================================================================== -->
+  <div id="invite-friends-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-[#161e31] border border-slate-700 rounded-3xl max-w-lg w-full p-6 shadow-2xl my-auto">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 flex items-center justify-center">
+            <i class="fa-solid fa-share-nodes"></i>
+          </div>
+          <div>
+            <h3 class="font-display text-lg font-extrabold text-white">Invite Friends to Your Vault</h3>
+            <p class="text-[11px] text-slate-400">Zero setup for friends — one click connects them live!</p>
+          </div>
+        </div>
+        <button onclick="closeModal('invite-friends-modal')" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="mt-4 space-y-4 text-xs">
+        <div id="invite-local-file-warning" class="hidden bg-amber-500/15 border border-amber-500/35 rounded-xl p-3 text-amber-200 space-y-1">
+          <div class="font-bold text-amber-300"><i class="fa-solid fa-triangle-exclamation mr-1"></i>You are currently viewing a local file (file://)</div>
+          <p class="text-[11px] leading-relaxed">Upload this HTML file (renamed to <code class="text-white">index.html</code>) to <strong>Netlify Drop</strong> or <strong>GitHub Pages</strong> first, open your hosted URL, and copy the Magic Invite Link from there so your friends can open it over the web!</p>
+        </div>
+
+        <div>
+          <label class="block font-bold text-slate-300 mb-1.5">1. Magic Friend Invite Link (Recommended)</label>
+          <div class="flex gap-2">
+            <input id="magic-invite-link-output" type="text" readonly class="flex-1 px-3 py-2.5 rounded-xl bg-[#0e131f] border border-slate-700 font-mono text-[11px] text-emerald-300 select-all focus:outline-none">
+            <button onclick="copyTextFromInput('magic-invite-link-output', 'Magic Invite Link copied! Send it to your friends.')" class="px-4 py-2.5 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-extrabold shrink-0 transition">
+              <i class="fa-regular fa-copy mr-1"></i>Copy Link
+            </button>
+          </div>
+          <p class="text-[11px] text-slate-400 mt-1.5">When your friends click this link, it automatically connects their browser to your live Card Vault and asks only for their Trainer Name.</p>
+        </div>
+
+        <div class="pt-2 border-t border-slate-800">
+          <label class="block font-bold text-slate-300 mb-1.5">2. Short Invite Code (Fallback)</label>
+          <div class="flex gap-2">
+            <input id="magic-invite-code-output" type="text" readonly class="flex-1 px-3 py-2 rounded-xl bg-[#0e131f] border border-slate-700 font-mono text-[11px] text-yellow-300 select-all focus:outline-none">
+            <button onclick="copyTextFromInput('magic-invite-code-output', 'Invite Code copied!')" class="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold shrink-0 transition">
+              Copy Code
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-5 flex justify-end">
+        <button onclick="closeModal('invite-friends-modal')" class="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 9: 1-STEP FRIEND WELCOME ONBOARDING (AUTO-TRIGGERED ON INVITE)  -->
+  <!-- ===================================================================== -->
+  <div id="friend-welcome-modal" class="fixed inset-0 z-50 hidden bg-black/88 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-[#161e31] border border-emerald-500/40 rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl text-center">
+      <div class="w-14 h-14 rounded-2xl bg-gradient-to-tr from-yellow-400 to-amber-500 text-slate-950 flex items-center justify-center text-2xl mx-auto mb-4 shadow-lg shadow-yellow-500/20">
+        <i class="fa-solid fa-id-card-clip"></i>
+      </div>
+      <span class="px-3 py-1 rounded-full text-[11px] font-extrabold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+        <i class="fa-solid fa-circle-check mr-1"></i>Connected to Friends' Live Vault!
+      </span>
+      <h3 class="font-display text-xl font-extrabold text-white mt-3">Welcome, Trainer!</h3>
+      <p class="text-xs text-slate-400 mt-1.5">Enter your Trainer Name below so your friends see who uploaded your cards and decks.</p>
+
+      <form onsubmit="handleFriendWelcomeSubmit(event)" class="mt-5 space-y-4 text-left">
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Your Trainer Name *</label>
+          <input id="welcome-trainer-name-input" type="text" required maxlength="24" placeholder="Enter your name..." class="w-full px-4 py-3 rounded-xl bg-[#0e131f] border border-slate-700 text-sm text-white focus:outline-none focus:border-yellow-400">
+        </div>
+        <button type="submit" class="w-full py-3 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-sm shadow-lg shadow-yellow-500/20 transition">
+          Enter Card Vault
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- FIREBASE & APPLICATION SCRIPT                                         -->
+  <!-- ===================================================================== -->
+  <script type="module">
+    import { initializeApp, getApps, deleteApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import {
+      getAuth,
+      signInAnonymously,
+      signInWithCustomToken,
+      onAuthStateChanged
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      setDoc,
+      addDoc,
+      updateDoc,
+      deleteDoc,
+      onSnapshot,
+      collection
+    } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+    const STORAGE_KEY_CONFIG = 'pokevault_firebase_config_v1';
+    const STORAGE_KEY_NAME = 'pokevault_trainer_name_v1';
+    const appId = typeof __app_id !== 'undefined' ? __app_id : 'pokevault-tcg-live';
+
+    let activeFirebaseConfig = null;
+    let joinedViaMagicInvite = false;
+
+    let app = null;
+    let auth = null;
+    let db = null;
+
+    const state = {
+      user: null,
+      displayName: localStorage.getItem(STORAGE_KEY_NAME) || 'Trainer',
+      cards: [],
+      decks: [],
+      activeTab: 'vault',
+      activeDeckId: null,
+      inspectedFriendDeckId: null,
+      uploadMode: 'full-image', // 'full-image' | 'card-maker'
+      currentImageDataUrl: ''
+    };
+
+    // Authentic Pokémon TCG Energy Type Badges
+    const ENERGY_META = {
+      Fire:      { bg: '#ef4444', icon: 'fa-fire',        text: '#fff' },
+      Water:     { bg: '#0ea5e9', icon: 'fa-droplet',     text: '#fff' },
+      Grass:     { bg: '#22c55e', icon: 'fa-leaf',        text: '#fff' },
+      Lightning: { bg: '#eab308', icon: 'fa-bolt',        text: '#111' },
+      Psychic:   { bg: '#a855f7', icon: 'fa-eye',         text: '#fff' },
+      Fighting:  { bg: '#c2410c', icon: 'fa-hand-fist',   text: '#fff' },
+      Darkness:  { bg: '#1e293b', icon: 'fa-moon',        text: '#fff' },
+      Metal:     { bg: '#64748b', icon: 'fa-shield-halved', text: '#fff' },
+      Fairy:     { bg: '#ec4899', icon: 'fa-sparkles',    text: '#fff' },
+      Dragon:    { bg: '#b45309', icon: 'fa-dragon',      text: '#fff' },
+      Colorless: { bg: '#e2e8f0', icon: 'fa-star-of-life', text: '#111' },
+      Trainer:   { bg: '#2563eb', icon: 'fa-suitcase',    text: '#fff' }
+    };
+
+    function escapeHtml(str) {
+      if (str === null || str === undefined) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    window.showToast = (message, type = 'info') => {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      const colors = {
+        success: 'bg-emerald-950/95 border-emerald-500/50 text-emerald-200',
+        error: 'bg-rose-950/95 border-rose-500/50 text-rose-200',
+        info: 'bg-slate-900/95 border-yellow-400/50 text-yellow-100'
+      };
+      const icons = {
+        success: 'fa-circle-check text-emerald-400',
+        error: 'fa-circle-exclamation text-rose-400',
+        info: 'fa-bolt text-yellow-400'
+      };
+      toast.className = `pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-xl border shadow-xl text-xs font-semibold transition-all duration-300 ${colors[type] || colors.info}`;
+      toast.innerHTML = `<i class="fa-solid ${icons[type] || icons.info}"></i><span>${escapeHtml(message)}</span>`;
+      container.appendChild(toast);
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transform = 'translateY(8px)';
+        setTimeout(() => toast.remove(), 300);
+      }, 3200);
+    };
+
+    window.openModal = (id) => document.getElementById(id)?.classList.remove('hidden');
+    window.closeModal = (id) => document.getElementById(id)?.classList.add('hidden');
+
+    // Clipboard helper compatible with both HTTPS and sandboxed iframes
+    window.copyTextSafe = (text, successMsg = 'Copied to clipboard!') => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMsg, 'success');
+      } catch (e) {
+        showToast('Could not auto-copy — please select and copy manually.', 'error');
+      }
+      ta.remove();
+    };
+
+    window.copyTextFromInput = (inputId, successMsg) => {
+      const el = document.getElementById(inputId);
+      if (!el) return;
+      el.select();
+      copyTextSafe(el.value, successMsg);
+    };
+
+    window.copySecurityRules = () => {
+      const rulesText = document.getElementById('rules-code-block')?.textContent || '';
+      copyTextSafe(rulesText, 'Firestore Security Rules copied!');
+    };
+
+    // -----------------------------------------------------------------------
+    // MAGIC INVITE LINK ENCODER / DECODER & ZERO-CODE CONFIG PARSER
+    // -----------------------------------------------------------------------
+    function encodeInvitePayload(configObj) {
+      const minimal = {
+        apiKey: configObj.apiKey,
+        authDomain: configObj.authDomain,
+        projectId: configObj.projectId,
+        storageBucket: configObj.storageBucket || '',
+        messagingSenderId: configObj.messagingSenderId || '',
+        appId: configObj.appId
+      };
+      const json = JSON.stringify(minimal);
+      return btoa(unescape(encodeURIComponent(json)))
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=+$/, '');
+    }
+
+    function decodeInvitePayload(rawInput) {
+      if (!rawInput) return null;
+      let token = rawInput.trim();
+      const hashMatch = token.match(/#invite=([A-Za-z0-9\-_]+)/);
+      if (hashMatch) {
+        token = hashMatch[1];
+      }
+      try {
+        const b64 = token.replace(/-/g, '+').replace(/_/g, '/');
+        const json = decodeURIComponent(escape(atob(b64)));
+        const parsed = JSON.parse(json);
+        if (parsed && parsed.apiKey && parsed.projectId && parsed.appId) {
+          return parsed;
+        }
+      } catch (e) {
+        return null;
+      }
+      return null;
+    }
+
+    function parseFirebaseSnippet(rawText) {
+      if (!rawText) return null;
+      // 1. Try direct JSON parse first
+      try {
+        const direct = JSON.parse(rawText.trim());
+        if (direct.apiKey && direct.projectId && direct.appId) return direct;
+      } catch (_) {}
+
+      // 2. Extract standard JS keys from pasted `const firebaseConfig = { ... };`
+      const keys = ['apiKey', 'authDomain', 'projectId', 'storageBucket', 'messagingSenderId', 'appId'];
+      const extracted = {};
+      for (const k of keys) {
+        const regex = new RegExp(`["']?${k}["']?\\s*:\\s*["']([^"']+)["']`);
+        const match = rawText.match(regex);
+        if (match && match[1]) {
+          extracted[k] = match[1].trim();
+        }
+      }
+      if (extracted.apiKey && extracted.projectId && extracted.appId) {
+        return extracted;
+      }
+      return null;
+    }
+
+    function resolveInitialFirebaseConfig() {
+      // Priority 1: Magic Friend Invite Link in URL Hash (#invite=...)
+      if (window.location.hash && window.location.hash.includes('invite=')) {
+        const invitedConfig = decodeInvitePayload(window.location.hash);
+        if (invitedConfig) {
+          localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(invitedConfig));
+          joinedViaMagicInvite = true;
+          // Clean hash from address bar so refreshing stays clean
+          try {
+            history.replaceState(null, '', window.location.pathname + window.location.search);
+          } catch (_) {}
+          return invitedConfig;
+        }
+      }
+
+      // Priority 2: Environment-injected Canvas config
+      if (typeof __firebase_config !== 'undefined' && __firebase_config) {
+        try {
+          return JSON.parse(__firebase_config);
+        } catch (_) {}
+      }
+
+      // Priority 3: Previously saved config in localStorage
+      const saved = localStorage.getItem(STORAGE_KEY_CONFIG);
+      if (saved) {
+        try {
+          const parsed = JSON.parse(saved);
+          if (parsed && parsed.apiKey && parsed.projectId) return parsed;
+        } catch (_) {}
+      }
+
+      return null;
+    }
+
+    window.switchSetupTab = (tab) => {
+      const friendBtn = document.getElementById('setup-tab-friend');
+      const hostBtn = document.getElementById('setup-tab-host');
+      const friendPanel = document.getElementById('setup-panel-friend');
+      const hostPanel = document.getElementById('setup-panel-host');
+
+      if (tab === 'friend') {
+        friendBtn.classList.add('bg-emerald-500', 'text-slate-950');
+        friendBtn.classList.remove('text-slate-400');
+        hostBtn.classList.remove('bg-yellow-400', 'text-slate-950');
+        hostBtn.classList.add('text-slate-400');
+        friendPanel.classList.remove('hidden');
+        hostPanel.classList.add('hidden');
+      } else {
+        hostBtn.classList.add('bg-yellow-400', 'text-slate-950');
+        hostBtn.classList.remove('text-slate-400');
+        friendBtn.classList.remove('bg-emerald-500', 'text-slate-950');
+        friendBtn.classList.add('text-slate-400');
+        hostPanel.classList.remove('hidden');
+        friendPanel.classList.add('hidden');
+      }
+    };
+
+    window.openHostSetupModal = (allowClose = true) => {
+      const closeBtn = document.getElementById('close-host-setup-btn');
+      if (allowClose && activeFirebaseConfig) {
+        closeBtn.classList.remove('hidden');
+      } else {
+        closeBtn.classList.add('hidden');
+      }
+      if (activeFirebaseConfig) {
+        document.getElementById('host-firebase-snippet').value = JSON.stringify(activeFirebaseConfig, null, 2);
+      }
+      openModal('host-setup-modal');
+    };
+
+    window.handleFriendInvitePaste = async (e) => {
+      e.preventDefault();
+      const rawInvite = document.getElementById('friend-invite-input').value;
+      const trainerName = document.getElementById('friend-join-name-input').value.trim();
+      const decoded = decodeInvitePayload(rawInvite);
+
+      if (!decoded) {
+        showToast('Invalid Invite Link or Code. Ask your friend to copy their Magic Invite Link again.', 'error');
+        return;
+      }
+
+      if (trainerName) {
+        state.displayName = trainerName;
+        localStorage.setItem(STORAGE_KEY_NAME, trainerName);
+      }
+
+      localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(decoded));
+      activeFirebaseConfig = decoded;
+      closeModal('host-setup-modal');
+      showToast('Invite accepted! Connecting to live vault...', 'success');
+      await connectToFirebase(decoded);
+    };
+
+    window.handleHostConfigSubmit = async (e) => {
+      e.preventDefault();
+      const rawSnippet = document.getElementById('host-firebase-snippet').value;
+      const parsed = parseFirebaseSnippet(rawSnippet);
+
+      if (!parsed) {
+        showToast('Could not detect apiKey, projectId, and appId. Paste the full firebaseConfig object.', 'error');
+        return;
+      }
+
+      localStorage.setItem(STORAGE_KEY_CONFIG, JSON.stringify(parsed));
+      activeFirebaseConfig = parsed;
+      closeModal('host-setup-modal');
+      showToast('Vault configuration saved! Connecting...', 'success');
+      await connectToFirebase(parsed);
+    };
+
+    window.clearSavedVaultConfig = () => {
+      localStorage.removeItem(STORAGE_KEY_CONFIG);
+      activeFirebaseConfig = null;
+      showToast('Saved connection cleared.', 'info');
+      window.location.reload();
+    };
+
+    window.openInviteModal = () => {
+      if (!activeFirebaseConfig) {
+        openHostSetupModal(false);
+        return;
+      }
+
+      const code = encodeInvitePayload(activeFirebaseConfig);
+      const baseUrl = window.location.origin && window.location.origin !== 'null'
+        ? `${window.location.origin}${window.location.pathname}`
+        : window.location.href.split('#')[0];
+      const magicLink = `${baseUrl}#invite=${code}`;
+
+      document.getElementById('magic-invite-link-output').value = magicLink;
+      document.getElementById('magic-invite-code-output').value = code;
+
+      const warnEl = document.getElementById('invite-local-file-warning');
+      if (window.location.protocol === 'file:') {
+        warnEl.classList.remove('hidden');
+      } else {
+        warnEl.classList.add('hidden');
+      }
+
+      openModal('invite-friends-modal');
+    };
+
+    window.handleFriendWelcomeSubmit = async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('welcome-trainer-name-input').value.trim();
+      if (!name) return;
+
+      state.displayName = name;
+      localStorage.setItem(STORAGE_KEY_NAME, name);
+      updateHeaderProfileUI();
+      closeModal('friend-welcome-modal');
+      showToast(`Welcome to the Vault, ${name}!`, 'success');
+
+      if (state.user && db) {
+        await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'profiles', state.user.uid), {
+          ownerId: state.user.uid,
+          displayName: name,
+          lastActive: Date.now()
+        }, { merge: true });
+      }
+    };
+
+    // -----------------------------------------------------------------------
+    // TRUE-TO-SIZE 2.5" x 3.5" MONITOR DPI CALIBRATOR
+    // -----------------------------------------------------------------------
+    window.updateCardDpiScale = (dpiVal) => {
+      const dpi = Number(dpiVal) || 96;
+      const scale = dpi / 96;
+      document.documentElement.style.setProperty('--dpi-scale', scale.toFixed(4));
+      const wPx = Math.round(2.5 * dpi);
+      const hPx = Math.round(3.5 * dpi);
+      document.getElementById('dpi-readout').textContent = `${dpi} DPI (${wPx}×${hPx}px)`;
+    };
+
+    window.resetDpiScale = () => {
+      const slider = document.getElementById('dpi-slider');
+      slider.value = 96;
+      updateCardDpiScale(96);
+    };
+
+    // -----------------------------------------------------------------------
+    // TAB NAVIGATION
+    // -----------------------------------------------------------------------
+    window.switchTab = (tabName) => {
+      state.activeTab = tabName;
+      ['vault', 'my-decks', 'friends-decks'].forEach(t => {
+        const view = document.getElementById(`view-${t}`);
+        const btn = document.getElementById(`tab-${t}`);
+        if (t === tabName) {
+          view?.classList.remove('hidden');
+          btn?.classList.add('bg-yellow-400', 'text-slate-950', 'shadow');
+          btn?.classList.remove('text-slate-300', 'hover:text-white', 'hover:bg-slate-800/70');
+        } else {
+          view?.classList.add('hidden');
+          btn?.classList.remove('bg-yellow-400', 'text-slate-950', 'shadow');
+          btn?.classList.add('text-slate-300', 'hover:text-white', 'hover:bg-slate-800/70');
+        }
+      });
+    };
+
+    // -----------------------------------------------------------------------
+    // AUTHENTICATION & REAL-TIME FIRESTORE SYNC (ZERO PREMADE PLACEHOLDERS)
+    // -----------------------------------------------------------------------
+    async function initApp() {
+      activeFirebaseConfig = resolveInitialFirebaseConfig();
+
+      if (!activeFirebaseConfig) {
+        document.getElementById('live-status-text').textContent = 'Setup Needed';
+        openHostSetupModal(false);
+        return;
+      }
+
+      await connectToFirebase(activeFirebaseConfig);
+    }
+
+    async function connectToFirebase(configObj) {
+      try {
+        // Clean up any existing Firebase app instance before reconnecting
+        const existingApps = getApps();
+        for (const existing of existingApps) {
+          await deleteApp(existing);
+        }
+
+        app = initializeApp(configObj);
+        auth = getAuth(app);
+        db = getFirestore(app);
+
+        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+          await signInWithCustomToken(auth, __initial_auth_token);
+        } else {
+          await signInAnonymously(auth);
+        }
+
+        onAuthStateChanged(auth, async (user) => {
+          if (!user) return;
+          state.user = user;
+
+          const savedName = localStorage.getItem(STORAGE_KEY_NAME);
+          state.displayName = savedName || user.displayName || `Trainer_${user.uid.slice(0, 5)}`;
+          updateHeaderProfileUI();
+
+          await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'profiles', user.uid), {
+            ownerId: user.uid,
+            displayName: state.displayName,
+            lastActive: Date.now()
+          }, { merge: true });
+
+          document.getElementById('live-status-text').textContent = 'Live Sync Active';
+          attachRealtimeListeners();
+
+          // If friend just clicked a Magic Invite Link and hasn't set their name yet, show 1-step welcome
+          if (joinedViaMagicInvite && !savedName) {
+            joinedViaMagicInvite = false;
+            openModal('friend-welcome-modal');
+          }
+        });
+      } catch (err) {
+        console.error('Firebase init error:', err);
+        document.getElementById('live-status-text').textContent = 'Connection Error';
+        showToast('Connection failed — verify Anonymous Auth & Firestore are enabled.', 'error');
+        openHostSetupModal(true);
+      }
+    }
+
+    function updateHeaderProfileUI() {
+      document.getElementById('user-display-name').textContent = state.displayName;
+      document.getElementById('user-avatar').textContent = state.displayName.slice(0, 2).toUpperCase();
+    }
+
+    window.openProfileModal = () => {
+      if (!state.user) return;
+      document.getElementById('profile-name-input').value = state.displayName;
+      document.getElementById('profile-full-uid').textContent = state.user.uid;
+      openModal('profile-modal');
+    };
+
+    window.handleSaveProfile = async (e) => {
+      e.preventDefault();
+      if (!state.user || !db) return;
+      const newName = document.getElementById('profile-name-input').value.trim();
+      if (!newName) return;
+
+      state.displayName = newName;
+      localStorage.setItem(STORAGE_KEY_NAME, newName);
+      updateHeaderProfileUI();
+
+      await setDoc(doc(db, 'artifacts', appId, 'public', 'data', 'profiles', state.user.uid), {
+        ownerId: state.user.uid,
+        displayName: newName,
+        lastActive: Date.now()
+      }, { merge: true });
+
+      const myDecks = state.decks.filter(d => d.ownerId === state.user.uid);
+      for (const deck of myDecks) {
+        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'decks', deck.id), {
+          ownerName: newName
+        });
+      }
+
+      closeModal('profile-modal');
+      showToast(`Trainer name updated to "${newName}"!`, 'success');
+    };
+
+    function attachRealtimeListeners() {
+      if (!state.user || !db) return;
+
+      // 1. Live Uploaded Cards Listener (No premade cards seeded!)
+      onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'cards'), (snapshot) => {
+        const list = [];
+        snapshot.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
+        list.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+        state.cards = list;
+
+        document.getElementById('badge-vault-count').textContent = list.length;
+        renderVault();
+        if (state.activeDeckId) renderDeckBuilder();
+        if (state.inspectedFriendDeckId) openFriendDeckInspector(state.inspectedFriendDeckId, true);
+      }, (err) => {
+        console.error('Cards listener error:', err);
+      });
+
+      // 2. Live Decks Listener
+      onSnapshot(collection(db, 'artifacts', appId, 'public', 'data', 'decks'), (snapshot) => {
+        const list = [];
+        snapshot.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
+        list.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+        state.decks = list;
+
+        const myDecks = list.filter(d => d.ownerId === state.user.uid);
+        const friendDecks = list.filter(d => d.ownerId !== state.user.uid);
+
+        document.getElementById('badge-my-decks-count').textContent = myDecks.length;
+        document.getElementById('badge-friends-decks-count').textContent = friendDecks.length;
+
+        const ticker = document.getElementById('latest-activity-text');
+        if (list.length > 0) {
+          const latest = list[0];
+          const count = Object.values(latest.cards || {}).reduce((s, q) => s + q, 0);
+          ticker.textContent = `${latest.ownerName || 'A Trainer'} updated "${latest.name}" (${count} cards)`;
+        } else if (state.cards.length > 0) {
+          ticker.textContent = `${state.cards.length} custom card(s) uploaded to the live Vault!`;
+        } else {
+          ticker.textContent = 'Vault is empty — click "Upload Card Image" or "Design Custom Card" to begin!';
+        }
+
+        renderMyDecks();
+        renderFriendsDecks();
+
+        if (state.activeDeckId) {
+          if (myDecks.some(d => d.id === state.activeDeckId)) {
+            renderDeckBuilder();
+          } else {
+            closeDeckBuilder();
+          }
+        }
+
+        if (state.inspectedFriendDeckId) {
+          if (list.some(d => d.id === state.inspectedFriendDeckId)) {
+            openFriendDeckInspector(state.inspectedFriendDeckId, true);
+          } else {
+            closeFriendInspector();
+          }
+        }
+      }, (err) => {
+        console.error('Decks listener error:', err);
+      });
+    }
+
+    // -----------------------------------------------------------------------
+    // TRUE-TO-SIZE POKÉMON TCG CARD RENDERER (2.5" x 3.5" / 5:7 RATIO)
+    // -----------------------------------------------------------------------
+    function renderEnergyPip(type, sizeEm = 1) {
+      const meta = ENERGY_META[type] || ENERGY_META.Colorless;
+      return `
+        <span style="background:${meta.bg}; color:${meta.text}; width:calc(14px * var(--card-font-scale) * ${sizeEm}); height:calc(14px * var(--card-font-scale) * ${sizeEm}); font-size:calc(8px * var(--card-font-scale) * ${sizeEm});"
+              class="inline-flex items-center justify-center rounded-full shadow-sm border border-black/30 shrink-0" title="${escapeHtml(type)}">
+          <i class="fa-solid ${meta.icon}"></i>
+        </span>
+      `;
+    }
+
+    function getRaritySymbol(rarity) {
+      if (rarity === 'Ultra Rare') return '★★';
+      if (rarity === 'Rare Holo') return '★';
+      if (rarity === 'Uncommon') return '◆';
+      return '●';
+    }
+
+    function buildPokemonCardHTML(card, options = {}) {
+      const {
+        showOwnerControls = false,
+        quantityBadge = null,
+        disableClickZoom = false
+      } = options;
+
+      const isMine = state.user && card.ownerId === state.user.uid;
+      const isHolo = card.rarity === 'Rare Holo' || card.rarity === 'Ultra Rare';
+      const borderClass = card.borderStyle === 'silver-holo'
+        ? 'border-silver-holo'
+        : card.borderStyle === 'gold-ultra'
+          ? 'border-gold-ultra'
+          : 'border-classic-yellow';
+
+      const clickAttr = disableClickZoom ? '' : `onclick="zoomCard('${card.id}')"`;
+
+      // Mode A: Full Custom Card Image Upload (renders user's uploaded card image edge-to-edge inside 2.5"x3.5" card frame)
+      if (card.uploadMode === 'full-image' && card.imageUrl) {
+        return `
+          <div class="flex flex-col items-center gap-2">
+            <div ${clickAttr} class="pkmn-card-outer ${borderClass} ${isHolo ? 'holo-shimmer' : ''} cursor-pointer group">
+              <div class="pkmn-card-inner bg-slate-950 !p-0">
+                <img src="${escapeHtml(card.imageUrl)}" alt="${escapeHtml(card.name)}" class="full-art-card-img">
+                ${quantityBadge !== null ? `
+                  <span style="font-size:calc(11px * var(--card-font-scale)); padding:calc(2px * var(--card-font-scale)) calc(7px * var(--card-font-scale));"
+                        class="absolute top-2 right-2 z-10 rounded-lg font-black bg-yellow-400 text-slate-950 shadow-lg border border-black/40">
+                    ${quantityBadge}×
+                  </span>
+                ` : ''}
+              </div>
+            </div>
+
+            <!-- Subtle Caption & Owner Actions Below Physical Card -->
+            <div style="width: var(--card-w);" class="flex items-center justify-between px-1 text-[11px]">
+              <div class="truncate text-slate-300 font-semibold" title="${escapeHtml(card.name)}">
+                ${escapeHtml(card.name)} <span class="text-slate-500 font-normal">• ${escapeHtml(card.creatorName || 'Trainer')}</span>
+              </div>
+              ${showOwnerControls && isMine ? `
+                <div class="flex items-center gap-1 shrink-0">
+                  <button onclick="openEditCardModal('${card.id}')" class="p-1 text-slate-400 hover:text-yellow-400 transition" title="Edit Card">
+                    <i class="fa-solid fa-pen"></i>
+                  </button>
+                  <button onclick="deleteCard('${card.id}')" class="p-1 text-slate-400 hover:text-rose-400 transition" title="Delete Card">
+                    <i class="fa-solid fa-trash"></i>
+                  </button>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+      }
+
+      // Mode B: Authentic Pokémon TCG Structured Card Layout (2.5" x 3.5" proportional scaling)
+      const isDarkText = card.type === 'Darkness' || card.type === 'Dragon';
+      const atk1CostCount = Math.max(0, Number(card.atk1Cost) || 0);
+      const atk2CostCount = Math.max(0, Number(card.atk2Cost) || 0);
+      const retreatCount = Math.max(0, Number(card.retreatCost) || 0);
+
+      const atk1Pips = Array.from({ length: atk1CostCount }, (_, i) =>
+        renderEnergyPip(i === 0 ? card.type : 'Colorless', 0.85)
+      ).join('');
+
+      const atk2Pips = Array.from({ length: atk2CostCount }, (_, i) =>
+        renderEnergyPip(i < 2 ? card.type : 'Colorless', 0.85)
+      ).join('');
+
+      const retreatPips = retreatCount > 0
+        ? Array.from({ length: retreatCount }, () => renderEnergyPip('Colorless', 0.72)).join('')
+        : `<span style="font-size:calc(7px * var(--card-font-scale));" class="opacity-60">—</span>`;
+
+      return `
+        <div class="flex flex-col items-center gap-2">
+          <div ${clickAttr} class="pkmn-card-outer ${borderClass} ${isHolo ? 'holo-shimmer' : ''} cursor-pointer">
+            <div class="pkmn-card-inner type-theme-${escapeHtml(card.type || 'Fire')}">
+              ${quantityBadge !== null ? `
+                <span style="font-size:calc(11px * var(--card-font-scale)); padding:calc(2px * var(--card-font-scale)) calc(7px * var(--card-font-scale));"
+                      class="absolute bottom-7 right-2 z-20 rounded-lg font-black bg-yellow-400 text-slate-950 shadow-lg border border-black/50">
+                  ${quantityBadge}×
+                </span>
+              ` : ''}
+
+              <!-- TOP HEADER: Stage Pill + Name + HP + Energy Icon -->
+              <div>
+                <div class="flex items-center justify-between gap-1 mb-0.5">
+                  <div class="flex items-center gap-1 min-w-0">
+                    <span style="font-size:calc(6.5px * var(--card-font-scale)); padding:calc(1px * var(--card-font-scale)) calc(4px * var(--card-font-scale));"
+                          class="rounded font-black uppercase tracking-tight bg-gradient-to-b from-slate-100 to-slate-300 text-slate-900 border border-slate-500/60 shadow-xs shrink-0">
+                      ${escapeHtml(card.stage || 'BASIC')}
+                    </span>
+                    <span style="font-size:calc(11.5px * var(--card-font-scale));"
+                          class="font-display font-extrabold tracking-tight truncate ${isDarkText ? 'text-white' : 'text-slate-950'}">
+                      ${escapeHtml(card.name || 'Custom Card')}
+                    </span>
+                  </div>
+
+                  <div class="flex items-center gap-1 shrink-0">
+                    ${card.type !== 'Trainer' ? `
+                      <div class="flex items-baseline">
+                        <span style="font-size:calc(6.5px * var(--card-font-scale));" class="font-extrabold mr-0.5 ${isDarkText ? 'text-rose-300' : 'text-rose-700'}">HP</span>
+                        <span style="font-size:calc(12px * var(--card-font-scale));" class="font-black leading-none ${isDarkText ? 'text-white' : 'text-slate-950'}">${Number(card.hp) || 100}</span>
+                      </div>
+                    ` : ''}
+                    ${renderEnergyPip(card.type, 1)}
+                  </div>
+                </div>
+
+                <!-- FRAMED ARTWORK WINDOW (Metallic Bevel) -->
+                <div style="height:calc(126px * var(--card-font-scale)); border-width:calc(2.5px * var(--card-font-scale));"
+                     class="w-full rounded-sm border-slate-300/90 bg-slate-950 overflow-hidden shadow-inner relative">
+                  ${card.imageUrl
+                    ? `<img src="${escapeHtml(card.imageUrl)}" alt="${escapeHtml(card.name)}" class="w-full h-full object-cover">`
+                    : `<div class="w-full h-full flex flex-col items-center justify-center text-slate-500 bg-slate-900">
+                         <i style="font-size:calc(18px * var(--card-font-scale));" class="fa-regular fa-image mb-1"></i>
+                         <span style="font-size:calc(8px * var(--card-font-scale));">No Artwork Uploaded</span>
+                       </div>`
+                  }
+                </div>
+
+                <!-- DEX / SPEC STRIP UNDER ARTWORK -->
+                <div style="font-size:calc(6px * var(--card-font-scale)); padding:calc(1.5px * var(--card-font-scale)) calc(4px * var(--card-font-scale)); margin-top:calc(2px * var(--card-font-scale));"
+                     class="w-full bg-gradient-to-r from-slate-200 via-white to-slate-200 text-slate-800 font-bold text-center rounded-xs border border-slate-400/60 truncate">
+                  ${escapeHtml(card.specLine || 'Custom TCG Edition')}
+                </div>
+              </div>
+
+              <!-- MIDDLE: ABILITY & ATTACKS SECTION -->
+              <div class="flex-1 flex flex-col justify-center gap-1.5 my-1 overflow-hidden">
+                ${card.abilityName ? `
+                  <div style="padding:calc(2px * var(--card-font-scale)) calc(3px * var(--card-font-scale));"
+                       class="rounded bg-white/35 backdrop-blur-[1px] border border-black/10">
+                    <div class="flex items-center gap-1">
+                      <span style="font-size:calc(6.5px * var(--card-font-scale)); padding:0 calc(4px * var(--card-font-scale));"
+                            class="rounded-sm bg-rose-700 text-white font-black uppercase tracking-wider">Ability</span>
+                      <span style="font-size:calc(8.5px * var(--card-font-scale));"
+                            class="font-extrabold truncate ${isDarkText ? 'text-rose-200' : 'text-rose-900'}">${escapeHtml(card.abilityName)}</span>
+                    </div>
+                    <p style="font-size:calc(7px * var(--card-font-scale)); line-height:1.18;"
+                       class="mt-0.5 line-clamp-2 ${isDarkText ? 'text-slate-100' : 'text-slate-900'}">${escapeHtml(card.abilityDesc || '')}</p>
+                  </div>
+                ` : ''}
+
+                <!-- Primary Attack -->
+                ${card.atk1Name ? `
+                  <div style="padding:calc(2px * var(--card-font-scale)) calc(2px * var(--card-font-scale));">
+                    <div class="flex items-center justify-between gap-1">
+                      <div class="flex items-center gap-1 min-w-0">
+                        <div class="flex items-center gap-0.5 shrink-0">${atk1Pips}</div>
+                        <span style="font-size:calc(9.5px * var(--card-font-scale));"
+                              class="font-extrabold truncate ${isDarkText ? 'text-white' : 'text-slate-950'}">${escapeHtml(card.atk1Name)}</span>
+                      </div>
+                      <span style="font-size:calc(10.5px * var(--card-font-scale));"
+                            class="font-black shrink-0 ${isDarkText ? 'text-white' : 'text-slate-950'}">${escapeHtml(card.atk1Dmg || '')}</span>
+                    </div>
+                    ${card.atk1Desc ? `
+                      <p style="font-size:calc(7px * var(--card-font-scale)); line-height:1.18;"
+                         class="mt-0.5 line-clamp-2 ${isDarkText ? 'text-slate-200' : 'text-slate-900'}">${escapeHtml(card.atk1Desc)}</p>
+                    ` : ''}
+                  </div>
+                ` : ''}
+
+                <!-- Secondary Attack -->
+                ${(card.atk2Name && atk2CostCount > 0) ? `
+                  <div style="padding:calc(2px * var(--card-font-scale)) calc(2px * var(--card-font-scale));"
+                       class="border-t border-black/15 pt-1">
+                    <div class="flex items-center justify-between gap-1">
+                      <div class="flex items-center gap-1 min-w-0">
+                        <div class="flex items-center gap-0.5 shrink-0">${atk2Pips}</div>
+                        <span style="font-size:calc(9.5px * var(--card-font-scale));"
+                              class="font-extrabold truncate ${isDarkText ? 'text-white' : 'text-slate-950'}">${escapeHtml(card.atk2Name)}</span>
+                      </div>
+                      <span style="font-size:calc(10.5px * var(--card-font-scale));"
+                            class="font-black shrink-0 ${isDarkText ? 'text-white' : 'text-slate-950'}">${escapeHtml(card.atk2Dmg || '')}</span>
+                    </div>
+                    ${card.atk2Desc ? `
+                      <p style="font-size:calc(7px * var(--card-font-scale)); line-height:1.18;"
+                         class="mt-0.5 line-clamp-2 ${isDarkText ? 'text-slate-200' : 'text-slate-900'}">${escapeHtml(card.atk2Desc)}</p>
+                    ` : ''}
+                  </div>
+                ` : ''}
+              </div>
+
+              <!-- BOTTOM: WEAKNESS / RESISTANCE / RETREAT BAR + FLAVOR + ILLUSTRATOR -->
+              <div>
+                <div style="font-size:calc(6.5px * var(--card-font-scale)); padding:calc(2px * var(--card-font-scale)) calc(5px * var(--card-font-scale));"
+                     class="w-full rounded-full bg-white/75 text-slate-900 font-bold flex items-center justify-between border border-black/15">
+                  <div class="flex items-center gap-1">
+                    <span>weakness</span>
+                    ${card.weakness && card.weakness !== 'None' ? `${renderEnergyPip(card.weakness, 0.72)}<span>×2</span>` : '<span>—</span>'}
+                  </div>
+                  <div class="flex items-center gap-1">
+                    <span>resistance</span>
+                    ${card.resistance && card.resistance !== 'None' ? `${renderEnergyPip(card.resistance, 0.72)}<span>-30</span>` : '<span>—</span>'}
+                  </div>
+                  <div class="flex items-center gap-0.5">
+                    <span>retreat</span>
+                    ${retreatPips}
+                  </div>
+                </div>
+
+                ${card.flavor ? `
+                  <div style="font-size:calc(6px * var(--card-font-scale)); line-height:1.15; margin-top:calc(2px * var(--card-font-scale)); padding:calc(1.5px * var(--card-font-scale)) calc(4px * var(--card-font-scale));"
+                       class="italic bg-white/40 text-slate-900 rounded-xs border border-black/10 line-clamp-1">
+                    ${escapeHtml(card.flavor)}
+                  </div>
+                ` : ''}
+
+                <div style="font-size:calc(6px * var(--card-font-scale)); margin-top:calc(2px * var(--card-font-scale));"
+                     class="flex items-center justify-between font-bold opacity-85 px-0.5">
+                  <span class="truncate max-w-[65%]">Illus. ${escapeHtml(card.creatorName || 'Trainer')}</span>
+                  <span>CUSTOM ${getRaritySymbol(card.rarity)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Owner Controls Below Card -->
+          <div style="width: var(--card-w);" class="flex items-center justify-between px-1 text-[11px]">
+            <span class="truncate text-slate-400">by <strong class="text-slate-200">${escapeHtml(card.creatorName || 'Trainer')}</strong></span>
+            ${showOwnerControls && isMine ? `
+              <div class="flex items-center gap-1.5 shrink-0">
+                <button onclick="openEditCardModal('${card.id}')" class="p-1 text-slate-400 hover:text-yellow-400 transition" title="Edit Card">
+                  <i class="fa-solid fa-pen"></i>
+                </button>
+                <button onclick="deleteCard('${card.id}')" class="p-1 text-slate-400 hover:text-rose-400 transition" title="Delete Card">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </div>
+            ` : `<span class="text-[10px] text-slate-500">Click to zoom</span>`}
+          </div>
+        </div>
+      `;
+    }
+
+    window.zoomCard = (cardId) => {
+      const card = state.cards.find(c => c.id === cardId);
+      if (!card) return;
+      document.getElementById('card-zoom-content').innerHTML = buildPokemonCardHTML(card, { disableClickZoom: true });
+      openModal('card-zoom-modal');
+    };
+
+    // -----------------------------------------------------------------------
+    // VAULT RENDERING (NO PREMADE PLACEHOLDERS — CLEAN UPLOAD PROMPT)
+    // -----------------------------------------------------------------------
+    window.renderVault = () => {
+      const grid = document.getElementById('vault-grid');
+      if (!grid) return;
+
+      const q = (document.getElementById('vault-search')?.value || '').toLowerCase().trim();
+      const typeFilter = document.getElementById('vault-filter-type')?.value || 'ALL';
+      const rarityFilter = document.getElementById('vault-filter-rarity')?.value || 'ALL';
+
+      if (state.cards.length === 0) {
+        grid.innerHTML = `
+          <div class="w-full bg-[#161e31]/90 border-2 border-dashed border-slate-700 rounded-3xl p-10 sm:p-14 text-center flex flex-col items-center">
+            <div class="w-16 h-16 rounded-2xl bg-yellow-400/15 border border-yellow-400/30 text-yellow-400 flex items-center justify-center text-2xl mb-4">
+              <i class="fa-solid fa-cloud-arrow-up"></i>
+            </div>
+            <h3 class="font-display text-xl font-extrabold text-white">Your Shared Card Vault is Empty</h3>
+            <p class="text-xs sm:text-sm text-slate-400 max-w-lg mt-2 leading-relaxed">
+              No premade placeholder cards here! Upload your own custom Pokémon-style card images or build cards from scratch—every card appears live in true <strong class="text-yellow-400">2.5" × 3.5"</strong> TCG dimensions for you and your friends.
+            </p>
+            <div class="flex flex-wrap justify-center gap-3 mt-6">
+              <button onclick="openUploadModal('full-image')" class="px-5 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-yellow-300 border border-yellow-400/30 font-bold text-xs sm:text-sm transition flex items-center gap-2">
+                <i class="fa-solid fa-file-image"></i>
+                <span>Upload Full Card Image</span>
+              </button>
+              <button onclick="openUploadModal('card-maker')" class="px-5 py-3 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-yellow-500/20 transition flex items-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>Design Custom Pokémon Card</span>
+              </button>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      const filtered = state.cards.filter(card => {
+        const matchesQuery = !q ||
+          (card.name || '').toLowerCase().includes(q) ||
+          (card.atk1Name || '').toLowerCase().includes(q) ||
+          (card.abilityName || '').toLowerCase().includes(q) ||
+          (card.creatorName || '').toLowerCase().includes(q);
+        const matchesType = typeFilter === 'ALL' || card.type === typeFilter;
+        const matchesRarity = rarityFilter === 'ALL' || card.rarity === rarityFilter;
+        return matchesQuery && matchesType && matchesRarity;
+      });
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `
+          <div class="w-full bg-[#161e31] border border-slate-800 rounded-2xl p-10 text-center">
+            <p class="text-sm font-bold text-white">No uploaded cards match your current filter.</p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(card => buildPokemonCardHTML(card, { showOwnerControls: true })).join('');
+    };
+
+    // -----------------------------------------------------------------------
+    // CUSTOM CARD UPLOAD MODAL & LIVE 2.5" x 3.5" PREVIEW
+    // -----------------------------------------------------------------------
+    window.setUploadMode = (mode) => {
+      state.uploadMode = mode;
+      const btnFull = document.getElementById('mode-btn-full-image');
+      const btnMaker = document.getElementById('mode-btn-card-maker');
+      const extraFields = document.getElementById('card-maker-extra-fields');
+      const zoneTitle = document.getElementById('upload-zone-title');
+
+      if (mode === 'full-image') {
+        btnFull.classList.add('bg-yellow-400', 'text-slate-950');
+        btnFull.classList.remove('text-slate-400');
+        btnMaker.classList.remove('bg-yellow-400', 'text-slate-950');
+        btnMaker.classList.add('text-slate-400');
+        extraFields.classList.add('hidden');
+        zoneTitle.textContent = 'Upload Full Custom Card Image (2.5" × 3.5" Ratio)';
+      } else {
+        btnMaker.classList.add('bg-yellow-400', 'text-slate-950');
+        btnMaker.classList.remove('text-slate-400');
+        btnFull.classList.remove('bg-yellow-400', 'text-slate-950');
+        btnFull.classList.add('text-slate-400');
+        extraFields.classList.remove('hidden');
+        zoneTitle.textContent = 'Upload Custom Pokémon Artwork for Card Frame';
+      }
+      updateLiveCardPreview();
+    };
+
+    window.openUploadModal = (mode = 'full-image') => {
+      document.getElementById('upload-modal-heading').textContent = 'Upload Custom Card to Live Vault';
+      document.getElementById('publish-card-btn').textContent = 'Publish Card to Live Vault';
+      document.getElementById('edit-card-id').value = '';
+      document.getElementById('custom-card-form').reset();
+      state.currentImageDataUrl = '';
+      setUploadMode(mode);
+      openModal('card-upload-modal');
+    };
+
+    window.openEditCardModal = (cardId) => {
+      const card = state.cards.find(c => c.id === cardId);
+      if (!card || card.ownerId !== state.user?.uid) {
+        showToast('Only the card creator can edit this card.', 'error');
+        return;
+      }
+
+      document.getElementById('upload-modal-heading').textContent = 'Edit Your Custom Card';
+      document.getElementById('publish-card-btn').textContent = 'Save Card Changes';
+      document.getElementById('edit-card-id').value = card.id;
+
+      state.currentImageDataUrl = card.imageUrl || '';
+      document.getElementById('field-name').value = card.name || '';
+      document.getElementById('field-hp').value = card.hp || 120;
+      document.getElementById('field-type').value = card.type || 'Fire';
+      document.getElementById('field-stage').value = card.stage || 'BASIC';
+      document.getElementById('field-rarity').value = card.rarity || 'Rare Holo';
+      document.getElementById('field-border').value = card.borderStyle || 'classic-yellow';
+      document.getElementById('field-spec').value = card.specLine || '';
+      document.getElementById('field-ability-name').value = card.abilityName || '';
+      document.getElementById('field-ability-desc').value = card.abilityDesc || '';
+      document.getElementById('field-atk1-cost').value = card.atk1Cost ?? 2;
+      document.getElementById('field-atk1-name').value = card.atk1Name || '';
+      document.getElementById('field-atk1-dmg').value = card.atk1Dmg || '';
+      document.getElementById('field-atk1-desc').value = card.atk1Desc || '';
+      document.getElementById('field-atk2-cost').value = card.atk2Cost ?? 0;
+      document.getElementById('field-atk2-name').value = card.atk2Name || '';
+      document.getElementById('field-atk2-dmg').value = card.atk2Dmg || '';
+      document.getElementById('field-atk2-desc').value = card.atk2Desc || '';
+      document.getElementById('field-weakness').value = card.weakness || 'Water';
+      document.getElementById('field-resistance').value = card.resistance || 'None';
+      document.getElementById('field-retreat').value = card.retreatCost ?? 1;
+      document.getElementById('field-flavor').value = card.flavor || '';
+
+      setUploadMode(card.uploadMode || 'card-maker');
+      openModal('card-upload-modal');
+    };
+
+    // Compress uploaded file via HTML5 Canvas so it fits cleanly inside Firestore (< 350KB)
+    function processImageFile(file) {
+      if (!file || !file.type.startsWith('image/')) {
+        showToast('Please select a valid PNG, JPG, or WEBP image file.', 'error');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          // Full card images get higher resolution (500x700 = exact 5:7 ratio); artwork gets 480px max width
+          const maxDim = state.uploadMode === 'full-image' ? 700 : 480;
+          const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+          state.currentImageDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+
+          // Auto-fill card name from filename if blank
+          const nameInput = document.getElementById('field-name');
+          if (!nameInput.value.trim()) {
+            const cleanName = file.name.replace(/\.[^/.]+$/, '').replace(/[_-]+/g, ' ').slice(0, 30);
+            nameInput.value = cleanName;
+          }
+
+          updateLiveCardPreview();
+          showToast('Image loaded into 2.5" × 3.5" preview!', 'success');
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    window.handleCardImageSelect = (event) => {
+      const file = event.target.files?.[0];
+      if (file) processImageFile(file);
+    };
+
+    // Drag & Drop support on the upload box
+    const dropZone = document.getElementById('drop-zone');
+    if (dropZone) {
+      dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('border-yellow-400', 'bg-slate-900');
+      });
+      dropZone.addEventListener('dragleave', () => {
+        dropZone.classList.remove('border-yellow-400', 'bg-slate-900');
+      });
+      dropZone.addEventListener('drop', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('border-yellow-400', 'bg-slate-900');
+        const file = e.dataTransfer?.files?.[0];
+        if (file) processImageFile(file);
+      });
+    }
+
+    function collectFormCardData() {
+      return {
+        uploadMode: state.uploadMode,
+        imageUrl: state.currentImageDataUrl,
+        name: document.getElementById('field-name').value.trim() || 'Untitled Card',
+        hp: Math.max(10, parseInt(document.getElementById('field-hp').value, 10) || 120),
+        type: document.getElementById('field-type').value,
+        stage: document.getElementById('field-stage').value,
+        rarity: document.getElementById('field-rarity').value,
+        borderStyle: document.getElementById('field-border').value,
+        specLine: document.getElementById('field-spec').value.trim(),
+        abilityName: document.getElementById('field-ability-name').value.trim(),
+        abilityDesc: document.getElementById('field-ability-desc').value.trim(),
+        atk1Cost: parseInt(document.getElementById('field-atk1-cost').value, 10) || 0,
+        atk1Name: document.getElementById('field-atk1-name').value.trim(),
+        atk1Dmg: document.getElementById('field-atk1-dmg').value.trim(),
+        atk1Desc: document.getElementById('field-atk1-desc').value.trim(),
+        atk2Cost: parseInt(document.getElementById('field-atk2-cost').value, 10) || 0,
+        atk2Name: document.getElementById('field-atk2-name').value.trim(),
+        atk2Dmg: document.getElementById('field-atk2-dmg').value.trim(),
+        atk2Desc: document.getElementById('field-atk2-desc').value.trim(),
+        weakness: document.getElementById('field-weakness').value,
+        resistance: document.getElementById('field-resistance').value,
+        retreatCost: parseInt(document.getElementById('field-retreat').value, 10) || 0,
+        flavor: document.getElementById('field-flavor').value.trim(),
+        creatorName: state.displayName
+      };
+    }
+
+    window.updateLiveCardPreview = () => {
+      const previewSlot = document.getElementById('live-card-preview-slot');
+      if (!previewSlot) return;
+      const draftCard = collectFormCardData();
+      previewSlot.innerHTML = buildPokemonCardHTML(draftCard, { disableClickZoom: true });
+    };
+
+    window.handlePublishCard = async (e) => {
+      e.preventDefault();
+      if (!state.user || !db) return;
+
+      const data = collectFormCardData();
+      if (!data.imageUrl) {
+        showToast('Please upload a custom card image or artwork first!', 'error');
+        return;
+      }
+
+      const editId = document.getElementById('edit-card-id').value;
+
+      try {
+        if (editId) {
+          const existing = state.cards.find(c => c.id === editId);
+          if (!existing || existing.ownerId !== state.user.uid) {
+            showToast('Unauthorized: Only the creator can edit this card.', 'error');
+            return;
+          }
+          await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cards', editId), data);
+          showToast(`Updated "${data.name}" live!`, 'success');
+        } else {
+          await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'cards'), {
+            ...data,
+            ownerId: state.user.uid,
+            createdAt: Date.now()
+          });
+          showToast(`Published "${data.name}" to the live Card Vault!`, 'success');
+        }
+        closeModal('card-upload-modal');
+      } catch (err) {
+        console.error('Publish card error:', err);
+        showToast('Upload failed: ' + err.message, 'error');
+      }
+    };
+
+    window.deleteCard = async (cardId) => {
+      if (!state.user || !db) return;
+      const card = state.cards.find(c => c.id === cardId);
+      if (!card || card.ownerId !== state.user.uid) {
+        showToast('Only the creator can delete this card.', 'error');
+        return;
+      }
+      await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'cards', cardId));
+      showToast(`Deleted "${card.name}".`, 'info');
+    };
+
+    // -----------------------------------------------------------------------
+    // MY DECKS & OWNER-ONLY DECK BUILDER
+    // -----------------------------------------------------------------------
+    window.renderMyDecks = () => {
+      const container = document.getElementById('my-decks-list');
+      if (!container || !state.user) return;
+
+      const myDecks = state.decks.filter(d => d.ownerId === state.user.uid);
+      if (myDecks.length === 0) {
+        container.innerHTML = `
+          <div class="col-span-full bg-[#161e31] border border-dashed border-slate-700 rounded-2xl p-8 text-center">
+            <h3 class="font-display text-base font-bold text-white">No Decks Created Yet</h3>
+            <p class="text-xs text-slate-400 mt-1 mb-4">Create your specialized deck and add your uploaded cards.</p>
+            <button onclick="openCreateDeckModal()" class="px-4 py-2 rounded-xl bg-yellow-400 text-slate-950 font-extrabold text-xs">
+              + Create First Deck
+            </button>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = myDecks.map(deck => {
+        const totalCards = Object.values(deck.cards || {}).reduce((s, q) => s + q, 0);
+        const isSelected = state.activeDeckId === deck.id;
+        return `
+          <div onclick="selectDeckForBuilding('${deck.id}')" class="cursor-pointer rounded-2xl bg-[#161e31] border ${isSelected ? 'border-yellow-400 ring-2 ring-yellow-400/25' : 'border-slate-800 hover:border-slate-600'} p-4 transition">
+            <div class="flex items-center justify-between gap-2">
+              <h4 class="font-display font-extrabold text-sm text-white truncate">${escapeHtml(deck.name)}</h4>
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-yellow-400/15 text-yellow-300 shrink-0">${totalCards} Cards</span>
+            </div>
+            <div class="text-[11px] text-sky-400 font-semibold mt-0.5">${escapeHtml(deck.format || 'Standard 60-Card')}</div>
+            <p class="text-xs text-slate-400 truncate mt-1.5">${escapeHtml(deck.description || 'Click to edit deck list')}</p>
+          </div>
+        `;
+      }).join('');
+    };
+
+    window.openCreateDeckModal = () => {
+      document.getElementById('deck-meta-modal-title').textContent = 'Create New Deck';
+      document.getElementById('deck-meta-mode').value = 'create';
+      document.getElementById('deck-meta-name').value = '';
+      document.getElementById('deck-meta-format').value = 'Standard 60-Card';
+      document.getElementById('deck-meta-desc').value = '';
+      openModal('deck-meta-modal');
+    };
+
+    window.openEditDeckMetaModal = () => {
+      const deck = state.decks.find(d => d.id === state.activeDeckId);
+      if (!deck || deck.ownerId !== state.user?.uid) return;
+      document.getElementById('deck-meta-modal-title').textContent = 'Deck Settings';
+      document.getElementById('deck-meta-mode').value = 'edit';
+      document.getElementById('deck-meta-name').value = deck.name || '';
+      document.getElementById('deck-meta-format').value = deck.format || 'Standard 60-Card';
+      document.getElementById('deck-meta-desc').value = deck.description || '';
+      openModal('deck-meta-modal');
+    };
+
+    window.handleSaveDeckMeta = async (e) => {
+      e.preventDefault();
+      if (!state.user || !db) return;
+
+      const mode = document.getElementById('deck-meta-mode').value;
+      const name = document.getElementById('deck-meta-name').value.trim();
+      const format = document.getElementById('deck-meta-format').value;
+      const description = document.getElementById('deck-meta-desc').value.trim();
+
+      if (mode === 'edit' && state.activeDeckId) {
+        const deck = state.decks.find(d => d.id === state.activeDeckId);
+        if (!deck || deck.ownerId !== state.user.uid) return;
+        await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'decks', deck.id), {
+          name, format, description, updatedAt: Date.now()
+        });
+        showToast('Deck updated!', 'success');
+      } else {
+        const docRef = await addDoc(collection(db, 'artifacts', appId, 'public', 'data', 'decks'), {
+          name,
+          format,
+          description,
+          ownerId: state.user.uid,
+          ownerName: state.displayName,
+          cards: {},
+          updatedAt: Date.now()
+        });
+        state.activeDeckId = docRef.id;
+        showToast(`Created deck "${name}"!`, 'success');
+      }
+      closeModal('deck-meta-modal');
+    };
+
+    window.selectDeckForBuilding = (deckId) => {
+      const deck = state.decks.find(d => d.id === deckId);
+      if (!deck || deck.ownerId !== state.user?.uid) return;
+      state.activeDeckId = deckId;
+      renderMyDecks();
+      renderDeckBuilder();
+      document.getElementById('deck-builder-workspace').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    window.closeDeckBuilder = () => {
+      state.activeDeckId = null;
+      document.getElementById('deck-builder-workspace').classList.add('hidden');
+      renderMyDecks();
+    };
+
+    window.deleteActiveDeck = async () => {
+      if (!state.activeDeckId || !state.user || !db) return;
+      const deck = state.decks.find(d => d.id === state.activeDeckId);
+      if (!deck || deck.ownerId !== state.user.uid) return;
+      await deleteDoc(doc(db, 'artifacts', appId, 'public', 'data', 'decks', deck.id));
+      showToast(`Deleted "${deck.name}".`, 'info');
+      closeDeckBuilder();
+    };
+
+    function getDeckTypeBreakdown(cardsMap) {
+      let total = 0;
+      let unique = 0;
+      const counts = {};
+      for (const [cid, qty] of Object.entries(cardsMap || {})) {
+        if (qty <= 0) continue;
+        const card = state.cards.find(c => c.id === cid);
+        if (!card) continue;
+        unique++;
+        total += qty;
+        counts[card.type] = (counts[card.type] || 0) + qty;
+      }
+      return { total, unique, counts };
+    }
+
+    window.renderDeckBuilder = () => {
+      const workspace = document.getElementById('deck-builder-workspace');
+      const deck = state.decks.find(d => d.id === state.activeDeckId);
+      if (!deck || deck.ownerId !== state.user?.uid) {
+        workspace.classList.add('hidden');
+        return;
+      }
+
+      workspace.classList.remove('hidden');
+      document.getElementById('builder-deck-name').textContent = deck.name;
+      document.getElementById('builder-deck-format').textContent = deck.format || 'Standard 60-Card';
+      document.getElementById('builder-deck-desc').textContent = deck.description || '';
+
+      const stats = getDeckTypeBreakdown(deck.cards);
+      document.getElementById('builder-total-cards').textContent = stats.total;
+      document.getElementById('builder-unique-cards').textContent = `${stats.unique} unique`;
+
+      const pills = Object.entries(stats.counts).map(([t, c]) => `
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-slate-800 text-slate-200 font-semibold">
+          ${renderEnergyPip(t, 0.85)}
+          <span>${escapeHtml(t)}: <strong>${c}</strong></span>
+        </span>
+      `).join('');
+      document.getElementById('builder-type-breakdown').innerHTML = pills || '<span class="text-slate-500 text-xs">No cards added yet</span>';
+
+      // Deck Roster
+      const rosterEl = document.getElementById('builder-deck-roster');
+      const entries = Object.entries(deck.cards || {}).filter(([, q]) => q > 0);
+      if (entries.length === 0) {
+        rosterEl.innerHTML = `<div class="text-center text-xs text-slate-500 py-12">Click "+ Add" on cards from the right to build your deck.</div>`;
+      } else {
+        rosterEl.innerHTML = entries.map(([cid, qty]) => {
+          const card = state.cards.find(c => c.id === cid);
+          if (!card) return '';
+          return `
+            <div class="flex items-center justify-between gap-2 p-2 rounded-xl bg-[#0e131f] border border-slate-800">
+              <div onclick="zoomCard('${card.id}')" class="flex items-center gap-2.5 min-w-0 cursor-pointer flex-1">
+                ${renderEnergyPip(card.type, 1.1)}
+                <img src="${escapeHtml(card.imageUrl)}" class="w-8 h-11 rounded object-cover border border-slate-700 shrink-0">
+                <div class="min-w-0">
+                  <div class="text-xs font-bold text-white truncate">${escapeHtml(card.name)}</div>
+                  <div class="text-[10px] text-slate-400">${escapeHtml(card.stage || 'BASIC')} • HP ${card.hp || 100}</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-1.5 shrink-0">
+                <button onclick="updateDeckCardQty('${card.id}', -1)" class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-rose-500/20 hover:text-rose-400 text-xs font-bold">-</button>
+                <span class="w-6 text-center text-xs font-extrabold text-yellow-400">${qty}×</span>
+                <button onclick="updateDeckCardQty('${card.id}', 1)" ${qty >= 4 ? 'disabled' : ''} class="w-7 h-7 rounded-lg bg-slate-800 hover:bg-emerald-500/20 hover:text-emerald-400 disabled:opacity-30 text-xs font-bold">+</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      renderBuilderVaultPicker();
+    };
+
+    window.renderBuilderVaultPicker = () => {
+      const pickerEl = document.getElementById('builder-vault-picker');
+      const deck = state.decks.find(d => d.id === state.activeDeckId);
+      if (!pickerEl || !deck) return;
+
+      const q = (document.getElementById('builder-vault-search')?.value || '').toLowerCase().trim();
+      const filtered = state.cards.filter(c => !q || (c.name || '').toLowerCase().includes(q));
+
+      if (filtered.length === 0) {
+        pickerEl.innerHTML = `<div class="col-span-full text-center text-xs text-slate-500 py-10">No uploaded cards available. Upload custom cards in the Card Vault tab first!</div>`;
+        return;
+      }
+
+      pickerEl.innerHTML = filtered.map(card => {
+        const qty = (deck.cards && deck.cards[card.id]) || 0;
+        return `
+          <div class="flex items-center justify-between gap-2 p-2.5 rounded-xl bg-[#0e131f] border border-slate-800">
+            <div onclick="zoomCard('${card.id}')" class="flex items-center gap-2.5 min-w-0 cursor-pointer flex-1">
+              <img src="${escapeHtml(card.imageUrl)}" class="w-9 h-12 rounded object-cover border border-slate-700 shrink-0">
+              <div class="min-w-0">
+                <div class="text-xs font-bold text-white truncate">${escapeHtml(card.name)}</div>
+                <div class="text-[10px] text-slate-400 flex items-center gap-1 mt-0.5">
+                  ${renderEnergyPip(card.type, 0.75)}
+                  <span>${escapeHtml(card.type)}</span>
+                </div>
+                <div class="text-[10px] text-yellow-400 mt-0.5">In Deck: ${qty}/4</div>
+              </div>
+            </div>
+            <button onclick="updateDeckCardQty('${card.id}', 1)" ${qty >= 4 ? 'disabled' : ''} class="px-3 py-1.5 rounded-lg bg-yellow-400 hover:bg-yellow-300 disabled:bg-slate-800 disabled:text-slate-500 text-slate-950 font-extrabold text-xs shrink-0">
+              ${qty >= 4 ? 'Max' : '+ Add'}
+            </button>
+          </div>
+        `;
+      }).join('');
+    };
+
+    window.updateDeckCardQty = async (cardId, delta) => {
+      if (!state.user || !db || !state.activeDeckId) return;
+      const deck = state.decks.find(d => d.id === state.activeDeckId);
+      if (!deck || deck.ownerId !== state.user.uid) {
+        showToast('Unauthorized: Only the deck owner can edit this deck.', 'error');
+        return;
+      }
+
+      const updatedCards = { ...(deck.cards || {}) };
+      const nextQty = Math.min(4, Math.max(0, (updatedCards[cardId] || 0) + delta));
+      if (nextQty === 0) {
+        delete updatedCards[cardId];
+      } else {
+        updatedCards[cardId] = nextQty;
+      }
+
+      await updateDoc(doc(db, 'artifacts', appId, 'public', 'data', 'decks', deck.id), {
+        cards: updatedCards,
+        updatedAt: Date.now()
+      });
+    };
+
+    // -----------------------------------------------------------------------
+    // FRIENDS' DECKS DIRECTORY & READ-ONLY LIVE 2.5" x 3.5" SHOWCASE
+    // -----------------------------------------------------------------------
+    window.renderFriendsDecks = () => {
+      const grid = document.getElementById('friends-decks-grid');
+      if (!grid || !state.user) return;
+
+      const q = (document.getElementById('friends-deck-search')?.value || '').toLowerCase().trim();
+      const friendDecks = state.decks.filter(d =>
+        d.ownerId !== state.user.uid &&
+        (!q || (d.name || '').toLowerCase().includes(q) || (d.ownerName || '').toLowerCase().includes(q))
+      );
+
+      if (friendDecks.length === 0) {
+        grid.innerHTML = `
+          <div class="col-span-full bg-[#161e31] border border-slate-800 rounded-2xl p-10 text-center">
+            <i class="fa-solid fa-users text-3xl text-sky-400 mb-3"></i>
+            <h3 class="font-display text-base font-extrabold text-white">No Friends' Decks Online Yet</h3>
+            <p class="text-xs text-slate-400 max-w-md mx-auto mt-1">
+              Have your friends open this app—as soon as they build a deck, it will appear here live for you to inspect at full 2.5" × 3.5" card size.
+            </p>
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = friendDecks.map(deck => {
+        const totalCards = Object.values(deck.cards || {}).reduce((s, q) => s + q, 0);
+        return `
+          <div onclick="openFriendDeckInspector('${deck.id}')" class="group cursor-pointer bg-[#161e31] hover:bg-[#1c263e] border border-slate-800 hover:border-sky-500/50 rounded-2xl p-5 transition shadow-lg flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between gap-2 mb-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sky-500/15 text-sky-300 border border-sky-500/30">
+                  <i class="fa-solid fa-user mr-1"></i>${escapeHtml(deck.ownerName || 'Friend')}
+                </span>
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-yellow-400 text-slate-950">
+                  ${totalCards} Cards
+                </span>
+              </div>
+              <h3 class="font-display text-lg font-extrabold text-white group-hover:text-yellow-400 transition">${escapeHtml(deck.name)}</h3>
+              <div class="text-[11px] text-slate-400 mt-0.5">${escapeHtml(deck.format || 'Standard 60-Card')}</div>
+              <p class="text-xs text-slate-300 mt-2 line-clamp-2">${escapeHtml(deck.description || 'No strategy description provided.')}</p>
+            </div>
+            <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+              <span class="text-slate-400"><i class="fa-solid fa-lock text-yellow-400 mr-1"></i>Read-Only Deck</span>
+              <span class="text-sky-400 font-bold">View All Cards <i class="fa-solid fa-arrow-right ml-1"></i></span>
+            </div>
+          </div>
+        `;
+      }).join('');
+    };
+
+    window.openFriendDeckInspector = (deckId, isLiveRefresh = false) => {
+      const deck = state.decks.find(d => d.id === deckId);
+      if (!deck) return;
+
+      state.inspectedFriendDeckId = deckId;
+      const stats = getDeckTypeBreakdown(deck.cards);
+
+      document.getElementById('inspector-deck-name').textContent = deck.name;
+      document.getElementById('inspector-deck-format').textContent = deck.format || 'Standard 60-Card';
+      document.getElementById('inspector-owner-name').textContent = deck.ownerName || 'Friend';
+      document.getElementById('inspector-card-count').textContent = `${stats.total} Cards (${stats.unique} Unique)`;
+      document.getElementById('inspector-deck-desc').textContent = deck.description || '';
+
+      document.getElementById('inspector-type-pills').innerHTML = Object.entries(stats.counts).map(([t, c]) => `
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#0e131f] border border-slate-800 text-slate-200 font-semibold">
+          ${renderEnergyPip(t, 0.85)}
+          <span>${escapeHtml(t)}: <strong>${c}</strong></span>
+        </span>
+      `).join('');
+
+      const grid = document.getElementById('inspector-cards-grid');
+      const entries = Object.entries(deck.cards || {}).filter(([, q]) => q > 0);
+
+      if (entries.length === 0) {
+        grid.innerHTML = `<div class="w-full text-center py-12 text-slate-400 text-xs">This deck has no cards yet—updates will appear here live!</div>`;
+      } else {
+        // Strictly Read-Only: showOwnerControls is false; zero edit or delete controls rendered
+        grid.innerHTML = entries.map(([cid, qty]) => {
+          const card = state.cards.find(c => c.id === cid);
+          if (!card) return '';
+          return buildPokemonCardHTML(card, { showOwnerControls: false, quantityBadge: qty });
+        }).join('');
+      }
+
+      if (!isLiveRefresh) {
+        openModal('friend-deck-inspector-modal');
+      }
+    };
+
+    window.closeFriendInspector = () => {
+      state.inspectedFriendDeckId = null;
+      closeModal('friend-deck-inspector-modal');
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+      initApp();
+      updateLiveCardPreview();
+    });
+  </script>
+</body>
+</html>
