@@ -988,23 +988,28 @@
           <!-- Single Unified 2.5:3.5 Photo Upload Zone -->
           <div id="trainer-drop-zone" class="cursor-pointer rounded-2xl border-2 border-dashed border-yellow-400/50 hover:border-yellow-400 bg-[#0b101b]/90 hover:bg-[#0b101b] p-3.5 text-center transition">
             <input id="trainer-image-input" type="file" accept="image/*" class="hidden">
-            <div class="flex items-center justify-center gap-3">
-              <div class="w-9 h-9 rounded-full bg-yellow-400/15 text-yellow-400 flex items-center justify-center text-sm shrink-0">
-                <i class="fa-solid fa-camera-retro"></i>
-              </div>
-              <div class="text-left">
-                <div class="flex flex-wrap items-center gap-2">
-                  <span id="trainer-upload-title" class="text-xs font-bold text-white">
-                    Upload Trainer Profile Photo
-                  </span>
-                  <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-yellow-400/15 text-yellow-300 border border-yellow-400/35">
-                    2.5" × 3.5" (5:7) Fixed Ratio
-                  </span>
+            <div class="flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-9 h-9 rounded-full bg-yellow-400/15 text-yellow-400 flex items-center justify-center text-sm shrink-0">
+                  <i class="fa-solid fa-camera-retro"></i>
                 </div>
-                <div class="text-[11px] text-slate-400 mt-0.5">
-                  Drag to pan & zoom inside the 2.5" × 3.5" frame • PNG, JPG, WEBP
+                <div class="text-left min-w-0">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <span id="trainer-upload-title" class="text-xs font-bold text-white">
+                      Upload Trainer Profile Photo
+                    </span>
+                    <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-yellow-400/15 text-yellow-300 border border-yellow-400/35">
+                      2.5" × 3.5" (5:7) Fixed Ratio
+                    </span>
+                  </div>
+                  <div class="text-[11px] text-slate-400 mt-0.5">
+                    Drag to pan & zoom inside the 2.5" × 3.5" frame • PNG, JPG, WEBP
+                  </div>
                 </div>
               </div>
+              <button type="button" id="btn-trigger-trainer-upload" class="px-3 py-1.5 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-xs shrink-0 transition">
+                Choose Photo
+              </button>
             </div>
           </div>
 
@@ -3182,7 +3187,21 @@ service cloud.firestore {
 
       const trainerDropZone = document.getElementById('trainer-drop-zone');
       const trainerFileInput = document.getElementById('trainer-image-input');
-      trainerDropZone?.addEventListener('click', () => trainerFileInput?.click());
+      const triggerTrainerUploadBtn = document.getElementById('btn-trigger-trainer-upload');
+      triggerTrainerUploadBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (trainerFileInput) {
+          trainerFileInput.value = '';
+          trainerFileInput.click();
+        }
+      });
+      trainerDropZone?.addEventListener('click', (e) => {
+        if (e.target === trainerFileInput) return;
+        if (trainerFileInput) {
+          trainerFileInput.value = '';
+          trainerFileInput.click();
+        }
+      });
       trainerFileInput?.addEventListener('change', (e) => {
         const file = e.target.files?.[0];
         if (file) processTrainerAvatarFile(file);
