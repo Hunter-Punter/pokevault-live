@@ -70,7 +70,7 @@
         0 0 24px rgba(250, 204, 21, 0.28);
     }
 
-    /* Classic Yellow, Modern Silver, and Secret Gold Borders */
+    /* Classic Yellow, Modern Silver, Secret Gold, and Rainbow Holo Borders */
     .border-classic-yellow {
       background: linear-gradient(145deg, #facc15 0%, #eab308 48%, #ca8a04 100%);
     }
@@ -79,6 +79,9 @@
     }
     .border-gold-ultra {
       background: linear-gradient(145deg, #fef08a 0%, #f59e0b 45%, #b45309 80%, #fde047 100%);
+    }
+    .border-rainbow-hyper {
+      background: linear-gradient(135deg, #f472b6 0%, #facc15 28%, #4ade80 54%, #38bdf8 78%, #c084fc 100%);
     }
 
     .pkmn-card-inner {
@@ -129,6 +132,27 @@
       background: radial-gradient(circle at 80% 15%, rgba(255, 255, 255, 0.85), transparent 50%), linear-gradient(165deg, #f8fafc 0%, #e2e8f0 52%, #94a3b8 100%);
     }
 
+    /* Trainer Supporter Card Accent Palettes */
+    .trainer-accent-Crimson {
+      background: radial-gradient(circle at 85% 12%, rgba(254, 205, 211, 0.75), transparent 48%), linear-gradient(160deg, #fb7185 0%, #e11d48 52%, #881337 100%);
+    }
+    .trainer-accent-Cobalt {
+      background: radial-gradient(circle at 85% 12%, rgba(186, 230, 253, 0.78), transparent 48%), linear-gradient(160deg, #38bdf8 0%, #2563eb 52%, #1e3a8a 100%);
+    }
+    .trainer-accent-Emerald {
+      background: radial-gradient(circle at 85% 12%, rgba(167, 243, 208, 0.78), transparent 48%), linear-gradient(160deg, #34d399 0%, #059669 52%, #064e3b 100%);
+    }
+    .trainer-accent-Amber {
+      background: radial-gradient(circle at 85% 12%, rgba(254, 243, 199, 0.85), transparent 48%), linear-gradient(160deg, #fbbf24 0%, #d97706 52%, #78350f 100%);
+    }
+    .trainer-accent-Violet {
+      background: radial-gradient(circle at 85% 12%, rgba(237, 233, 254, 0.78), transparent 48%), linear-gradient(160deg, #a78bfa 0%, #7c3aed 52%, #4c1d95 100%);
+    }
+    .trainer-accent-Obsidian {
+      background: radial-gradient(circle at 85% 12%, rgba(226, 232, 240, 0.35), transparent 48%), linear-gradient(160deg, #475569 0%, #1e293b 52%, #090d16 100%);
+      color: #f8fafc;
+    }
+
     /* Holographic Foil Shimmer Overlay */
     .holo-shimmer::before {
       content: "";
@@ -137,10 +161,10 @@
       background: linear-gradient(
         115deg,
         transparent 18%,
-        rgba(255, 255, 255, 0.28) 34%,
-        rgba(56, 189, 248, 0.24) 44%,
-        rgba(244, 114, 182, 0.24) 52%,
-        rgba(250, 204, 21, 0.28) 62%,
+        rgba(255, 255, 255, 0.3) 34%,
+        rgba(56, 189, 248, 0.25) 44%,
+        rgba(244, 114, 182, 0.25) 52%,
+        rgba(250, 204, 21, 0.3) 62%,
         transparent 78%
       );
       background-size: 220% 220%;
@@ -216,7 +240,7 @@
           </button>
           <button type="button" id="tab-my-decks" data-tab="my-decks" class="nav-tab flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800/70 transition flex items-center justify-center gap-2">
             <i class="fa-solid fa-layer-group"></i>
-            <span>My Decks</span>
+            <span>My Profile & Decks</span>
             <span id="badge-my-decks-count" class="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-800 text-slate-300 font-bold">0</span>
           </button>
           <button type="button" id="tab-friends-decks" data-tab="friends-decks" class="nav-tab flex-1 sm:flex-none px-3.5 py-2 rounded-lg text-xs sm:text-sm font-bold text-slate-300 hover:text-white hover:bg-slate-800/70 transition flex items-center justify-center gap-2">
@@ -226,7 +250,7 @@
           </button>
         </nav>
 
-        <!-- Actions: Invite Friends, Rules, Trainer Profile -->
+        <!-- Actions: Invite Friends, Rules, Trainer Profile Chip -->
         <div class="flex items-center gap-2 order-2 sm:order-3">
           <button type="button" id="btn-invite-friends" class="px-3 py-2 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/35 transition text-xs font-extrabold flex items-center gap-1.5 shadow-sm">
             <i class="fa-solid fa-share-nodes"></i>
@@ -236,15 +260,15 @@
             <i class="fa-solid fa-shield-halved"></i>
             <span class="hidden md:inline font-semibold">Rules</span>
           </button>
-          <button type="button" id="btn-open-profile" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#141c2e] hover:bg-slate-800 border border-slate-700/80 transition">
-            <div id="user-avatar" class="w-7 h-7 rounded-lg bg-gradient-to-tr from-yellow-400 to-amber-600 flex items-center justify-center text-xs font-extrabold text-slate-950 uppercase">
+          <button type="button" id="btn-open-profile" title="Edit Your Trainer Trading Card" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#141c2e] hover:bg-slate-800 border border-yellow-400/35 transition group">
+            <div id="user-avatar" class="w-7 h-7 rounded-lg bg-gradient-to-tr from-yellow-400 to-amber-600 flex items-center justify-center text-xs font-extrabold text-slate-950 uppercase overflow-hidden shrink-0">
               TR
             </div>
             <div class="text-left">
               <div id="user-display-name" class="text-xs font-bold text-white max-w-[110px] truncate">Trainer</div>
               <div class="text-[10px] text-yellow-400 flex items-center gap-1">
                 <span>Trainer Card</span>
-                <i class="fa-solid fa-pen text-[8px]"></i>
+                <i class="fa-solid fa-wand-magic-sparkles text-[8px]"></i>
               </div>
             </div>
           </button>
@@ -329,9 +353,79 @@
     </section>
 
     <!-- =================================================================== -->
-    <!-- VIEW 2: MY DECKS (OWNER-ONLY EDITING)                               -->
+    <!-- VIEW 2: MY PROFILE TRAINER CARD & SPECIALIZED DECKS (OWNER-ONLY)    -->
     <!-- =================================================================== -->
     <section id="view-my-decks" class="hidden space-y-6">
+      <!-- Personal Trainer Profile Showcase Banner (Displays True-to-Size 2.5" x 3.5" Trainer Card) -->
+      <div class="bg-gradient-to-br from-[#141c2e] via-[#172136] to-[#0f1626] p-5 sm:p-6 rounded-3xl border border-yellow-400/30 shadow-2xl">
+        <div class="flex flex-col lg:flex-row items-center lg:items-start gap-6 lg:gap-8">
+          <!-- True-to-Size 2.5" x 3.5" Personal Trainer Trading Card -->
+          <div class="flex flex-col items-center shrink-0">
+            <div id="my-trainer-card-showcase"></div>
+          </div>
+
+          <!-- Trainer Bio, Stats & Quick Actions -->
+          <div class="flex-1 text-center lg:text-left space-y-4 w-full">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-800">
+              <div>
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-yellow-400/15 text-yellow-300 border border-yellow-400/30 mb-1.5">
+                  <i class="fa-solid fa-id-badge"></i>
+                  <span id="showcase-trainer-title">Ace Trainer</span>
+                </div>
+                <h2 id="showcase-trainer-name" class="font-display text-2xl sm:text-3xl font-extrabold text-white tracking-tight">Trainer</h2>
+                <p id="showcase-trainer-region" class="text-xs text-slate-400 mt-0.5">
+                  <i class="fa-solid fa-location-dot text-rose-400 mr-1"></i>Custom Region
+                </p>
+              </div>
+
+              <button type="button" id="btn-customize-trainer-card" class="px-4 py-2.5 rounded-xl bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-300 hover:to-amber-400 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-yellow-500/20 transition flex items-center justify-center gap-2 self-center sm:self-auto">
+                <i class="fa-solid fa-paintbrush"></i>
+                <span>Customize Trainer Card</span>
+              </button>
+            </div>
+
+            <!-- Trainer Quote & Supporter Ability Summary -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-left">
+              <div class="bg-[#0b101b]/90 p-3.5 rounded-2xl border border-slate-800">
+                <div class="text-[11px] font-bold uppercase tracking-wider text-rose-400 mb-1">
+                  <i class="fa-solid fa-bolt mr-1"></i>Trainer Supporter Effect
+                </div>
+                <p id="showcase-trainer-effect" class="text-xs text-slate-200 leading-relaxed">
+                  Draw 3 cards. If you have a favorite type Pokémon in play, draw 2 more cards.
+                </p>
+              </div>
+              <div class="bg-[#0b101b]/90 p-3.5 rounded-2xl border border-slate-800">
+                <div class="text-[11px] font-bold uppercase tracking-wider text-sky-400 mb-1">
+                  <i class="fa-solid fa-quote-left mr-1"></i>Signature Trainer Motto
+                </div>
+                <p id="showcase-trainer-quote" class="text-xs italic text-slate-300 leading-relaxed">
+                  "Every deck tells the story of the Trainer who built it."
+                </p>
+              </div>
+            </div>
+
+            <!-- Live Trainer Stats Bar -->
+            <div class="grid grid-cols-3 gap-3 pt-1">
+              <div class="bg-[#0b101b] p-3 rounded-xl border border-slate-800 text-center">
+                <div id="stat-my-cards-count" class="font-display text-xl sm:text-2xl font-extrabold text-yellow-400">0</div>
+                <div class="text-[11px] text-slate-400 font-semibold">Cards Forged</div>
+              </div>
+              <div class="bg-[#0b101b] p-3 rounded-xl border border-slate-800 text-center">
+                <div id="stat-my-decks-count" class="font-display text-xl sm:text-2xl font-extrabold text-sky-400">0</div>
+                <div class="text-[11px] text-slate-400 font-semibold">Specialized Decks</div>
+              </div>
+              <div class="bg-[#0b101b] p-3 rounded-xl border border-slate-800 text-center flex flex-col items-center justify-center">
+                <div id="stat-my-fav-type" class="flex items-center gap-1.5 font-display text-sm sm:text-base font-extrabold text-white">
+                  Fire
+                </div>
+                <div class="text-[11px] text-slate-400 font-semibold mt-0.5">Partner Type</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- My Specialized Decks Header -->
       <div class="bg-[#141c2e] p-4 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         <div>
           <h2 class="font-display text-lg font-extrabold text-white">My Specialized Decks</h2>
@@ -420,18 +514,18 @@
     </section>
 
     <!-- =================================================================== -->
-    <!-- VIEW 3: FRIENDS' DECKS (LIVE READ-ONLY DIRECTORY & INSPECTOR)       -->
+    <!-- VIEW 3: FRIENDS' DECKS & TRAINER CARDS (LIVE READ-ONLY DIRECTORY)   -->
     <!-- =================================================================== -->
     <section id="view-friends-decks" class="hidden space-y-6">
       <div class="bg-[#141c2e] p-4 rounded-2xl border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
         <div>
           <h2 class="font-display text-lg font-extrabold text-white flex items-center gap-2">
-            <span>Friends' Live Decks</span>
+            <span>Friends' Live Decks & Trainer Cards</span>
             <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sky-500/15 text-sky-300 border border-sky-500/30">
               <i class="fa-solid fa-eye mr-1"></i>Live Read-Only
             </span>
           </h2>
-          <p class="text-xs text-slate-400">Inspect every card in your friends' decks in real time at true 2.5" × 3.5" card size. Editing is strictly locked to each deck's owner.</p>
+          <p class="text-xs text-slate-400">Inspect every card in your friends' decks and view their custom Trainer Trading Cards in true 2.5" × 3.5" size.</p>
         </div>
         <input id="friends-deck-search" type="text" placeholder="Filter by friend or deck name..." class="w-full sm:w-64 px-3.5 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
       </div>
@@ -730,9 +824,15 @@
           </p>
           <p id="inspector-deck-desc" class="text-xs text-slate-300 mt-1.5"></p>
         </div>
-        <button type="button" id="btn-close-inspector" class="self-end sm:self-center px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white">
-          Close Inspector
-        </button>
+        <div class="flex items-center gap-2 self-end sm:self-center">
+          <button type="button" id="btn-inspector-view-trainer-card" class="px-3.5 py-2 rounded-xl bg-yellow-400/15 hover:bg-yellow-400/25 text-yellow-300 border border-yellow-400/35 text-xs font-extrabold flex items-center gap-1.5 transition">
+            <i class="fa-solid fa-id-badge"></i>
+            <span>View Trainer Card</span>
+          </button>
+          <button type="button" id="btn-close-inspector" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-white">
+            Close Inspector
+          </button>
+        </div>
       </div>
 
       <div id="inspector-type-pills" class="flex flex-wrap gap-2 py-3 border-b border-slate-800 text-xs"></div>
@@ -742,7 +842,7 @@
   </div>
 
   <!-- ===================================================================== -->
-  <!-- MODAL 4: FULL-SIZE CARD ZOOM MODAL                                    -->
+  <!-- MODAL 4: FULL-SIZE CARD ZOOM MODAL (POKÉMON & TRAINER CARDS)          -->
   <!-- ===================================================================== -->
   <div id="card-zoom-modal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
     <div class="flex flex-col items-center gap-4">
@@ -754,51 +854,159 @@
   </div>
 
   <!-- ===================================================================== -->
-  <!-- MODAL 5: WELCOME TRAINER / TRAINER PROFILE MODAL                      -->
+  <!-- MODAL 5: CUSTOM TRAINER TRADING CARD STUDIO & PROFILE MODAL           -->
   <!-- ===================================================================== -->
-  <div id="profile-modal" class="fixed inset-0 z-50 hidden bg-black/88 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="bg-[#141c2e] border border-yellow-400/40 rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl">
-      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+  <div id="profile-modal" class="fixed inset-0 z-50 hidden bg-black/88 backdrop-blur-md flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+    <div class="bg-[#141c2e] border border-yellow-400/40 rounded-3xl max-w-5xl w-full p-5 sm:p-6 shadow-2xl my-auto">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-800">
         <div class="flex items-center gap-2.5">
-          <div class="w-9 h-9 rounded-xl bg-yellow-400/15 text-yellow-400 border border-yellow-400/30 flex items-center justify-center">
+          <div class="w-10 h-10 rounded-xl bg-yellow-400/15 text-yellow-400 border border-yellow-400/30 flex items-center justify-center text-lg">
             <i class="fa-solid fa-id-card-clip"></i>
           </div>
           <div>
-            <h3 id="profile-modal-heading" class="font-display text-lg font-extrabold text-white">Welcome, Trainer!</h3>
-            <p class="text-[11px] text-slate-400">Your name appears on cards & decks you create</p>
+            <h3 id="profile-modal-heading" class="font-display text-lg sm:text-xl font-extrabold text-white">Trainer Trading Card Studio</h3>
+            <p class="text-[11px] text-slate-400">Create your personal 2.5" × 3.5" Supporter Trainer Card — visible on your profile and to friends!</p>
           </div>
         </div>
-        <button type="button" id="btn-close-profile" data-close-modal="profile-modal" class="text-slate-400 hover:text-white">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
+        <div class="flex items-center gap-2">
+          <div class="bg-[#0b101b] p-1 rounded-xl border border-slate-800 flex text-xs font-bold">
+            <button type="button" id="trainer-mode-btn-builder" class="px-3 py-1.5 rounded-lg transition bg-yellow-400 text-slate-950">
+              <i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Supporter Card Maker
+            </button>
+            <button type="button" id="trainer-mode-btn-full" class="px-3 py-1.5 rounded-lg transition text-slate-400">
+              <i class="fa-solid fa-file-image mr-1"></i>Full Card Image
+            </button>
+          </div>
+          <button type="button" id="btn-close-profile" data-close-modal="profile-modal" class="text-slate-400 hover:text-white p-1.5">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
       </div>
 
-      <form id="profile-form" class="mt-4 space-y-4">
-        <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1">Trainer Name *</label>
-          <input id="profile-name-input" type="text" required maxlength="24" placeholder="e.g., Ash / Misty / Brock" class="w-full px-3.5 py-2.5 rounded-xl bg-[#0b101b] border border-slate-700 text-sm text-white focus:outline-none focus:border-yellow-400">
-        </div>
-
-        <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1.5">Avatar Badge Color</label>
-          <div id="avatar-color-picker" class="flex flex-wrap gap-2">
-            <button type="button" data-color="from-yellow-400 to-amber-600" class="avatar-color-btn w-8 h-8 rounded-lg bg-gradient-to-tr from-yellow-400 to-amber-600 ring-2 ring-white"></button>
-            <button type="button" data-color="from-rose-500 to-red-700" class="avatar-color-btn w-8 h-8 rounded-lg bg-gradient-to-tr from-rose-500 to-red-700"></button>
-            <button type="button" data-color="from-sky-400 to-blue-700" class="avatar-color-btn w-8 h-8 rounded-lg bg-gradient-to-tr from-sky-400 to-blue-700"></button>
-            <button type="button" data-color="from-emerald-400 to-green-700" class="avatar-color-btn w-8 h-8 rounded-lg bg-gradient-to-tr from-emerald-400 to-green-700"></button>
-            <button type="button" data-color="from-purple-400 to-indigo-700" class="avatar-color-btn w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-400 to-indigo-700"></button>
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-5 items-start">
+        <!-- Trainer Card Form (7 cols) -->
+        <form id="profile-form" class="lg:col-span-7 space-y-3.5">
+          <!-- Upload Portrait / Full Trainer Card Image -->
+          <div id="trainer-drop-zone" class="cursor-pointer rounded-2xl border-2 border-dashed border-yellow-400/50 hover:border-yellow-400 bg-[#0b101b]/90 hover:bg-[#0b101b] p-3.5 text-center transition">
+            <input id="trainer-image-input" type="file" accept="image/*" class="hidden">
+            <div class="flex items-center justify-center gap-3">
+              <div class="w-9 h-9 rounded-full bg-yellow-400/15 text-yellow-400 flex items-center justify-center text-sm shrink-0">
+                <i class="fa-solid fa-camera-retro"></i>
+              </div>
+              <div class="text-left">
+                <div id="trainer-upload-title" class="text-xs font-bold text-white">
+                  Upload Your Trainer Portrait / Avatar Artwork
+                </div>
+                <div class="text-[11px] text-slate-400">
+                  PNG, JPG, WEBP • Auto-compressed & synced live to friends
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <div class="bg-[#0b101b] p-3 rounded-xl border border-slate-800 text-[11px] text-slate-400">
-          <div class="font-bold text-slate-300 mb-0.5">Trainer ID (Owner Lock Key):</div>
-          <code id="profile-full-uid" class="text-yellow-400 break-all select-all">Signing in...</code>
-        </div>
+          <!-- Trainer Name & Title -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">Trainer Name *</label>
+              <input id="profile-name-input" type="text" required maxlength="24" placeholder="e.g., Ash / Cynthia / Red" class="w-full px-3.5 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-sm text-white focus:outline-none focus:border-yellow-400">
+            </div>
+            <div>
+              <label class="block text-xs font-bold text-slate-300 mb-1">Trainer Class / Title</label>
+              <select id="trainer-title-select" class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-yellow-400">
+                <option value="Ace Trainer">Ace Trainer</option>
+                <option value="Gym Leader">Gym Leader</option>
+                <option value="Elite Four">Elite Four</option>
+                <option value="League Champion">League Champion</option>
+                <option value="Dragon Tamer">Dragon Tamer</option>
+                <option value="Master Collector">Master Collector</option>
+                <option value="Pokémon Professor">Pokémon Professor</option>
+                <option value="Hex Maniac">Hex Maniac</option>
+                <option value="Pokémon Breeder">Pokémon Breeder</option>
+              </select>
+            </div>
+          </div>
 
-        <button type="submit" class="w-full py-3 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-yellow-500/20">
-          Save Trainer Card & Enter Vault
-        </button>
-      </form>
+          <!-- Builder-Specific Fields -->
+          <div id="trainer-builder-extra-fields" class="space-y-3">
+            <div class="grid grid-cols-3 gap-2.5">
+              <div>
+                <label class="block text-[11px] font-bold text-slate-300 mb-1">Card Finish</label>
+                <select id="trainer-style-select" class="w-full px-2.5 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
+                  <option value="Supporter Holo">★ Supporter Holo</option>
+                  <option value="Full Art Ultra">★★ Full Art Ultra</option>
+                  <option value="Gold Hyper Rare">★★★ Gold Hyper Rare</option>
+                  <option value="Classic Supporter">● Classic Supporter</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-300 mb-1">Card Theme</label>
+                <select id="trainer-accent-select" class="w-full px-2.5 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
+                  <option value="Cobalt">Cobalt Blue</option>
+                  <option value="Crimson">Crimson Red</option>
+                  <option value="Emerald">Emerald Green</option>
+                  <option value="Amber">Amber Gold</option>
+                  <option value="Violet">Royal Violet</option>
+                  <option value="Obsidian">Obsidian Dark</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-300 mb-1">Partner Type</label>
+                <select id="trainer-fav-type-select" class="w-full px-2.5 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
+                  <option value="Fire">Fire</option>
+                  <option value="Water">Water</option>
+                  <option value="Grass">Grass</option>
+                  <option value="Lightning">Lightning</option>
+                  <option value="Psychic">Psychic</option>
+                  <option value="Fighting">Fighting</option>
+                  <option value="Darkness">Darkness</option>
+                  <option value="Metal">Metal</option>
+                  <option value="Dragon">Dragon</option>
+                  <option value="Colorless">Colorless</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-slate-300 mb-1">Hometown / Region Badge</label>
+              <input id="trainer-hometown-input" type="text" maxlength="34" value="Pallet Town • Kanto League" placeholder="e.g., Sinnoh League / Custom Arena" class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-rose-400 mb-1">Custom Supporter Rule Text</label>
+              <textarea id="trainer-effect-input" rows="2" maxlength="145" placeholder="e.g., Draw 3 cards. If your Active Pokémon is your favorite type, draw 2 more cards." class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">Draw 3 cards. If your Active Pokémon matches your Partner Type, search your deck for any 1 card and put it into your hand.</textarea>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold text-sky-400 mb-1">Signature Quote / Flavor Motto</label>
+              <input id="trainer-quote-input" type="text" maxlength="85" value="Every deck tells the story of the Trainer who built it." placeholder="Your personal Trainer catchphrase..." class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
+            </div>
+          </div>
+
+          <div class="bg-[#0b101b] px-3 py-2 rounded-xl border border-slate-800 text-[11px] text-slate-400 flex items-center justify-between gap-2">
+            <span>Trainer Owner ID:</span>
+            <code id="profile-full-uid" class="text-yellow-400 truncate max-w-[230px] select-all">Signing in...</code>
+          </div>
+
+          <div class="pt-1 flex justify-end gap-2">
+            <button type="button" data-close-modal="profile-modal" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300">Cancel</button>
+            <button type="submit" class="px-5 py-2.5 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-yellow-500/20">
+              Save Trainer Card
+            </button>
+          </div>
+        </form>
+
+        <!-- Live Side-by-Side 2.5" x 3.5" Trainer Card Preview (5 cols) -->
+        <div class="lg:col-span-5 bg-[#0b101b] border border-slate-800 rounded-2xl p-5 flex flex-col items-center justify-center">
+          <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-400 mb-3 flex items-center gap-1.5">
+            <i class="fa-solid fa-id-card"></i>
+            <span>Live 2.5" × 3.5" Trainer Card</span>
+          </div>
+          <div id="live-trainer-card-preview-slot"></div>
+          <p class="text-[11px] text-slate-400 text-center mt-3 max-w-xs">
+            Displays on your Profile page and whenever friends inspect your decks!
+          </p>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -829,7 +1037,7 @@
           </button>
         </div>
         <p class="text-[11px] text-slate-400 leading-relaxed">
-          When your friends open this URL, they are automatically signed into your shared Firebase vault and greeted with a simple <strong>Welcome, Trainer!</strong> prompt to pick their name.
+          When your friends open this URL, they are automatically signed into your shared Firebase vault and can design their own custom <strong>Trainer Trading Card</strong> right away.
         </p>
       </div>
 
@@ -851,7 +1059,7 @@
         <button type="button" data-close-modal="rules-modal" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="mt-4 space-y-3 text-xs text-slate-300">
-        <p>These rules enforce that any signed-in friend can view all cards and decks live, while <strong>only the creator/owner</strong> can edit or delete their own cards and decks:</p>
+        <p>These rules enforce that any signed-in friend can view all cards, decks, and Trainer cards live, while <strong>only the creator/owner</strong> can edit or delete their own items:</p>
         <textarea id="rules-textarea" readonly rows="16" class="w-full bg-[#0b101b] p-3.5 rounded-xl border border-slate-800 text-[11px] font-mono text-emerald-300 focus:outline-none select-all">rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
@@ -919,20 +1127,42 @@ service cloud.firestore {
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    const STORAGE_KEY_NAME = 'pokevault_trainer_name_v2';
-    const STORAGE_KEY_AVATAR = 'pokevault_trainer_avatar_v2';
+    const STORAGE_KEY_TRAINER = 'pokevault_trainer_profile_v3';
+
+    function loadLocalTrainerProfile() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY_TRAINER);
+        if (raw) return JSON.parse(raw);
+      } catch (_) {}
+      return null;
+    }
+
+    const savedTrainer = loadLocalTrainerProfile();
 
     const state = {
       user: null,
-      displayName: localStorage.getItem(STORAGE_KEY_NAME) || 'Trainer',
-      avatarGradient: localStorage.getItem(STORAGE_KEY_AVATAR) || 'from-yellow-400 to-amber-600',
+      trainerProfile: {
+        trainerName: savedTrainer?.trainerName || 'Trainer',
+        trainerTitle: savedTrainer?.trainerTitle || 'Ace Trainer',
+        cardStyle: savedTrainer?.cardStyle || 'Supporter Holo',
+        accentColor: savedTrainer?.accentColor || 'Cobalt',
+        favoriteType: savedTrainer?.favoriteType || 'Fire',
+        hometown: savedTrainer?.hometown || 'Pallet Town • Kanto League',
+        supporterEffect: savedTrainer?.supporterEffect || 'Draw 3 cards. If your Active Pokémon matches your Partner Type, search your deck for any 1 card and put it into your hand.',
+        signatureQuote: savedTrainer?.signatureQuote || 'Every deck tells the story of the Trainer who built it.',
+        avatarDataUrl: savedTrainer?.avatarDataUrl || '',
+        uploadMode: savedTrainer?.uploadMode || 'builder'
+      },
+      usersById: {},
       cards: [],
       decks: [],
       activeTab: 'vault',
       activeDeckId: null,
       inspectedFriendDeckId: null,
       uploadMode: 'full-image',
-      currentImageDataUrl: ''
+      currentImageDataUrl: '',
+      draftTrainerAvatarDataUrl: savedTrainer?.avatarDataUrl || '',
+      draftTrainerUploadMode: savedTrainer?.uploadMode || 'builder'
     };
 
     const ENERGY_META = {
@@ -1036,32 +1266,293 @@ service cloud.firestore {
           btn?.classList.add('text-slate-300', 'hover:text-white', 'hover:bg-slate-800/70');
         }
       });
+      if (tabName === 'my-decks') {
+        renderMyTrainerProfileShowcase();
+      }
     }
 
     // -----------------------------------------------------------------------
-    // TRAINER PROFILE & HEADER UI
+    // TRAINER TRADING CARD RENDERER (2.5" x 3.5" SUPPORTER / FULL-ART CARD)
+    // -----------------------------------------------------------------------
+    function getTrainerBorderClass(cardStyle) {
+      if (cardStyle === 'Gold Hyper Rare') return 'border-gold-ultra';
+      if (cardStyle === 'Full Art Ultra') return 'border-rainbow-hyper';
+      if (cardStyle === 'Supporter Holo') return 'border-silver-holo';
+      return 'border-classic-yellow';
+    }
+
+    function getTrainerRarityStars(cardStyle) {
+      if (cardStyle === 'Gold Hyper Rare') return '★★★';
+      if (cardStyle === 'Full Art Ultra') return '★★';
+      if (cardStyle === 'Supporter Holo') return '★';
+      return '◆';
+    }
+
+    function buildTrainerTradingCardHTML(profile, options = {}) {
+      const { disableClickZoom = false, zoomOwnerUid = null, captionText = null } = options;
+      const p = profile || {};
+      const name = p.trainerName || p.displayName || 'Trainer';
+      const title = p.trainerTitle || 'Ace Trainer';
+      const cardStyle = p.cardStyle || 'Supporter Holo';
+      const accent = p.accentColor || 'Cobalt';
+      const favType = p.favoriteType || 'Fire';
+      const hometown = p.hometown || 'Custom Region';
+      const effect = p.supporterEffect || 'Draw 3 cards. If your Active Pokémon matches your Partner Type, draw 2 more cards.';
+      const quote = p.signatureQuote || 'Every deck tells the story of the Trainer who built it.';
+      const avatarUrl = p.avatarDataUrl || '';
+      const mode = p.uploadMode || 'builder';
+
+      const borderClass = getTrainerBorderClass(cardStyle);
+      const isHolo = cardStyle !== 'Classic Supporter';
+      const isDarkText = accent === 'Obsidian';
+      const zoomAttr = (!disableClickZoom && zoomOwnerUid) ? `data-zoom-trainer-uid="${escapeHtml(zoomOwnerUid)}"` : '';
+      const triggerClass = (!disableClickZoom && zoomOwnerUid) ? 'trainer-card-zoom-trigger cursor-pointer' : '';
+
+      // Mode 2: Full Custom Uploaded 2.5" x 3.5" Trainer Card Image
+      if (mode === 'full_image' && avatarUrl) {
+        return `
+          <div class="flex flex-col items-center gap-2">
+            <div ${zoomAttr} class="pkmn-card-outer ${borderClass} ${isHolo ? 'holo-shimmer' : ''} ${triggerClass}">
+              <div class="pkmn-card-inner bg-slate-950 !p-0">
+                <img src="${escapeHtml(avatarUrl)}" alt="${escapeHtml(name)} Trainer Card" class="full-art-card-img">
+              </div>
+            </div>
+            ${captionText ? `<div class="text-[11px] text-slate-400 font-semibold">${escapeHtml(captionText)}</div>` : ''}
+          </div>
+        `;
+      }
+
+      // Mode 1: Authentic Pokémon TCG Supporter-Style Trainer Card Layout
+      return `
+        <div class="flex flex-col items-center gap-2">
+          <div ${zoomAttr} class="pkmn-card-outer ${borderClass} ${isHolo ? 'holo-shimmer' : ''} ${triggerClass}">
+            <div class="pkmn-card-inner trainer-accent-${escapeHtml(accent)}">
+              <!-- TOP BANNER: TRAINER PILL + SUPPORTER TAG -->
+              <div>
+                <div class="flex items-center justify-between gap-1 mb-0.5">
+                  <span style="font-size:calc(7px * var(--card-font-scale)); padding:calc(1.5px * var(--card-font-scale)) calc(6px * var(--card-font-scale));"
+                        class="rounded-full font-black uppercase tracking-wider bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400 text-slate-950 border border-black/30 shadow-xs">
+                    TRAINER
+                  </span>
+                  <span style="font-size:calc(7.5px * var(--card-font-scale));"
+                        class="font-black uppercase tracking-wider text-rose-100 bg-rose-700/90 px-1.5 py-0.2 rounded border border-white/25">
+                    Supporter
+                  </span>
+                </div>
+
+                <!-- TRAINER NAME + PARTNER TYPE EMBLEM -->
+                <div class="flex items-center justify-between gap-1 my-0.5">
+                  <div class="min-w-0">
+                    <div style="font-size:calc(12.5px * var(--card-font-scale)); line-height:1.1;"
+                         class="font-display font-black tracking-tight truncate ${isDarkText ? 'text-white' : 'text-slate-950'}">
+                      ${escapeHtml(name)}
+                    </div>
+                    <div style="font-size:calc(7px * var(--card-font-scale));"
+                         class="font-bold uppercase tracking-wide truncate ${isDarkText ? 'text-amber-300' : 'text-slate-900/80'}">
+                      ${escapeHtml(title)}
+                    </div>
+                  </div>
+                  <div class="flex items-center gap-1 shrink-0">
+                    ${renderEnergyPip(favType, 1.05)}
+                  </div>
+                </div>
+
+                <!-- PORTRAIT ARTWORK FRAME -->
+                <div style="height:calc(132px * var(--card-font-scale)); border-width:calc(2.5px * var(--card-font-scale));"
+                     class="w-full rounded-sm border-slate-200/90 bg-slate-950 overflow-hidden shadow-inner relative">
+                  ${avatarUrl
+                    ? `<img src="${escapeHtml(avatarUrl)}" alt="${escapeHtml(name)}" class="w-full h-full object-cover">`
+                    : `<div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-slate-800 to-slate-950 text-slate-300">
+                         <div style="width:calc(46px * var(--card-font-scale)); height:calc(46px * var(--card-font-scale)); font-size:calc(18px * var(--card-font-scale));"
+                              class="rounded-full bg-yellow-400 text-slate-950 font-black flex items-center justify-center shadow-lg border-2 border-white/40 mb-1">
+                           ${escapeHtml(name.slice(0, 2).toUpperCase())}
+                         </div>
+                         <span style="font-size:calc(7.5px * var(--card-font-scale));" class="text-slate-400 font-semibold">Custom Trainer Portrait</span>
+                       </div>`
+                  }
+                </div>
+
+                <!-- REGION / LEAGUE STRIP -->
+                <div style="font-size:calc(6.2px * var(--card-font-scale)); padding:calc(1.5px * var(--card-font-scale)) calc(4px * var(--card-font-scale)); margin-top:calc(2px * var(--card-font-scale));"
+                     class="w-full bg-gradient-to-r from-slate-200 via-white to-slate-200 text-slate-800 font-bold text-center rounded-xs border border-slate-400/60 truncate">
+                  ${escapeHtml(hometown)}
+                </div>
+              </div>
+
+              <!-- MIDDLE: SUPPORTER ABILITY TEXT BOX -->
+              <div style="padding:calc(4px * var(--card-font-scale)) calc(5px * var(--card-font-scale));"
+                   class="my-1 rounded bg-white/82 text-slate-900 border border-black/15 shadow-xs flex-1 flex flex-col justify-center">
+                <p style="font-size:calc(7.4px * var(--card-font-scale)); line-height:1.22;" class="font-medium line-clamp-4">
+                  ${escapeHtml(effect)}
+                </p>
+              </div>
+
+              <!-- BOTTOM: SUPPORTER RULE REMINDER, QUOTE & CARD FOOTER -->
+              <div>
+                <div style="font-size:calc(6px * var(--card-font-scale)); line-height:1.15; padding:calc(2px * var(--card-font-scale)) calc(4px * var(--card-font-scale));"
+                     class="italic bg-black/20 ${isDarkText ? 'text-slate-200' : 'text-slate-950 font-semibold'} rounded-xs line-clamp-1 mb-0.5">
+                  "${escapeHtml(quote)}"
+                </div>
+                <div style="font-size:calc(5.8px * var(--card-font-scale));"
+                     class="flex items-center justify-between font-bold opacity-90 px-0.5">
+                  <span>You may play only 1 Supporter card during your turn.</span>
+                  <span class="shrink-0 ml-1">${getTrainerRarityStars(cardStyle)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          ${captionText ? `<div class="text-[11px] text-slate-400 font-semibold">${escapeHtml(captionText)}</div>` : ''}
+        </div>
+      `;
+    }
+
+    function zoomTrainerCardByUid(uid) {
+      const profile = (state.user && uid === state.user.uid)
+        ? state.trainerProfile
+        : state.usersById[uid];
+
+      const fallbackProfile = profile || {
+        trainerName: 'Trainer',
+        trainerTitle: 'Ace Trainer',
+        cardStyle: 'Supporter Holo',
+        accentColor: 'Cobalt',
+        favoriteType: 'Fire'
+      };
+
+      document.getElementById('card-zoom-content').innerHTML = buildTrainerTradingCardHTML(fallbackProfile, { disableClickZoom: true });
+      openModal('card-zoom-modal');
+    }
+
+    // -----------------------------------------------------------------------
+    // TRAINER PROFILE SHOWCASE & STUDIO MODAL
     // -----------------------------------------------------------------------
     function updateHeaderProfileUI() {
-      document.getElementById('user-display-name').textContent = state.displayName;
+      const tp = state.trainerProfile;
+      document.getElementById('user-display-name').textContent = tp.trainerName;
       const avatarEl = document.getElementById('user-avatar');
-      avatarEl.textContent = state.displayName.slice(0, 2).toUpperCase();
-      avatarEl.className = `w-7 h-7 rounded-lg bg-gradient-to-tr ${state.avatarGradient} flex items-center justify-center text-xs font-extrabold text-slate-950 uppercase`;
+
+      if (tp.avatarDataUrl) {
+        avatarEl.innerHTML = `<img src="${escapeHtml(tp.avatarDataUrl)}" alt="Trainer" class="w-full h-full object-cover">`;
+      } else {
+        avatarEl.textContent = tp.trainerName.slice(0, 2).toUpperCase();
+      }
+    }
+
+    function renderMyTrainerProfileShowcase() {
+      const tp = state.trainerProfile;
+      const showcaseSlot = document.getElementById('my-trainer-card-showcase');
+      if (showcaseSlot) {
+        showcaseSlot.innerHTML = buildTrainerTradingCardHTML(tp, {
+          zoomOwnerUid: state.user?.uid || null,
+          captionText: 'Click card to inspect close-up'
+        });
+      }
+
+      document.getElementById('showcase-trainer-title').textContent = tp.trainerTitle;
+      document.getElementById('showcase-trainer-name').textContent = tp.trainerName;
+      document.getElementById('showcase-trainer-region').innerHTML = `<i class="fa-solid fa-location-dot text-rose-400 mr-1"></i>${escapeHtml(tp.hometown)}`;
+      document.getElementById('showcase-trainer-effect').textContent = tp.supporterEffect;
+      document.getElementById('showcase-trainer-quote').textContent = `"${tp.signatureQuote}"`;
+
+      const myCardsCount = state.user ? state.cards.filter(c => c.ownerId === state.user.uid).length : 0;
+      const myDecksCount = state.user ? state.decks.filter(d => d.ownerId === state.user.uid).length : 0;
+      document.getElementById('stat-my-cards-count').textContent = myCardsCount;
+      document.getElementById('stat-my-decks-count').textContent = myDecksCount;
+      document.getElementById('stat-my-fav-type').innerHTML = `${renderEnergyPip(tp.favoriteType, 1.1)}<span>${escapeHtml(tp.favoriteType)}</span>`;
+    }
+
+    function setTrainerStudioMode(mode) {
+      state.draftTrainerUploadMode = mode;
+      const btnBuilder = document.getElementById('trainer-mode-btn-builder');
+      const btnFull = document.getElementById('trainer-mode-btn-full');
+      const extraFields = document.getElementById('trainer-builder-extra-fields');
+      const uploadTitle = document.getElementById('trainer-upload-title');
+
+      if (mode === 'full_image') {
+        btnFull.classList.add('bg-yellow-400', 'text-slate-950');
+        btnFull.classList.remove('text-slate-400');
+        btnBuilder.classList.remove('bg-yellow-400', 'text-slate-950');
+        btnBuilder.classList.add('text-slate-400');
+        extraFields.classList.add('hidden');
+        uploadTitle.textContent = 'Upload Complete 2.5" × 3.5" Custom Trainer Card Image';
+      } else {
+        btnBuilder.classList.add('bg-yellow-400', 'text-slate-950');
+        btnBuilder.classList.remove('text-slate-400');
+        btnFull.classList.remove('bg-yellow-400', 'text-slate-950');
+        btnFull.classList.add('text-slate-400');
+        extraFields.classList.remove('hidden');
+        uploadTitle.textContent = 'Upload Your Trainer Portrait / Avatar Artwork';
+      }
+      updateLiveTrainerCardPreview();
+    }
+
+    function collectTrainerFormDraft() {
+      return {
+        trainerName: document.getElementById('profile-name-input').value.trim() || state.trainerProfile.trainerName || 'Trainer',
+        trainerTitle: document.getElementById('trainer-title-select').value,
+        cardStyle: document.getElementById('trainer-style-select').value,
+        accentColor: document.getElementById('trainer-accent-select').value,
+        favoriteType: document.getElementById('trainer-fav-type-select').value,
+        hometown: document.getElementById('trainer-hometown-input').value.trim() || 'Custom Region',
+        supporterEffect: document.getElementById('trainer-effect-input').value.trim() || 'Draw 3 cards.',
+        signatureQuote: document.getElementById('trainer-quote-input').value.trim() || 'Ready for battle!',
+        avatarDataUrl: state.draftTrainerAvatarDataUrl,
+        uploadMode: state.draftTrainerUploadMode
+      };
+    }
+
+    function updateLiveTrainerCardPreview() {
+      const slot = document.getElementById('live-trainer-card-preview-slot');
+      if (!slot) return;
+      slot.innerHTML = buildTrainerTradingCardHTML(collectTrainerFormDraft(), { disableClickZoom: true });
     }
 
     function openProfileModal(isFirstVisit = false) {
-      document.getElementById('profile-modal-heading').textContent = isFirstVisit ? 'Welcome, Trainer!' : 'Edit Trainer Card';
-      document.getElementById('profile-name-input').value = isFirstVisit ? '' : state.displayName;
+      const tp = state.trainerProfile;
+      document.getElementById('profile-modal-heading').textContent = isFirstVisit
+        ? 'Welcome! Design Your Trainer Card'
+        : 'Trainer Trading Card Studio';
+
+      document.getElementById('profile-name-input').value = isFirstVisit ? '' : tp.trainerName;
+      document.getElementById('trainer-title-select').value = tp.trainerTitle;
+      document.getElementById('trainer-style-select').value = tp.cardStyle;
+      document.getElementById('trainer-accent-select').value = tp.accentColor;
+      document.getElementById('trainer-fav-type-select').value = tp.favoriteType;
+      document.getElementById('trainer-hometown-input').value = tp.hometown;
+      document.getElementById('trainer-effect-input').value = tp.supporterEffect;
+      document.getElementById('trainer-quote-input').value = tp.signatureQuote;
       document.getElementById('profile-full-uid').textContent = state.user ? state.user.uid : 'Connecting...';
 
-      document.querySelectorAll('.avatar-color-btn').forEach(btn => {
-        if (btn.dataset.color === state.avatarGradient) {
-          btn.classList.add('ring-2', 'ring-white');
-        } else {
-          btn.classList.remove('ring-2', 'ring-white');
-        }
-      });
-
+      state.draftTrainerAvatarDataUrl = tp.avatarDataUrl || '';
+      setTrainerStudioMode(tp.uploadMode || 'builder');
       openModal('profile-modal');
+    }
+
+    function processTrainerAvatarFile(file) {
+      if (!file || !file.type.startsWith('image/')) {
+        showToast('Please select a valid PNG, JPG, or WEBP image file.', 'error');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          const canvas = document.createElement('canvas');
+          const maxDim = state.draftTrainerUploadMode === 'full_image' ? 700 : 440;
+          const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
+          canvas.width = Math.round(img.width * scale);
+          canvas.height = Math.round(img.height * scale);
+
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+          state.draftTrainerAvatarDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+
+          updateLiveTrainerCardPreview();
+          showToast('Trainer portrait loaded into 2.5" × 3.5" card preview!', 'success');
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
     }
 
     // -----------------------------------------------------------------------
@@ -1080,19 +1571,22 @@ service cloud.firestore {
         if (!user) return;
         state.user = user;
 
-        const savedName = localStorage.getItem(STORAGE_KEY_NAME);
-        state.displayName = savedName || `Trainer_${user.uid.slice(0, 5)}`;
+        const existingLocal = loadLocalTrainerProfile();
+        if (!existingLocal?.trainerName) {
+          state.trainerProfile.trainerName = `Trainer_${user.uid.slice(0, 5)}`;
+        }
         updateHeaderProfileUI();
+        renderMyTrainerProfileShowcase();
 
         try {
           await setDoc(doc(db, 'users', user.uid), {
             uid: user.uid,
-            displayName: state.displayName,
-            avatarGradient: state.avatarGradient,
+            displayName: state.trainerProfile.trainerName,
+            ...state.trainerProfile,
             lastActive: Date.now()
           }, { merge: true });
         } catch (err) {
-          console.error('Profile write error:', err);
+          console.error('Profile sync error:', err);
         }
 
         const pill = document.getElementById('live-status-pill');
@@ -1102,8 +1596,7 @@ service cloud.firestore {
 
         attachRealtimeListeners();
 
-        // Friendly 1-step welcome modal on first visit
-        if (!savedName) {
+        if (!existingLocal?.trainerName) {
           openProfileModal(true);
         }
       });
@@ -1112,7 +1605,31 @@ service cloud.firestore {
     function attachRealtimeListeners() {
       if (!state.user) return;
 
-      // 1. Live Cards Collection (/cards)
+      // 1. Live Users & Trainer Cards Listener (/users)
+      onSnapshot(collection(db, 'users'), (snapshot) => {
+        const map = {};
+        snapshot.forEach(docSnap => {
+          map[docSnap.id] = { uid: docSnap.id, ...docSnap.data() };
+        });
+        state.usersById = map;
+
+        // Hydrate own profile from Firestore if saved in another session
+        const remoteSelf = map[state.user.uid];
+        if (remoteSelf && remoteSelf.trainerName) {
+          state.trainerProfile = {
+            ...state.trainerProfile,
+            ...remoteSelf
+          };
+          localStorage.setItem(STORAGE_KEY_TRAINER, JSON.stringify(state.trainerProfile));
+          updateHeaderProfileUI();
+          renderMyTrainerProfileShowcase();
+        }
+        renderFriendsDecks();
+      }, (err) => {
+        console.error('Users listener error:', err);
+      });
+
+      // 2. Live Cards Collection (/cards)
       onSnapshot(collection(db, 'cards'), (snapshot) => {
         const list = [];
         snapshot.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
@@ -1121,6 +1638,7 @@ service cloud.firestore {
 
         document.getElementById('badge-vault-count').textContent = list.length;
         renderVault();
+        renderMyTrainerProfileShowcase();
         if (state.activeDeckId) renderDeckBuilder();
         if (state.inspectedFriendDeckId) openFriendDeckInspector(state.inspectedFriendDeckId, true);
       }, (err) => {
@@ -1128,7 +1646,7 @@ service cloud.firestore {
         showToast('Error syncing cards: ' + err.message, 'error');
       });
 
-      // 2. Live Decks Collection (/decks)
+      // 3. Live Decks Collection (/decks)
       onSnapshot(collection(db, 'decks'), (snapshot) => {
         const list = [];
         snapshot.forEach(docSnap => list.push({ id: docSnap.id, ...docSnap.data() }));
@@ -1153,6 +1671,7 @@ service cloud.firestore {
         }
 
         renderMyDecks();
+        renderMyTrainerProfileShowcase();
         renderFriendsDecks();
 
         if (state.activeDeckId) {
@@ -1632,7 +2151,7 @@ service cloud.firestore {
         resistance: document.getElementById('field-resistance').value,
         retreatCost: parseInt(document.getElementById('field-retreat').value, 10) || 0,
         flavor: document.getElementById('field-flavor').value.trim(),
-        creatorName: state.displayName
+        creatorName: state.trainerProfile.trainerName
       };
     }
 
@@ -1777,7 +2296,7 @@ service cloud.firestore {
             format,
             description,
             ownerId: state.user.uid,
-            ownerName: state.displayName,
+            ownerName: state.trainerProfile.trainerName,
             cards: {},
             updatedAt: Date.now()
           });
@@ -1868,7 +2387,6 @@ service cloud.firestore {
       `).join('');
       document.getElementById('builder-stage-breakdown').innerHTML = stagePills || '<span class="text-slate-500 text-xs">No stages yet</span>';
 
-      // Deck Roster
       const rosterEl = document.getElementById('builder-deck-roster');
       const entries = Object.entries(deck.cards || {}).filter(([, q]) => q > 0);
       if (entries.length === 0) {
@@ -1963,7 +2481,7 @@ service cloud.firestore {
     }
 
     // -----------------------------------------------------------------------
-    // FRIENDS' DECKS DIRECTORY & LIVE READ-ONLY INSPECTOR
+    // FRIENDS' DECKS DIRECTORY & LIVE READ-ONLY INSPECTOR + TRAINER CARDS
     // -----------------------------------------------------------------------
     function renderFriendsDecks() {
       const grid = document.getElementById('friends-decks-grid');
@@ -1981,7 +2499,7 @@ service cloud.firestore {
             <i class="fa-solid fa-users text-3xl text-sky-400 mb-3"></i>
             <h3 class="font-display text-base font-extrabold text-white">No Friends' Decks Online Yet</h3>
             <p class="text-xs text-slate-400 max-w-md mx-auto mt-1">
-              Click <strong>Invite Friends</strong> at the top to share your link—as soon as a friend creates a deck, it appears here live in read-only mode!
+              Click <strong>Invite Friends</strong> at the top to share your link—as soon as a friend creates a deck, it appears here live alongside their Trainer Card!
             </p>
           </div>
         `;
@@ -1993,18 +2511,28 @@ service cloud.firestore {
         const totalCards = entries.reduce((s, [, qty]) => s + qty, 0);
         const firstCardId = entries[0]?.[0];
         const coverCard = firstCardId ? state.cards.find(c => c.id === firstCardId) : null;
+        const friendUser = state.usersById[deck.ownerId] || {};
+        const trainerTitle = friendUser.trainerTitle || 'Ace Trainer';
 
         return `
           <div data-inspect-deck-id="${escapeHtml(deck.id)}" class="btn-inspect-friend-deck group cursor-pointer bg-[#141c2e] hover:bg-[#1a243b] border border-slate-800 hover:border-sky-500/50 rounded-2xl p-5 transition shadow-lg flex flex-col justify-between">
             <div>
               <div class="flex items-center justify-between gap-2 mb-3">
-                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-sky-500/15 text-sky-300 border border-sky-500/30">
-                  <i class="fa-solid fa-user mr-1"></i>${escapeHtml(deck.ownerName || 'Friend')}
-                </span>
-                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-yellow-400 text-slate-950">
+                <div class="flex items-center gap-2 min-w-0">
+                  ${friendUser.avatarDataUrl
+                    ? `<img src="${escapeHtml(friendUser.avatarDataUrl)}" class="w-7 h-7 rounded-full object-cover border border-yellow-400/60 shrink-0">`
+                    : `<span class="w-7 h-7 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30 flex items-center justify-center text-[11px] font-extrabold shrink-0">${escapeHtml((deck.ownerName || 'F').slice(0, 2).toUpperCase())}</span>`
+                  }
+                  <div class="min-w-0">
+                    <div class="text-xs font-bold text-white truncate">${escapeHtml(deck.ownerName || 'Friend')}</div>
+                    <div class="text-[10px] text-yellow-400 truncate">${escapeHtml(trainerTitle)}</div>
+                  </div>
+                </div>
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-extrabold bg-yellow-400 text-slate-950 shrink-0">
                   ${totalCards} Cards
                 </span>
               </div>
+
               <div class="flex items-start gap-3">
                 ${coverCard?.imageUrl
                   ? `<img src="${escapeHtml(coverCard.imageUrl)}" class="w-12 h-16 rounded-lg object-cover border border-slate-700 shrink-0 shadow">`
@@ -2017,9 +2545,13 @@ service cloud.firestore {
                 </div>
               </div>
             </div>
-            <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
-              <span class="text-slate-400"><i class="fa-solid fa-lock text-yellow-400 mr-1"></i>Read-Only Deck</span>
-              <span class="text-sky-400 font-bold">Inspect All Cards <i class="fa-solid fa-arrow-right ml-1"></i></span>
+
+            <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between gap-2 text-xs">
+              <button type="button" data-zoom-trainer-uid="${escapeHtml(deck.ownerId)}" class="btn-friend-trainer-card px-2.5 py-1 rounded-lg bg-yellow-400/10 hover:bg-yellow-400/20 text-yellow-300 border border-yellow-400/30 font-bold text-[11px] transition flex items-center gap-1">
+                <i class="fa-solid fa-id-badge"></i>
+                <span>Trainer Card</span>
+              </button>
+              <span class="text-sky-400 font-bold">Inspect Deck <i class="fa-solid fa-arrow-right ml-1"></i></span>
             </div>
           </div>
         `;
@@ -2039,6 +2571,11 @@ service cloud.firestore {
       document.getElementById('inspector-card-count').textContent = `${stats.total} Cards (${stats.unique} Unique)`;
       document.getElementById('inspector-deck-desc').textContent = deck.description || '';
 
+      const trainerBtn = document.getElementById('btn-inspector-view-trainer-card');
+      if (trainerBtn) {
+        trainerBtn.dataset.ownerUid = deck.ownerId;
+      }
+
       document.getElementById('inspector-type-pills').innerHTML = Object.entries(stats.typeCounts).map(([t, c]) => `
         <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#0b101b] border border-slate-800 text-slate-200 font-semibold">
           ${renderEnergyPip(t, 0.85)}
@@ -2052,7 +2589,6 @@ service cloud.firestore {
       if (entries.length === 0) {
         grid.innerHTML = `<div class="w-full text-center py-12 text-slate-400 text-xs">This deck has no cards yet—updates will appear here live!</div>`;
       } else {
-        // Strictly Read-Only: showOwnerControls is false; zero edit or delete buttons rendered
         grid.innerHTML = entries.map(([cid, qty]) => {
           const card = state.cards.find(c => c.id === cid);
           if (!card) return '';
@@ -2087,6 +2623,7 @@ service cloud.firestore {
       });
       document.getElementById('btn-open-rules')?.addEventListener('click', () => openModal('rules-modal'));
       document.getElementById('btn-open-profile')?.addEventListener('click', () => openProfileModal(false));
+      document.getElementById('btn-customize-trainer-card')?.addEventListener('click', () => openProfileModal(false));
 
       // Copy Buttons inside Modals
       document.getElementById('btn-copy-invite')?.addEventListener('click', () => {
@@ -2164,43 +2701,72 @@ service cloud.firestore {
       // Friends' Decks Controls
       document.getElementById('friends-deck-search')?.addEventListener('input', renderFriendsDecks);
       document.getElementById('btn-close-inspector')?.addEventListener('click', closeFriendInspector);
+      document.getElementById('btn-inspector-view-trainer-card')?.addEventListener('click', (e) => {
+        const ownerUid = e.currentTarget.dataset.ownerUid;
+        if (ownerUid) zoomTrainerCardByUid(ownerUid);
+      });
 
-      // Trainer Profile Form & Avatar Picker
-      document.querySelectorAll('.avatar-color-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          state.avatarGradient = btn.dataset.color;
-          document.querySelectorAll('.avatar-color-btn').forEach(b => b.classList.remove('ring-2', 'ring-white'));
-          btn.classList.add('ring-2', 'ring-white');
-        });
+      // Trainer Trading Card Studio Controls
+      document.getElementById('trainer-mode-btn-builder')?.addEventListener('click', () => setTrainerStudioMode('builder'));
+      document.getElementById('trainer-mode-btn-full')?.addEventListener('click', () => setTrainerStudioMode('full_image'));
+
+      const trainerDrop = document.getElementById('trainer-drop-zone');
+      const trainerFile = document.getElementById('trainer-image-input');
+      trainerDrop?.addEventListener('click', () => trainerFile?.click());
+      trainerFile?.addEventListener('change', (e) => {
+        const file = e.target.files?.[0];
+        if (file) processTrainerAvatarFile(file);
+      });
+      trainerDrop?.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        trainerDrop.classList.add('border-yellow-400', 'bg-slate-900');
+      });
+      trainerDrop?.addEventListener('dragleave', () => {
+        trainerDrop.classList.remove('border-yellow-400', 'bg-slate-900');
+      });
+      trainerDrop?.addEventListener('drop', (e) => {
+        e.preventDefault();
+        trainerDrop.classList.remove('border-yellow-400', 'bg-slate-900');
+        const file = e.dataTransfer?.files?.[0];
+        if (file) processTrainerAvatarFile(file);
+      });
+
+      [
+        'profile-name-input', 'trainer-title-select', 'trainer-style-select',
+        'trainer-accent-select', 'trainer-fav-type-select', 'trainer-hometown-input',
+        'trainer-effect-input', 'trainer-quote-input'
+      ].forEach(id => {
+        const el = document.getElementById(id);
+        el?.addEventListener('input', updateLiveTrainerCardPreview);
+        el?.addEventListener('change', updateLiveTrainerCardPreview);
       });
 
       document.getElementById('profile-form')?.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const newName = document.getElementById('profile-name-input').value.trim();
-        if (!newName) return;
+        const updatedProfile = collectTrainerFormDraft();
+        state.trainerProfile = updatedProfile;
 
-        state.displayName = newName;
-        localStorage.setItem(STORAGE_KEY_NAME, newName);
-        localStorage.setItem(STORAGE_KEY_AVATAR, state.avatarGradient);
+        localStorage.setItem(STORAGE_KEY_TRAINER, JSON.stringify(updatedProfile));
         updateHeaderProfileUI();
+        renderMyTrainerProfileShowcase();
         closeModal('profile-modal');
-        showToast(`Trainer Card saved as "${newName}"!`, 'success');
+        showToast(`Trainer Card saved for "${updatedProfile.trainerName}"!`, 'success');
 
         if (state.user) {
           try {
             await setDoc(doc(db, 'users', state.user.uid), {
               uid: state.user.uid,
-              displayName: newName,
-              avatarGradient: state.avatarGradient,
+              displayName: updatedProfile.trainerName,
+              ...updatedProfile,
               lastActive: Date.now()
             }, { merge: true });
 
             const myDecks = state.decks.filter(d => d.ownerId === state.user.uid);
             for (const deck of myDecks) {
-              await updateDoc(doc(db, 'decks', deck.id), { ownerName: newName });
+              await updateDoc(doc(db, 'decks', deck.id), { ownerName: updatedProfile.trainerName });
             }
           } catch (err) {
-            console.error('Profile sync error:', err);
+            console.error('Trainer profile sync error:', err);
           }
         }
       });
@@ -2210,7 +2776,7 @@ service cloud.firestore {
         btn.addEventListener('click', () => closeModal(btn.dataset.closeModal));
       });
 
-      // Delegated Clicks for Dynamic Cards, Deck Cards, and Roster Quantity Buttons
+      // Delegated Clicks for Dynamic Cards, Trainer Cards, Deck Cards, and Roster Buttons
       document.addEventListener('click', (e) => {
         const editCardBtn = e.target.closest('.btn-edit-card');
         if (editCardBtn) {
@@ -2223,6 +2789,20 @@ service cloud.firestore {
         if (deleteCardBtn) {
           e.stopPropagation();
           deleteCard(deleteCardBtn.dataset.deleteCardId);
+          return;
+        }
+
+        const friendTrainerBtn = e.target.closest('.btn-friend-trainer-card');
+        if (friendTrainerBtn) {
+          e.stopPropagation();
+          zoomTrainerCardByUid(friendTrainerBtn.dataset.zoomTrainerUid);
+          return;
+        }
+
+        const trainerZoomTrigger = e.target.closest('.trainer-card-zoom-trigger');
+        if (trainerZoomTrigger) {
+          e.stopPropagation();
+          zoomTrainerCardByUid(trainerZoomTrigger.dataset.zoomTrainerUid);
           return;
         }
 
@@ -2254,6 +2834,8 @@ service cloud.firestore {
     // Boot Application
     window.addEventListener('DOMContentLoaded', () => {
       bindAllEventListeners();
+      updateHeaderProfileUI();
+      renderMyTrainerProfileShowcase();
       updateLiveCardPreview();
       initFirebaseLive();
     });
