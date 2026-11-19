@@ -1201,6 +1201,52 @@
       </div>
 
       <div class="mt-5 flex justify-end">
+        <button type="button" data-close-modal="invite-modal" class="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL 7: FIRESTORE SECURITY RULES REFERENCE                           -->
+  <!-- ===================================================================== -->
+  <div id="rules-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-[#141c2e] border border-slate-700 rounded-3xl max-w-lg w-full p-6 shadow-2xl">
+      <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-yellow-400/15 text-yellow-400 border border-yellow-400/30 flex items-center justify-center">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <div>
+            <h3 class="font-display text-lg font-extrabold text-white">Firestore Security Rules</h3>
+            <p class="text-[11px] text-slate-400">Supports shared cards, owner decks, and cross-device Trainer profiles</p>
+          </div>
+        </div>
+        <button type="button" data-close-modal="rules-modal" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+
+      <div class="mt-4 space-y-2 text-xs">
+        <textarea id="rules-textarea" rows="12" readonly class="w-full p-3 rounded-xl bg-[#0b101b] border border-slate-700 font-mono text-[11px] text-emerald-300 focus:outline-none">rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+      allow read, write: if request.auth != null;
+    }
+    match /cards/{cardId} {
+      allow read, create: if request.auth != null;
+      allow update, delete: if request.auth != null;
+    }
+    match /decks/{deckId} {
+      allow read, create: if request.auth != null;
+      allow update, delete: if request.auth != null;
+    }
+  }
+}</textarea>
+      </div>
+
+      <div class="mt-4 flex justify-between items-center gap-2">
+        <button type="button" id="btn-copy-rules" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 font-bold text-xs">
+          <i class="fa-regular fa-copy mr-1"></i>Copy Rules
+        </button>
         <button type="button" data-close-modal="rules-modal" class="px-5 py-2 rounded-xl bg-yellow-400 text-slate-950 font-extrabold text-xs">Close</button>
       </div>
     </div>
@@ -3132,6 +3178,84 @@
         } else {
           showToast('Incorrect PIN. Please try again.', 'error');
         }
+      });
+
+      const trainerDropZone = document.getElementById('trainer-drop-zone');
+      const trainerFileInput = document.getElementById('trainer-image-input');
+      trainerDropZone?.addEventListener('click', () => trainerFileInput?.click());
+      trainerFileInput?.addEventListener('change', (e) => {
+        const file = e.target.files?.[0];
+        if (file) processTrainerAvatarFile(file);
+      });
+      trainerDropZone?.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        trainerDropZone.classList.add('border-yellow-400', 'bg-slate-900');
+      });
+      trainerDropZone?.addEventListener('dragleave', () => {
+        trainerDropZone.classList.remove('border-yellow-400', 'bg-slate-900');
+      });
+      trainerDropZone?.addEventListener('drop', (e) => {
+        e.preventDefault();
+        trainerDropZone.classList.remove('border-yellow-400', 'bg-slate-900');
+        const file = e.dataTransfer?.files?.[0];
+        if (file) processTrainerAvatarFile(file);
+      });
+
+      const zoomSlider = document.getElementById('trainer-zoom-slider');
+      zoomSlider?.addEventListener('input', (e) => {
+        state.cropEditor.zoom = parseFloat(e.target.value) || 1;
+        syncCropSliderUI();
+        renderCroppedTrainerDataUrl();
+        updateLiveTrainerCardPreview();
+      });
+
+      document.getElementById('btn-reset-trainer-crop')?.addEventListener('click', () => {
+        state.cropEditor.zoom = 1;
+        state.cropEditor.panX = 0;
+        state.cropEditor.panY = 0;
+        syncCropSliderUI();
+        renderCroppedTrainerDataUrl();
+        updateLiveTrainerCardPreview();
+      });
+
+      document.querySelectorAll('.btn-nudge-crop').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (!state.cropEditor.img) return;
+          state.cropEditor.panX += Number(btn.dataset.nudgeX) || 0;
+          state.cropEditor.panY += Number(btn.dataset.nudgeY) || 0;
+          renderCroppedTrainerDataUrl();
+          updateLiveTrainerCardPreview();
+        });
+      });
+
+      const studioPreviewSlot = document.getElementById('live-trainer-card-preview-slot');
+      studioPreviewSlot?.addEventListener('pointerdown', (e) => {
+        if (!state.cropEditor.img) return;
+        const frame = e.target.closest('.trainer-photo-frame-5-7');
+        if (!frame) return;
+        e.preventDefault();
+        state.cropEditor.isDragging = true;
+        state.cropEditor.dragStartX = e.clientX;
+        state.cropEditor.dragStartY = e.clientY;
+        state.cropEditor.startPanX = state.cropEditor.panX;
+        state.cropEditor.startPanY = state.cropEditor.panY;
+        frame.style.cursor = 'grabbing';
+      });
+
+      window.addEventListener('pointermove', (e) => {
+        if (!state.cropEditor.isDragging) return;
+        const dx = (e.clientX - state.cropEditor.dragStartX) * 2.5;
+        const dy = (e.clientY - state.cropEditor.dragStartY) * 2.5;
+        state.cropEditor.panX = state.cropEditor.startPanX + dx;
+        state.cropEditor.panY = state.cropEditor.startPanY + dy;
+        renderCroppedTrainerDataUrl();
+        updateLiveTrainerCardPreview();
+      });
+
+      window.addEventListener('pointerup', () => {
+        if (!state.cropEditor.isDragging) return;
+        state.cropEditor.isDragging = false;
+        updateLiveTrainerCardPreview();
       });
 
       studioPreviewSlot?.addEventListener('wheel', (e) => {
