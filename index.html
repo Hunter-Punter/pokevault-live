@@ -282,9 +282,21 @@
     .full-art-card-img {
       width: 100%;
       height: 100%;
+      aspect-ratio: 5 / 7;
       object-fit: cover;
       border-radius: calc(7px * var(--card-font-scale));
       display: block;
+    }
+
+    /* Strict Fixed 2.5 : 3.5 (5:7) Aspect Ratio for Trainer Profile Photo */
+    .trainer-photo-frame-5-7 {
+      aspect-ratio: 5 / 7;
+      width: auto;
+      max-width: 100%;
+      height: 100%;
+      margin-left: auto;
+      margin-right: auto;
+      object-fit: cover;
     }
 
     /* Zoomed Inspection Card Override (Large crisp 340px x 476px = exact 5:7 ratio) */
@@ -965,28 +977,18 @@
           </div>
           <div>
             <h3 id="profile-modal-heading" class="font-display text-lg sm:text-xl font-extrabold text-white">Trainer Trading Card Studio</h3>
-            <p class="text-[11px] text-slate-400">Create your personal 2.5" × 3.5" Supporter Trainer Card — visible on your profile and to friends!</p>
+            <p class="text-[11px] text-slate-400">Create your personal 2.5" × 3.5" Trainer Card — visible on your profile and to friends!</p>
           </div>
         </div>
-        <div class="flex items-center gap-2">
-          <div class="bg-[#0b101b] p-1 rounded-xl border border-slate-800 flex text-xs font-bold">
-            <button type="button" id="trainer-mode-btn-builder" class="px-3 py-1.5 rounded-lg transition bg-yellow-400 text-slate-950">
-              <i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Profile Card Maker
-            </button>
-            <button type="button" id="trainer-mode-btn-full" class="px-3 py-1.5 rounded-lg transition text-slate-400">
-              <i class="fa-solid fa-file-image mr-1"></i>Full Card Image
-            </button>
-          </div>
-          <button type="button" id="btn-close-profile" data-close-modal="profile-modal" class="text-slate-400 hover:text-white p-1.5">
-            <i class="fa-solid fa-xmark text-lg"></i>
-          </button>
-        </div>
+        <button type="button" id="btn-close-profile" data-close-modal="profile-modal" class="text-slate-400 hover:text-white p-1.5">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 mt-5 items-start">
         <!-- Trainer Card Form (7 cols) -->
         <form id="profile-form" class="lg:col-span-7 space-y-3.5">
-          <!-- Upload Portrait / Full Trainer Card Image -->
+          <!-- Single Unified 2.5:3.5 Photo Upload Zone -->
           <div id="trainer-drop-zone" class="cursor-pointer rounded-2xl border-2 border-dashed border-yellow-400/50 hover:border-yellow-400 bg-[#0b101b]/90 hover:bg-[#0b101b] p-3.5 text-center transition">
             <input id="trainer-image-input" type="file" accept="image/*" class="hidden">
             <div class="flex items-center justify-center gap-3">
@@ -994,11 +996,16 @@
                 <i class="fa-solid fa-camera-retro"></i>
               </div>
               <div class="text-left">
-                <div id="trainer-upload-title" class="text-xs font-bold text-white">
-                  Upload Your Trainer Portrait / Avatar Photo
+                <div class="flex flex-wrap items-center gap-2">
+                  <span id="trainer-upload-title" class="text-xs font-bold text-white">
+                    Upload Trainer Profile Photo
+                  </span>
+                  <span class="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-yellow-400/15 text-yellow-300 border border-yellow-400/35">
+                    2.5" × 3.5" (5:7) Fixed Ratio
+                  </span>
                 </div>
-                <div class="text-[11px] text-slate-400">
-                  PNG, JPG, WEBP • Auto-compressed & synced live to friends
+                <div class="text-[11px] text-slate-400 mt-0.5">
+                  Auto center-cropped to exact 2.5" × 3.5" portrait ratio • PNG, JPG, WEBP
                 </div>
               </div>
             </div>
@@ -1042,7 +1049,7 @@
                 <option value="cyber_neon">★★ Cyberpunk Chrome</option>
               </select>
             </div>
-            <div id="trainer-accent-wrapper">
+            <div>
               <label class="block text-xs font-bold text-slate-300 mb-1">Card Frame Palette</label>
               <select id="trainer-accent-select" class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-yellow-400">
                 <option value="Cobalt">Cobalt Blue</option>
@@ -1055,8 +1062,8 @@
             </div>
           </div>
 
-          <!-- Builder-Specific Aesthetic Fields -->
-          <div id="trainer-builder-extra-fields" class="space-y-3">
+          <!-- Trainer Emblem, Hometown & Quote -->
+          <div class="space-y-3">
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label class="block text-[11px] font-bold text-slate-300 mb-1">Partner Energy Emblem</label>
@@ -1252,8 +1259,7 @@ service cloud.firestore {
         favoriteType: savedTrainer?.favoriteType || 'Fire',
         hometown: savedTrainer?.hometown || 'Pallet Town • Kanto League',
         signatureQuote: savedTrainer?.signatureQuote || 'Every deck tells the story of the Trainer who built it.',
-        avatarDataUrl: savedTrainer?.avatarDataUrl || '',
-        uploadMode: savedTrainer?.uploadMode || 'builder'
+        avatarDataUrl: savedTrainer?.avatarDataUrl || ''
       },
       usersById: {},
       cards: [],
@@ -1263,18 +1269,7 @@ service cloud.firestore {
       inspectedFriendDeckId: null,
       uploadMode: 'full-image',
       currentImageDataUrl: '',
-      draftTrainerAvatarDataUrl: savedTrainer?.avatarDataUrl || '',
-      draftTrainerUploadMode: savedTrainer?.uploadMode || 'builder'
-    };
-
-    const HOLO_FINISH_META = {
-      cosmos:       { label: 'Cosmos Galaxy Holo',        stars: '★',   border: 'border-silver-holo' },
-      prismatic:    { label: 'Prismatic Tera Rainbow',    stars: '★★',  border: 'border-rainbow-hyper' },
-      gold_hyper:   { label: 'Gold Hyper Rare',           stars: '★★★', border: 'border-gold-ultra' },
-      alt_art:      { label: 'Full-Art Textured Etch',    stars: '★★',  border: 'border-silver-holo' },
-      reverse_holo: { label: 'Reverse Pattern Foil',      stars: '◆',   border: 'border-classic-yellow' },
-      cracked_ice:  { label: 'Cracked Ice Shatter',       stars: '★',   border: 'border-silver-holo' },
-      cyber_neon:   { label: 'Cyberpunk Chrome',          stars: '★★',  border: 'border-cyber-chrome' }
+      draftTrainerAvatarDataUrl: savedTrainer?.avatarDataUrl || ''
     };
 
     const ENERGY_META = {
@@ -1289,6 +1284,29 @@ service cloud.firestore {
       Dragon:    { bg: '#b45309', icon: 'fa-dragon',        text: '#fff' },
       Colorless: { bg: '#e2e8f0', icon: 'fa-star-of-life',  text: '#111' }
     };
+
+    const HOLO_FINISH_META = {
+      cosmos:       { label: 'Cosmos Galaxy Holo',      stars: '★',   border: 'border-silver-holo' },
+      prismatic:    { label: 'Prismatic Tera Rainbow',  stars: '★★',  border: 'border-rainbow-hyper' },
+      gold_hyper:   { label: 'Gold Hyper Rare',         stars: '★★★', border: 'border-gold-ultra' },
+      alt_art:      { label: 'Full-Art Textured Etch',  stars: '★★',  border: 'border-silver-holo' },
+      reverse_holo: { label: 'Reverse Pattern Foil',    stars: '◆',   border: 'border-classic-yellow' },
+      cracked_ice:  { label: 'Cracked Ice Shatter',     stars: '★',   border: 'border-silver-holo' },
+      cyber_neon:   { label: 'Cyberpunk Chrome',        stars: '★★',  border: 'border-cyber-chrome' }
+    };
+
+    function normalizeHoloKey(rawStyle) {
+      if (!rawStyle) return 'cosmos';
+      if (HOLO_FINISH_META[rawStyle]) return rawStyle;
+      const lower = String(rawStyle).toLowerCase();
+      if (lower.includes('gold')) return 'gold_hyper';
+      if (lower.includes('prism') || lower.includes('rainbow')) return 'prismatic';
+      if (lower.includes('alt') || lower.includes('full')) return 'alt_art';
+      if (lower.includes('reverse')) return 'reverse_holo';
+      if (lower.includes('ice') || lower.includes('cracked')) return 'cracked_ice';
+      if (lower.includes('cyber') || lower.includes('neon')) return 'cyber_neon';
+      return 'cosmos';
+    }
 
     function escapeHtml(str) {
       if (str === null || str === undefined) return '';
@@ -1332,7 +1350,7 @@ service cloud.firestore {
       document.getElementById(id)?.classList.add('hidden');
     }
 
-    function copyTextSafe(text, successMsg = 'Copied to clipboard!') {
+    function copyTextSafe(text, successMsg = 'Copied!') {
       const ta = document.createElement('textarea');
       ta.value = text;
       ta.style.position = 'fixed';
@@ -1342,277 +1360,344 @@ service cloud.firestore {
       try {
         document.execCommand('copy');
         showToast(successMsg, 'success');
-      } catch (e) {
-        showToast('Auto-copy blocked — select the text box and press Ctrl+C / Cmd+C.', 'error');
+      } catch (_) {
+        showToast('Please select and copy manually.', 'error');
       }
       ta.remove();
     }
 
-    // -----------------------------------------------------------------------
-    // PURE AESTHETIC TRAINER PROFILE CARD RENDERER (2.5" x 3.5", ZERO BATTLE TEXT)
-    // -----------------------------------------------------------------------
-    function normalizeHoloKey(cardStyle) {
-      if (HOLO_FINISH_META[cardStyle]) return cardStyle;
-      if (cardStyle === 'Gold Hyper Rare') return 'gold_hyper';
-      if (cardStyle === 'Full Art Ultra') return 'prismatic';
-      if (cardStyle === 'Classic Supporter') return 'reverse_holo';
-      return 'cosmos';
+    function updateCardDpiScale(dpiVal) {
+      const dpi = Number(dpiVal) || 96;
+      const scale = dpi / 96;
+      document.documentElement.style.setProperty('--dpi-scale', scale.toFixed(4));
+      const wPx = Math.round(2.5 * dpi);
+      const hPx = Math.round(3.5 * dpi);
+      const readout = document.getElementById('dpi-readout');
+      if (readout) readout.textContent = `${dpi} DPI (${wPx}×${hPx}px)`;
     }
 
+    function switchTab(tabName) {
+      state.activeTab = tabName;
+      ['vault', 'my-decks', 'friends-decks'].forEach(t => {
+        const view = document.getElementById(`view-${t}`);
+        const btn = document.getElementById(`tab-${t}`);
+        if (t === tabName) {
+          view?.classList.remove('hidden');
+          btn?.classList.add('bg-yellow-400', 'text-slate-950', 'shadow');
+          btn?.classList.remove('text-slate-300', 'hover:text-white', 'hover:bg-slate-800/70');
+        } else {
+          view?.classList.add('hidden');
+          btn?.classList.remove('bg-yellow-400', 'text-slate-950', 'shadow');
+          btn?.classList.add('text-slate-300', 'hover:text-white', 'hover:bg-slate-800/70');
+        }
+      });
+    }
+
+    // -----------------------------------------------------------------------
+    // TRUE-TO-SIZE 2.5" x 3.5" TRAINER TRADING CARD RENDERER
+    // -----------------------------------------------------------------------
     function buildTrainerTradingCardHTML(profile, options = {}) {
-      const { disableClickZoom = false, zoomOwnerUid = null, captionText = null } = options;
+      const { disableClickZoom = false, zoomOwnerUid = null, captionText = '' } = options;
       const p = profile || {};
       const name = p.trainerName || p.displayName || 'Trainer';
       const title = p.trainerTitle || 'Ace Trainer';
       const holoKey = normalizeHoloKey(p.cardStyle);
-      const holoMeta = HOLO_FINISH_META[holoKey];
+      const holoMeta = HOLO_FINISH_META[holoKey] || HOLO_FINISH_META.cosmos;
       const accent = p.accentColor || 'Cobalt';
       const favType = p.favoriteType || 'Fire';
       const hometown = p.hometown || 'Custom Region';
       const quote = p.signatureQuote || 'Every deck tells the story of the Trainer who built it.';
       const avatarUrl = p.avatarDataUrl || '';
-      const mode = p.uploadMode || 'builder';
 
-      const isDarkText = accent === 'Obsidian';
-      const zoomAttr = (!disableClickZoom && zoomOwnerUid) ? `data-zoom-trainer-uid="${escapeHtml(zoomOwnerUid)}"` : '';
-      const triggerClass = (!disableClickZoom && zoomOwnerUid) ? 'trainer-card-zoom-trigger cursor-pointer' : '';
+      const isObsidian = accent === 'Obsidian';
+      const zoomUid = zoomOwnerUid || p.uid || state.user?.uid || '';
+      const clickAttr = disableClickZoom
+        ? ''
+        : `data-zoom-trainer-uid="${escapeHtml(zoomUid)}"`;
 
-      // Mode 2: Full Custom Uploaded 2.5" x 3.5" Trainer Card Image + Chosen Holo Overlay
-      if (mode === 'full_image' && avatarUrl) {
-        return `
-          <div class="flex flex-col items-center gap-2">
-            <div ${zoomAttr} class="pkmn-card-outer trainer-tilt-card holo-finish-${holoKey} ${holoMeta.border} ${triggerClass}">
-              <div class="pkmn-card-inner bg-slate-950 !p-0 relative">
-                <img src="${escapeHtml(avatarUrl)}" alt="${escapeHtml(name)} Profile Card" class="full-art-card-img">
-                <div class="holo-layer"></div>
-              </div>
-            </div>
-            ${captionText ? `<div class="text-[11px] text-slate-400 font-semibold">${escapeHtml(captionText)}</div>` : ''}
-          </div>
-        `;
-      }
-
-      // Mode 1: Pure Aesthetic Collector Profile Card (Full-Art Portrait Focus, Zero Battle Rules)
       return `
         <div class="flex flex-col items-center gap-2">
-          <div ${zoomAttr} class="pkmn-card-outer trainer-tilt-card holo-finish-${holoKey} ${holoMeta.border} ${triggerClass}">
-            <div class="pkmn-card-inner trainer-accent-${escapeHtml(accent)} relative">
-              <div class="holo-layer"></div>
-
-              <!-- TOP HEADER: COLLECTOR BADGE + TRAINER NAME & TITLE -->
-              <div class="relative z-10">
-                <div class="flex items-center justify-between gap-1 mb-0.5">
-                  <span style="font-size:calc(6.5px * var(--card-font-scale)); padding:calc(1.5px * var(--card-font-scale)) calc(6px * var(--card-font-scale));"
-                        class="rounded-full font-black uppercase tracking-wider bg-gradient-to-r from-amber-200 via-yellow-300 to-amber-400 text-slate-950 border border-black/30 shadow-xs">
-                    TRAINER PROFILE
-                  </span>
-                  <span style="font-size:calc(6.5px * var(--card-font-scale)); padding:calc(1px * var(--card-font-scale)) calc(5px * var(--card-font-scale));"
-                        class="rounded-full font-extrabold uppercase tracking-wider bg-black/35 text-white border border-white/20 truncate max-w-[52%]">
-                    ${escapeHtml(title)}
-                  </span>
+          <div ${clickAttr}
+               class="pkmn-card-outer trainer-tilt-card ${holoMeta.border} holo-finish-${escapeHtml(holoKey)} ${disableClickZoom ? '' : 'trainer-card-zoom-trigger cursor-pointer'}">
+            <div class="holo-layer"></div>
+            <div class="pkmn-card-inner trainer-accent-${escapeHtml(accent)}">
+              <!-- Top Trainer Card Header -->
+              <div>
+                <div class="flex items-center justify-between gap-1 mb-1">
+                  <div class="flex items-center gap-1 min-w-0">
+                    <span style="font-size:calc(6.5px * var(--card-font-scale)); padding:calc(1px * var(--card-font-scale)) calc(4.5px * var(--card-font-scale));"
+                          class="rounded font-black uppercase tracking-wider bg-amber-300 text-slate-950 border border-black/30 shrink-0 shadow-xs">
+                      TRAINER
+                    </span>
+                    <span style="font-size:calc(11.5px * var(--card-font-scale));"
+                          class="font-display font-extrabold tracking-tight truncate ${isObsidian ? 'text-white' : 'text-slate-950'}">
+                      ${escapeHtml(name)}
+                    </span>
+                  </div>
+                  <div class="flex items-center gap-1 shrink-0">
+                    <span style="font-size:calc(6.5px * var(--card-font-scale)); padding:calc(1px * var(--card-font-scale)) calc(4px * var(--card-font-scale));"
+                          class="rounded-full font-extrabold bg-white/85 text-slate-900 border border-black/20">
+                      ${escapeHtml(title)}
+                    </span>
+                    ${renderEnergyPip(favType, 0.92)}
+                  </div>
                 </div>
 
-                <div class="flex items-center justify-between gap-1.5 my-0.5">
-                  <div style="font-size:calc(13px * var(--card-font-scale)); line-height:1.15;"
-                       class="font-display font-black tracking-tight truncate ${isDarkText ? 'text-white' : 'text-slate-950'}">
-                    ${escapeHtml(name)}
-                  </div>
-                  <div class="shrink-0">
-                    ${renderEnergyPip(favType, 1.05)}
-                  </div>
+                <!-- Fixed 2.5" x 3.5" (5:7) Portrait Photo Frame -->
+                <div style="height:calc(198px * var(--card-font-scale)); border-width:calc(2.5px * var(--card-font-scale));"
+                     class="w-full rounded-md border-white/85 bg-slate-950/90 overflow-hidden shadow-inner flex items-center justify-center relative">
+                  ${avatarUrl
+                    ? `<img src="${escapeHtml(avatarUrl)}" alt="${escapeHtml(name)}" class="trainer-photo-frame-5-7 rounded-xs">`
+                    : `<div class="trainer-photo-frame-5-7 flex flex-col items-center justify-center bg-slate-900 text-slate-400 px-2 text-center">
+                         <i style="font-size:calc(22px * var(--card-font-scale));" class="fa-solid fa-user-astronaut text-yellow-400 mb-1.5"></i>
+                         <span style="font-size:calc(8px * var(--card-font-scale));" class="font-bold text-slate-200">${escapeHtml(name)}</span>
+                         <span style="font-size:calc(6.5px * var(--card-font-scale));" class="text-slate-400 mt-0.5">2.5" × 3.5" Portrait</span>
+                       </div>`
+                  }
                 </div>
               </div>
 
-              <!-- CENTERPIECE EXPANDED PORTRAIT FRAME -->
-              <div style="border-width:calc(2.5px * var(--card-font-scale));"
-                   class="relative z-10 flex-1 my-1 w-full rounded-md border-white/80 bg-slate-950 overflow-hidden shadow-inner">
-                ${avatarUrl
-                  ? `<img src="${escapeHtml(avatarUrl)}" alt="${escapeHtml(name)}" class="w-full h-full object-cover">`
-                  : `<div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-slate-800 to-slate-950 text-slate-300">
-                       <div style="width:calc(58px * var(--card-font-scale)); height:calc(58px * var(--card-font-scale)); font-size:calc(22px * var(--card-font-scale));"
-                            class="rounded-full bg-gradient-to-tr from-yellow-400 to-amber-500 text-slate-950 font-black flex items-center justify-center shadow-lg border-2 border-white/50 mb-1.5">
-                         ${escapeHtml(name.slice(0, 2).toUpperCase())}
-                       </div>
-                       <span style="font-size:calc(8px * var(--card-font-scale));" class="text-slate-300 font-bold">Upload Profile Photo</span>
-                     </div>`
-                }
-                <!-- Subtle Bottom Vignette & Region Ribbon inside Frame -->
-                <div style="font-size:calc(6.5px * var(--card-font-scale)); padding:calc(2.5px * var(--card-font-scale)) calc(6px * var(--card-font-scale));"
-                     class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/85 via-black/55 to-transparent text-white font-bold flex items-center justify-between">
-                  <span class="truncate"><i class="fa-solid fa-location-dot text-yellow-400 mr-1"></i>${escapeHtml(hometown)}</span>
+              <!-- Bottom Aesthetic Profile Plaque & Collector Promo Footer -->
+              <div class="space-y-1 mt-1">
+                <div style="padding:calc(3px * var(--card-font-scale)) calc(5px * var(--card-font-scale));"
+                     class="rounded bg-white/80 backdrop-blur-xs border border-black/15 text-slate-900">
+                  <div style="font-size:calc(6.2px * var(--card-font-scale));"
+                       class="font-extrabold uppercase tracking-wider text-slate-600 flex items-center justify-between">
+                    <span class="truncate"><i class="fa-solid fa-location-dot text-rose-600 mr-0.5"></i>${escapeHtml(hometown)}</span>
+                    <span class="shrink-0 ml-1">${escapeHtml(holoMeta.stars)}</span>
+                  </div>
+                  <p style="font-size:calc(7.2px * var(--card-font-scale)); line-height:1.2;"
+                     class="italic font-medium text-slate-900 mt-0.5 line-clamp-2">
+                    "${escapeHtml(quote)}"
+                  </p>
                 </div>
-              </div>
 
-              <!-- BOTTOM AESTHETIC BIO PLAQUE & COLLECTOR STAMP -->
-              <div class="relative z-10">
-                <div style="font-size:calc(6.8px * var(--card-font-scale)); line-height:1.22; padding:calc(3.5px * var(--card-font-scale)) calc(6px * var(--card-font-scale));"
-                     class="italic rounded bg-white/80 text-slate-900 font-semibold border border-black/15 shadow-xs line-clamp-2 text-center mb-1">
-                  "${escapeHtml(quote)}"
-                </div>
                 <div style="font-size:calc(6px * var(--card-font-scale));"
-                     class="flex items-center justify-between font-extrabold uppercase tracking-wider opacity-90 px-0.5">
-                  <span>POKÉVAULT • PROMO 2026</span>
-                  <span>${holoMeta.stars}</span>
+                     class="flex items-center justify-between font-extrabold px-0.5 ${isObsidian ? 'text-slate-200' : 'text-slate-950/85'}">
+                  <span class="truncate">${escapeHtml(holoMeta.label)}</span>
+                  <span class="shrink-0">PROMO • 2026</span>
                 </div>
               </div>
             </div>
           </div>
-          ${captionText ? `<div class="text-[11px] text-slate-400 font-semibold">${escapeHtml(captionText)}</div>` : ''}
+          ${captionText ? `<span class="text-[11px] text-slate-400 font-semibold">${escapeHtml(captionText)}</span>` : ''}
         </div>
       `;
     }
 
-    function zoomTrainerCardByUid(uid) {
-      const profile = (state.user && uid === state.user.uid)
-        ? state.trainerProfile
-        : state.usersById[uid];
-
-      const fallbackProfile = profile || {
-        trainerName: 'Trainer',
-        trainerTitle: 'Ace Trainer',
-        cardStyle: 'Supporter Holo',
-        accentColor: 'Cobalt',
-        favoriteType: 'Fire'
-      };
-
-      document.getElementById('card-zoom-content').innerHTML = buildTrainerTradingCardHTML(fallbackProfile, { disableClickZoom: true });
-      openModal('card-zoom-modal');
-    }
-
-    // -----------------------------------------------------------------------
-    // TRAINER PROFILE SHOWCASE & STUDIO MODAL
-    // -----------------------------------------------------------------------
     function updateHeaderProfileUI() {
-      const tp = state.trainerProfile;
-      document.getElementById('user-display-name').textContent = tp.trainerName;
+      const name = state.trainerProfile.trainerName || 'Trainer';
+      const nameEl = document.getElementById('user-display-name');
       const avatarEl = document.getElementById('user-avatar');
-
-      if (tp.avatarDataUrl) {
-        avatarEl.innerHTML = `<img src="${escapeHtml(tp.avatarDataUrl)}" alt="Trainer" class="w-full h-full object-cover">`;
-      } else {
-        avatarEl.textContent = tp.trainerName.slice(0, 2).toUpperCase();
+      if (nameEl) nameEl.textContent = name;
+      if (avatarEl) {
+        if (state.trainerProfile.avatarDataUrl) {
+          avatarEl.innerHTML = `<img src="${escapeHtml(state.trainerProfile.avatarDataUrl)}" alt="${escapeHtml(name)}" class="w-full h-full object-cover">`;
+        } else {
+          avatarEl.textContent = name.slice(0, 2).toUpperCase();
+        }
       }
     }
 
     function renderMyTrainerProfileShowcase() {
-      const tp = state.trainerProfile;
-      const holoKey = normalizeHoloKey(tp.cardStyle);
-      const holoMeta = HOLO_FINISH_META[holoKey];
       const showcaseSlot = document.getElementById('my-trainer-card-showcase');
-      if (showcaseSlot) {
-        showcaseSlot.innerHTML = buildTrainerTradingCardHTML(tp, {
-          zoomOwnerUid: state.user?.uid || null,
-          captionText: 'Hover to tilt • Click for close-up'
-        });
-      }
+      if (!showcaseSlot) return;
 
-      document.getElementById('showcase-trainer-title').textContent = tp.trainerTitle;
-      document.getElementById('showcase-trainer-name').textContent = tp.trainerName;
-      document.getElementById('showcase-trainer-region').innerHTML = `<i class="fa-solid fa-location-dot text-rose-400 mr-1"></i>${escapeHtml(tp.hometown)}`;
+      const p = state.trainerProfile;
+      const holoKey = normalizeHoloKey(p.cardStyle);
+      const holoMeta = HOLO_FINISH_META[holoKey] || HOLO_FINISH_META.cosmos;
+
+      showcaseSlot.innerHTML = buildTrainerTradingCardHTML(p, {
+        zoomOwnerUid: state.user?.uid || 'self',
+        captionText: 'Hover to tilt • Click to zoom'
+      });
+
+      const titleEl = document.getElementById('showcase-trainer-title');
+      const nameEl = document.getElementById('showcase-trainer-name');
+      const regionEl = document.getElementById('showcase-trainer-region');
       const finishEl = document.getElementById('showcase-trainer-finish');
-      if (finishEl) finishEl.textContent = `${holoMeta.label} (${holoMeta.stars}) • ${tp.accentColor} Frame`;
-      document.getElementById('showcase-trainer-quote').textContent = `"${tp.signatureQuote}"`;
+      const quoteEl = document.getElementById('showcase-trainer-quote');
 
-      const myCardsCount = state.user ? state.cards.filter(c => c.ownerId === state.user.uid).length : 0;
-      const myDecksCount = state.user ? state.decks.filter(d => d.ownerId === state.user.uid).length : 0;
-      document.getElementById('stat-my-cards-count').textContent = myCardsCount;
-      document.getElementById('stat-my-decks-count').textContent = myDecksCount;
-      document.getElementById('stat-my-fav-type').innerHTML = `${renderEnergyPip(tp.favoriteType, 1.1)}<span>${escapeHtml(tp.favoriteType)}</span>`;
-    }
-
-    function setTrainerStudioMode(mode) {
-      state.draftTrainerUploadMode = mode;
-      const btnBuilder = document.getElementById('trainer-mode-btn-builder');
-      const btnFull = document.getElementById('trainer-mode-btn-full');
-      const extraFields = document.getElementById('trainer-builder-extra-fields');
-      const accentWrapper = document.getElementById('trainer-accent-wrapper');
-      const uploadTitle = document.getElementById('trainer-upload-title');
-
-      if (mode === 'full_image') {
-        btnFull.classList.add('bg-yellow-400', 'text-slate-950');
-        btnFull.classList.remove('text-slate-400');
-        btnBuilder.classList.remove('bg-yellow-400', 'text-slate-950');
-        btnBuilder.classList.add('text-slate-400');
-        extraFields.classList.add('hidden');
-        accentWrapper?.classList.add('opacity-40', 'pointer-events-none');
-        uploadTitle.textContent = 'Upload Complete 2.5" × 3.5" Custom Profile Card Image';
-      } else {
-        btnBuilder.classList.add('bg-yellow-400', 'text-slate-950');
-        btnBuilder.classList.remove('text-slate-400');
-        btnFull.classList.remove('bg-yellow-400', 'text-slate-950');
-        btnFull.classList.add('text-slate-400');
-        extraFields.classList.remove('hidden');
-        accentWrapper?.classList.remove('opacity-40', 'pointer-events-none');
-        uploadTitle.textContent = 'Upload Your Trainer Portrait / Avatar Photo';
+      if (titleEl) titleEl.textContent = p.trainerTitle || 'Ace Trainer';
+      if (nameEl) nameEl.textContent = p.trainerName || 'Trainer';
+      if (regionEl) {
+        regionEl.innerHTML = `<i class="fa-solid fa-location-dot text-rose-400 mr-1"></i>${escapeHtml(p.hometown || 'Custom Region')}`;
       }
-      updateLiveTrainerCardPreview();
+      if (finishEl) {
+        finishEl.textContent = `${holoMeta.label} • ${p.accentColor || 'Cobalt'} Frame`;
+      }
+      if (quoteEl) {
+        quoteEl.textContent = `"${p.signatureQuote || 'Every deck tells the story of the Trainer who built it.'}"`;
+      }
+
+      const myUid = state.user?.uid;
+      const myCardsCount = myUid ? state.cards.filter(c => c.ownerId === myUid).length : 0;
+      const myDecksCount = myUid ? state.decks.filter(d => d.ownerId === myUid).length : 0;
+      const favType = p.favoriteType || 'Fire';
+
+      const cardsStatEl = document.getElementById('stat-my-cards-count');
+      const decksStatEl = document.getElementById('stat-my-decks-count');
+      const typeStatEl = document.getElementById('stat-my-fav-type');
+
+      if (cardsStatEl) cardsStatEl.textContent = myCardsCount;
+      if (decksStatEl) decksStatEl.textContent = myDecksCount;
+      if (typeStatEl) {
+        typeStatEl.innerHTML = `${renderEnergyPip(favType, 0.95)}<span>${escapeHtml(favType)}</span>`;
+      }
     }
 
-    function collectTrainerFormDraft() {
+    function openProfileModal(isFirstTimeWelcome = false) {
+      const p = state.trainerProfile;
+      const heading = document.getElementById('profile-modal-heading');
+      if (heading) {
+        heading.textContent = isFirstTimeWelcome
+          ? 'Welcome, Trainer! Design Your Profile Card'
+          : 'Trainer Trading Card Studio';
+      }
+
+      document.getElementById('profile-name-input').value = p.trainerName || '';
+      document.getElementById('trainer-title-select').value = p.trainerTitle || 'Ace Trainer';
+      document.getElementById('trainer-style-select').value = normalizeHoloKey(p.cardStyle);
+      document.getElementById('trainer-accent-select').value = p.accentColor || 'Cobalt';
+      document.getElementById('trainer-fav-type-select').value = p.favoriteType || 'Fire';
+      document.getElementById('trainer-hometown-input').value = p.hometown || 'Pallet Town • Kanto League';
+      document.getElementById('trainer-quote-input').value = p.signatureQuote || 'Every deck tells the story of the Trainer who built it.';
+
+      const uidEl = document.getElementById('profile-full-uid');
+      if (uidEl) uidEl.textContent = state.user ? state.user.uid : 'Signing in...';
+
+      state.draftTrainerAvatarDataUrl = p.avatarDataUrl || '';
+      updateLiveTrainerCardPreview();
+      openModal('profile-modal');
+    }
+
+    function collectDraftTrainerProfile() {
       return {
-        trainerName: document.getElementById('profile-name-input').value.trim() || state.trainerProfile.trainerName || 'Trainer',
-        trainerTitle: document.getElementById('trainer-title-select').value,
-        cardStyle: normalizeHoloKey(document.getElementById('trainer-style-select').value),
-        accentColor: document.getElementById('trainer-accent-select').value,
-        favoriteType: document.getElementById('trainer-fav-type-select').value,
-        hometown: document.getElementById('trainer-hometown-input').value.trim() || 'Custom Region',
-        signatureQuote: document.getElementById('trainer-quote-input').value.trim() || 'Ready for adventure!',
-        avatarDataUrl: state.draftTrainerAvatarDataUrl,
-        uploadMode: state.draftTrainerUploadMode
+        trainerName: document.getElementById('profile-name-input')?.value.trim() || 'Trainer',
+        trainerTitle: document.getElementById('trainer-title-select')?.value || 'Ace Trainer',
+        cardStyle: document.getElementById('trainer-style-select')?.value || 'cosmos',
+        accentColor: document.getElementById('trainer-accent-select')?.value || 'Cobalt',
+        favoriteType: document.getElementById('trainer-fav-type-select')?.value || 'Fire',
+        hometown: document.getElementById('trainer-hometown-input')?.value.trim() || 'Custom Region',
+        signatureQuote: document.getElementById('trainer-quote-input')?.value.trim() || 'Every deck tells the story of the Trainer who built it.',
+        avatarDataUrl: state.draftTrainerAvatarDataUrl || ''
       };
     }
 
     function updateLiveTrainerCardPreview() {
-      const slot = document.getElementById('live-trainer-card-preview-slot');
-      if (!slot) return;
-      slot.innerHTML = buildTrainerTradingCardHTML(collectTrainerFormDraft(), { disableClickZoom: true });
+      const previewSlot = document.getElementById('live-trainer-card-preview-slot');
+      if (!previewSlot) return;
+      const draft = collectDraftTrainerProfile();
+      previewSlot.innerHTML = buildTrainerTradingCardHTML(draft, { disableClickZoom: true });
     }
 
-    function openProfileModal(isFirstVisit = false) {
-      const tp = state.trainerProfile;
-      document.getElementById('profile-modal-heading').textContent = isFirstVisit
-        ? 'Welcome! Design Your Trainer Profile Card'
-        : 'Trainer Profile Card Studio';
-
-      document.getElementById('profile-name-input').value = isFirstVisit ? '' : tp.trainerName;
-      document.getElementById('trainer-title-select').value = tp.trainerTitle;
-      document.getElementById('trainer-style-select').value = normalizeHoloKey(tp.cardStyle);
-      document.getElementById('trainer-accent-select').value = tp.accentColor;
-      document.getElementById('trainer-fav-type-select').value = tp.favoriteType;
-      document.getElementById('trainer-hometown-input').value = tp.hometown;
-      document.getElementById('trainer-quote-input').value = tp.signatureQuote;
-      document.getElementById('profile-full-uid').textContent = state.user ? state.user.uid : 'Connecting...';
-
-      state.draftTrainerAvatarDataUrl = tp.avatarDataUrl || '';
-      setTrainerStudioMode(tp.uploadMode || 'builder');
-      openModal('profile-modal');
-    }
-
+    // Center-crop any uploaded photo to an exact 2.5 : 3.5 (5:7) ratio (500 x 700 px)
     function processTrainerAvatarFile(file) {
       if (!file || !file.type.startsWith('image/')) {
-        showToast('Please select a valid PNG, JPG, or WEBP image file.', 'error');
+        showToast('Please select a valid PNG, JPG, or WEBP photo.', 'error');
         return;
       }
+
       const reader = new FileReader();
       reader.onload = (e) => {
         const img = new Image();
         img.onload = () => {
+          const targetRatio = 5 / 7;
+          const srcRatio = img.width / img.height;
+
+          let sx = 0;
+          let sy = 0;
+          let sWidth = img.width;
+          let sHeight = img.height;
+
+          if (srcRatio > targetRatio) {
+            sWidth = Math.round(img.height * targetRatio);
+            sx = Math.round((img.width - sWidth) / 2);
+          } else if (srcRatio < targetRatio) {
+            sHeight = Math.round(img.width / targetRatio);
+            sy = Math.round((img.height - sHeight) / 2);
+          }
+
           const canvas = document.createElement('canvas');
-          const maxDim = state.draftTrainerUploadMode === 'full_image' ? 700 : 440;
-          const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
-          canvas.width = Math.round(img.width * scale);
-          canvas.height = Math.round(img.height * scale);
-
+          canvas.width = 500;
+          canvas.height = 700;
           const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          state.draftTrainerAvatarDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+          ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, 500, 700);
 
+          state.draftTrainerAvatarDataUrl = canvas.toDataURL('image/jpeg', 0.84);
           updateLiveTrainerCardPreview();
-          showToast('Trainer portrait loaded into 2.5" × 3.5" card preview!', 'success');
+          showToast('Photo cropped to exact 2.5" × 3.5" (5:7) ratio!', 'success');
         };
         img.src = e.target.result;
       };
       reader.readAsDataURL(file);
+    }
+
+    function zoomTrainerCardByUid(ownerUid) {
+      let profile = null;
+      if (state.user && ownerUid === state.user.uid) {
+        profile = state.trainerProfile;
+      } else if (state.usersById[ownerUid]) {
+        profile = state.usersById[ownerUid];
+      } else {
+        const deck = state.decks.find(d => d.ownerId === ownerUid);
+        profile = {
+          trainerName: deck?.ownerName || 'Trainer',
+          trainerTitle: 'Ace Trainer',
+          cardStyle: 'cosmos',
+          accentColor: 'Cobalt',
+          favoriteType: 'Fire'
+        };
+      }
+
+      const zoomSlot = document.getElementById('card-zoom-content');
+      if (!zoomSlot) return;
+      zoomSlot.innerHTML = buildTrainerTradingCardHTML(profile, { disableClickZoom: true });
+      openModal('card-zoom-modal');
+    }
+
+    async function handleSaveTrainerProfile(e) {
+      e.preventDefault();
+      const updated = collectDraftTrainerProfile();
+      state.trainerProfile = {
+        ...state.trainerProfile,
+        ...updated
+      };
+
+      try {
+        localStorage.setItem(STORAGE_KEY_TRAINER, JSON.stringify(state.trainerProfile));
+      } catch (_) {}
+
+      updateHeaderProfileUI();
+      renderMyTrainerProfileShowcase();
+
+      if (state.user) {
+        try {
+          await setDoc(doc(db, 'users', state.user.uid), {
+            uid: state.user.uid,
+            displayName: state.trainerProfile.trainerName,
+            ...state.trainerProfile,
+            lastActive: Date.now()
+          }, { merge: true });
+
+          const myDecks = state.decks.filter(d => d.ownerId === state.user.uid);
+          for (const deck of myDecks) {
+            if (deck.ownerName !== state.trainerProfile.trainerName) {
+              await updateDoc(doc(db, 'decks', deck.id), {
+                ownerName: state.trainerProfile.trainerName
+              });
+            }
+          }
+          showToast('Trainer Profile Card saved & synced live!', 'success');
+        } catch (err) {
+          console.error('Save trainer card error:', err);
+          showToast('Saved locally, but cloud sync failed: ' + err.message, 'error');
+        }
+      } else {
+        showToast('Trainer Profile Card saved locally!', 'success');
+      }
+
+      closeModal('profile-modal');
     }
 
     // -----------------------------------------------------------------------
@@ -2767,8 +2852,8 @@ service cloud.firestore {
       });
 
       // Trainer Trading Card Studio Controls
-      document.getElementById('trainer-mode-btn-builder')?.addEventListener('click', () => setTrainerStudioMode('builder'));
-      document.getElementById('trainer-mode-btn-full')?.addEventListener('click', () => setTrainerStudioMode('full_image'));
+      // Trainer Trading Card Studio Controls (Single Unified Photo Upload)
+      document.getElementById('profile-form')?.addEventListener('submit', handleSaveTrainerProfile);
 
       const trainerDrop = document.getElementById('trainer-drop-zone');
       const trainerFile = document.getElementById('trainer-image-input');
