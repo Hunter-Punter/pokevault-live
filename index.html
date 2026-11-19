@@ -288,15 +288,12 @@
       display: block;
     }
 
-    /* Strict Fixed 2.5 : 3.5 (5:7) Aspect Ratio for Trainer Profile Photo */
+    /* Full-Bleed Edge-to-Edge Portrait Frame for Trainer Profile Photo */
     .trainer-photo-frame-5-7 {
-      aspect-ratio: 5 / 7;
-      width: auto;
-      max-width: 100%;
+      width: 100%;
       height: 100%;
-      margin-left: auto;
-      margin-right: auto;
       object-fit: cover;
+      display: block;
     }
 
     /* Zoomed Inspection Card Override (Large crisp 340px x 476px = exact 5:7 ratio) */
@@ -1005,8 +1002,36 @@
                   </span>
                 </div>
                 <div class="text-[11px] text-slate-400 mt-0.5">
-                  Auto center-cropped to exact 2.5" × 3.5" portrait ratio • PNG, JPG, WEBP
+                  Drag to pan & zoom inside the 2.5" × 3.5" frame • PNG, JPG, WEBP
                 </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Interactive 2.5:3.5 Zoom & Pan Framing Controls (Appears when photo is loaded) -->
+          <div id="trainer-crop-controls" class="hidden bg-[#0b101b] border border-yellow-400/35 rounded-2xl p-3.5 space-y-2.5">
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="font-extrabold text-yellow-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-up-down-left-right"></i>
+                <span>Adjust Photo Framing (Drag Preview or Use Controls)</span>
+              </span>
+              <button type="button" id="btn-reset-trainer-crop" class="text-slate-400 hover:text-yellow-400 font-bold underline">
+                Reset Fit
+              </button>
+            </div>
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-magnifying-glass-minus text-slate-400 text-xs"></i>
+              <input id="trainer-zoom-slider" type="range" min="1" max="3" step="0.02" value="1" class="flex-1 accent-yellow-400 cursor-pointer">
+              <i class="fa-solid fa-magnifying-glass-plus text-yellow-400 text-xs"></i>
+              <span id="trainer-zoom-readout" class="font-mono text-[11px] text-slate-300 w-12 text-right">1.00×</span>
+            </div>
+            <div class="flex items-center justify-between gap-2 text-[11px] text-slate-400">
+              <span>Tip: Click & drag directly on the card photo preview on the right to pan!</span>
+              <div class="flex items-center gap-1 shrink-0">
+                <button type="button" data-nudge-x="0" data-nudge-y="-12" class="btn-nudge-crop w-6 h-6 rounded bg-slate-800 hover:bg-slate-700 text-slate-200" title="Move Up"><i class="fa-solid fa-arrow-up text-[10px]"></i></button>
+                <button type="button" data-nudge-x="0" data-nudge-y="12" class="btn-nudge-crop w-6 h-6 rounded bg-slate-800 hover:bg-slate-700 text-slate-200" title="Move Down"><i class="fa-solid fa-arrow-down text-[10px]"></i></button>
+                <button type="button" data-nudge-x="-12" data-nudge-y="0" class="btn-nudge-crop w-6 h-6 rounded bg-slate-800 hover:bg-slate-700 text-slate-200" title="Move Left"><i class="fa-solid fa-arrow-left text-[10px]"></i></button>
+                <button type="button" data-nudge-x="12" data-nudge-y="0" class="btn-nudge-crop w-6 h-6 rounded bg-slate-800 hover:bg-slate-700 text-slate-200" title="Move Right"><i class="fa-solid fa-arrow-right text-[10px]"></i></button>
               </div>
             </div>
           </div>
@@ -1109,11 +1134,11 @@
         <div class="lg:col-span-5 bg-[#0b101b] border border-slate-800 rounded-2xl p-5 flex flex-col items-center justify-center">
           <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-400 mb-3 flex items-center gap-1.5">
             <i class="fa-solid fa-id-card"></i>
-            <span>Live 2.5" × 3.5" Profile Card (Hover to Tilt)</span>
+            <span>Live 2.5" × 3.5" Profile Card (Drag Photo to Pan)</span>
           </div>
           <div id="live-trainer-card-preview-slot"></div>
           <p class="text-[11px] text-slate-400 text-center mt-3 max-w-xs">
-            Move your cursor across the card to preview the holographic foil tilt & glare!
+            Drag directly on the photo to reposition, or scroll/slide to zoom!
           </p>
         </div>
       </div>
@@ -1269,7 +1294,18 @@ service cloud.firestore {
       inspectedFriendDeckId: null,
       uploadMode: 'full-image',
       currentImageDataUrl: '',
-      draftTrainerAvatarDataUrl: savedTrainer?.avatarDataUrl || ''
+      draftTrainerAvatarDataUrl: savedTrainer?.avatarDataUrl || '',
+      cropEditor: {
+        img: null,
+        zoom: 1,
+        panX: 0,
+        panY: 0,
+        isDragging: false,
+        dragStartX: 0,
+        dragStartY: 0,
+        startPanX: 0,
+        startPanY: 0
+      }
     };
 
     const ENERGY_META = {
@@ -1443,15 +1479,15 @@ service cloud.firestore {
                   </div>
                 </div>
 
-                <!-- Fixed 2.5" x 3.5" (5:7) Portrait Photo Frame -->
+                <!-- Full-Width Edge-to-Edge Portrait Photo Frame -->
                 <div style="height:calc(198px * var(--card-font-scale)); border-width:calc(2.5px * var(--card-font-scale));"
-                     class="w-full rounded-md border-white/85 bg-slate-950/90 overflow-hidden shadow-inner flex items-center justify-center relative">
+                     class="w-full rounded-md border-white/85 bg-slate-950/90 overflow-hidden shadow-inner relative">
                   ${avatarUrl
-                    ? `<img src="${escapeHtml(avatarUrl)}" alt="${escapeHtml(name)}" class="trainer-photo-frame-5-7 rounded-xs">`
+                    ? `<img src="${escapeHtml(avatarUrl)}" alt="${escapeHtml(name)}" class="trainer-photo-frame-5-7">`
                     : `<div class="trainer-photo-frame-5-7 flex flex-col items-center justify-center bg-slate-900 text-slate-400 px-2 text-center">
                          <i style="font-size:calc(22px * var(--card-font-scale));" class="fa-solid fa-user-astronaut text-yellow-400 mb-1.5"></i>
                          <span style="font-size:calc(8px * var(--card-font-scale));" class="font-bold text-slate-200">${escapeHtml(name)}</span>
-                         <span style="font-size:calc(6.5px * var(--card-font-scale));" class="text-slate-400 mt-0.5">2.5" × 3.5" Portrait</span>
+                         <span style="font-size:calc(6.5px * var(--card-font-scale));" class="text-slate-400 mt-0.5">Full-Frame Portrait</span>
                        </div>`
                   }
                 </div>
@@ -1567,8 +1603,81 @@ service cloud.firestore {
       if (uidEl) uidEl.textContent = state.user ? state.user.uid : 'Signing in...';
 
       state.draftTrainerAvatarDataUrl = p.avatarDataUrl || '';
+      state.cropEditor = {
+        img: null,
+        zoom: 1,
+        panX: 0,
+        panY: 0,
+        isDragging: false,
+        dragStartX: 0,
+        dragStartY: 0,
+        startPanX: 0,
+        startPanY: 0
+      };
+
+      const cropControls = document.getElementById('trainer-crop-controls');
+      if (p.avatarDataUrl) {
+        const existingImg = new Image();
+        existingImg.onload = () => {
+          state.cropEditor.img = existingImg;
+          cropControls?.classList.remove('hidden');
+          syncCropSliderUI();
+          updateLiveTrainerCardPreview();
+        };
+        existingImg.src = p.avatarDataUrl;
+      } else {
+        cropControls?.classList.add('hidden');
+      }
+
       updateLiveTrainerCardPreview();
       openModal('profile-modal');
+    }
+
+    function syncCropSliderUI() {
+      const slider = document.getElementById('trainer-zoom-slider');
+      const readout = document.getElementById('trainer-zoom-readout');
+      if (slider) slider.value = state.cropEditor.zoom.toFixed(2);
+      if (readout) readout.textContent = `${state.cropEditor.zoom.toFixed(2)}×`;
+    }
+
+    function clampCropPan() {
+      const ce = state.cropEditor;
+      if (!ce.img) return;
+      const outW = 615;
+      const outH = 600;
+      const baseScale = Math.max(outW / ce.img.width, outH / ce.img.height);
+      const drawW = ce.img.width * baseScale * ce.zoom;
+      const drawH = ce.img.height * baseScale * ce.zoom;
+      const maxPanX = Math.max(0, (drawW - outW) / 2);
+      const maxPanY = Math.max(0, (drawH - outH) / 2);
+      ce.panX = Math.max(-maxPanX, Math.min(maxPanX, ce.panX));
+      ce.panY = Math.max(-maxPanY, Math.min(maxPanY, ce.panY));
+    }
+
+    function renderCroppedTrainerDataUrl() {
+      const ce = state.cropEditor;
+      if (!ce.img) return state.draftTrainerAvatarDataUrl || '';
+      clampCropPan();
+
+      const outW = 615;
+      const outH = 600;
+      const canvas = document.createElement('canvas');
+      canvas.width = outW;
+      canvas.height = outH;
+      const ctx = canvas.getContext('2d');
+
+      const baseScale = Math.max(outW / ce.img.width, outH / ce.img.height);
+      const drawW = ce.img.width * baseScale * ce.zoom;
+      const drawH = ce.img.height * baseScale * ce.zoom;
+      const dx = (outW - drawW) / 2 + ce.panX;
+      const dy = (outH - drawH) / 2 + ce.panY;
+
+      ctx.fillStyle = '#090d16';
+      ctx.fillRect(0, 0, outW, outH);
+      ctx.drawImage(ce.img, dx, dy, drawW, drawH);
+
+      state.draftTrainerAvatarDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+      return state.draftTrainerAvatarDataUrl;
     }
 
     function collectDraftTrainerProfile() {
@@ -1589,9 +1698,16 @@ service cloud.firestore {
       if (!previewSlot) return;
       const draft = collectDraftTrainerProfile();
       previewSlot.innerHTML = buildTrainerTradingCardHTML(draft, { disableClickZoom: true });
+
+      const photoImg = previewSlot.querySelector('.trainer-photo-frame-5-7');
+      if (photoImg && state.cropEditor.img) {
+        photoImg.style.cursor = state.cropEditor.isDragging ? 'grabbing' : 'grab';
+        photoImg.style.touchAction = 'none';
+        photoImg.title = 'Drag to pan photo • Scroll to zoom';
+      }
     }
 
-    // Center-crop any uploaded photo to an exact 2.5 : 3.5 (5:7) ratio (500 x 700 px)
+    // Load uploaded photo into interactive 2.5 : 3.5 (5:7) Zoom & Pan editor
     function processTrainerAvatarFile(file) {
       if (!file || !file.type.startsWith('image/')) {
         showToast('Please select a valid PNG, JPG, or WEBP photo.', 'error');
@@ -1602,31 +1718,16 @@ service cloud.firestore {
       reader.onload = (e) => {
         const img = new Image();
         img.onload = () => {
-          const targetRatio = 5 / 7;
-          const srcRatio = img.width / img.height;
+          state.cropEditor.img = img;
+          state.cropEditor.zoom = 1;
+          state.cropEditor.panX = 0;
+          state.cropEditor.panY = 0;
 
-          let sx = 0;
-          let sy = 0;
-          let sWidth = img.width;
-          let sHeight = img.height;
-
-          if (srcRatio > targetRatio) {
-            sWidth = Math.round(img.height * targetRatio);
-            sx = Math.round((img.width - sWidth) / 2);
-          } else if (srcRatio < targetRatio) {
-            sHeight = Math.round(img.width / targetRatio);
-            sy = Math.round((img.height - sHeight) / 2);
-          }
-
-          const canvas = document.createElement('canvas');
-          canvas.width = 500;
-          canvas.height = 700;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, sx, sy, sWidth, sHeight, 0, 0, 500, 700);
-
-          state.draftTrainerAvatarDataUrl = canvas.toDataURL('image/jpeg', 0.84);
+          document.getElementById('trainer-crop-controls')?.classList.remove('hidden');
+          syncCropSliderUI();
+          renderCroppedTrainerDataUrl();
           updateLiveTrainerCardPreview();
-          showToast('Photo cropped to exact 2.5" × 3.5" (5:7) ratio!', 'success');
+          showToast('Photo loaded! Drag on the card preview to pan or use the zoom slider.', 'success');
         };
         img.src = e.target.result;
       };
@@ -2875,6 +2976,79 @@ service cloud.firestore {
         const file = e.dataTransfer?.files?.[0];
         if (file) processTrainerAvatarFile(file);
       });
+
+      // Zoom slider, reset & nudge buttons for 2.5" x 3.5" photo framing
+      document.getElementById('trainer-zoom-slider')?.addEventListener('input', (e) => {
+        if (!state.cropEditor.img) return;
+        state.cropEditor.zoom = Math.max(1, Math.min(3, parseFloat(e.target.value) || 1));
+        syncCropSliderUI();
+        renderCroppedTrainerDataUrl();
+        updateLiveTrainerCardPreview();
+      });
+
+      document.getElementById('btn-reset-trainer-crop')?.addEventListener('click', () => {
+        if (!state.cropEditor.img) return;
+        state.cropEditor.zoom = 1;
+        state.cropEditor.panX = 0;
+        state.cropEditor.panY = 0;
+        syncCropSliderUI();
+        renderCroppedTrainerDataUrl();
+        updateLiveTrainerCardPreview();
+      });
+
+      document.querySelectorAll('.btn-nudge-crop').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (!state.cropEditor.img) return;
+          state.cropEditor.panX += Number(btn.dataset.nudgeX) || 0;
+          state.cropEditor.panY += Number(btn.dataset.nudgeY) || 0;
+          renderCroppedTrainerDataUrl();
+          updateLiveTrainerCardPreview();
+        });
+      });
+
+      // Interactive pointer drag-to-pan & wheel-to-zoom directly on the Studio preview photo
+      const studioPreviewSlot = document.getElementById('live-trainer-card-preview-slot');
+      studioPreviewSlot?.addEventListener('pointerdown', (e) => {
+        if (!state.cropEditor.img) return;
+        const frame = e.target.closest('.trainer-photo-frame-5-7');
+        if (!frame) return;
+        e.preventDefault();
+        state.cropEditor.isDragging = true;
+        state.cropEditor.dragStartX = e.clientX;
+        state.cropEditor.dragStartY = e.clientY;
+        state.cropEditor.startPanX = state.cropEditor.panX;
+        state.cropEditor.startPanY = state.cropEditor.panY;
+        frame.style.cursor = 'grabbing';
+      });
+
+      window.addEventListener('pointermove', (e) => {
+        if (!state.cropEditor.isDragging || !state.cropEditor.img) return;
+        // Scale screen drag pixels proportionally to 500x700 output canvas (~3.5x preview frame)
+        const scaleFactor = 3.5;
+        state.cropEditor.panX = state.cropEditor.startPanX + (e.clientX - state.cropEditor.dragStartX) * scaleFactor;
+        state.cropEditor.panY = state.cropEditor.startPanY + (e.clientY - state.cropEditor.dragStartY) * scaleFactor;
+        renderCroppedTrainerDataUrl();
+        updateLiveTrainerCardPreview();
+      });
+
+      window.addEventListener('pointerup', () => {
+        if (state.cropEditor.isDragging) {
+          state.cropEditor.isDragging = false;
+          updateLiveTrainerCardPreview();
+        }
+      });
+
+      studioPreviewSlot?.addEventListener('wheel', (e) => {
+        if (!state.cropEditor.img) return;
+        const frame = e.target.closest('.trainer-photo-frame-5-7');
+        if (!frame) return;
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? 0.1 : -0.1;
+        state.cropEditor.zoom = Math.max(1, Math.min(3, Number((state.cropEditor.zoom + delta).toFixed(2))));
+        syncCropSliderUI();
+        renderCroppedTrainerDataUrl();
+        updateLiveTrainerCardPreview();
+      }, { passive: false });
 
       [
         'profile-name-input', 'trainer-title-select', 'trainer-style-select',
