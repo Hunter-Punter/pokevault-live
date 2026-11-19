@@ -83,6 +83,106 @@
     .border-rainbow-hyper {
       background: linear-gradient(135deg, #f472b6 0%, #facc15 28%, #4ade80 54%, #38bdf8 78%, #c084fc 100%);
     }
+    .border-cyber-chrome {
+      background: linear-gradient(135deg, #06b6d4 0%, #1e293b 35%, #ec4899 70%, #22d3ee 100%);
+    }
+
+    /* ===================================================================== */
+    /* 7 INTERACTIVE HOLOGRAPHIC CARD FINISHES & 3D TILT GLARE               */
+    /* ===================================================================== */
+    .trainer-tilt-card {
+      --mx: 50%;
+      --my: 50%;
+      --rx: 0deg;
+      --ry: 0deg;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+
+    .trainer-tilt-card:hover {
+      transform: perspective(750px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-5px) scale(1.03);
+    }
+
+    .zoomed-card-wrapper .trainer-tilt-card:hover {
+      transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) scale(1.01) !important;
+    }
+
+    .holo-layer {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 8;
+      border-radius: inherit;
+      transition: opacity 0.25s ease;
+    }
+
+    /* 1. Cosmos Galaxy Holo */
+    .holo-finish-cosmos .holo-layer {
+      background:
+        radial-gradient(circle at var(--mx) var(--my), rgba(255, 255, 255, 0.52) 0%, rgba(168, 85, 247, 0.28) 28%, rgba(56, 189, 248, 0.22) 52%, transparent 78%),
+        radial-gradient(circle at 22% 28%, rgba(255, 255, 255, 0.75) 1px, transparent 2px),
+        radial-gradient(circle at 74% 18%, rgba(250, 204, 21, 0.85) 1.2px, transparent 2.5px),
+        radial-gradient(circle at 62% 66%, rgba(56, 189, 248, 0.85) 1.5px, transparent 3px),
+        radial-gradient(circle at 31% 78%, rgba(244, 114, 182, 0.8) 1.2px, transparent 2.5px),
+        radial-gradient(circle at 82% 82%, rgba(255, 255, 255, 0.8) 1px, transparent 2px),
+        conic-gradient(from 45deg at var(--mx) var(--my), rgba(244, 114, 182, 0.22), rgba(250, 204, 21, 0.22), rgba(74, 222, 128, 0.22), rgba(56, 189, 248, 0.22), rgba(192, 132, 252, 0.22), rgba(244, 114, 182, 0.22));
+      mix-blend-mode: screen;
+    }
+
+    /* 2. Prismatic Tera Rainbow */
+    .holo-finish-prismatic .holo-layer {
+      background:
+        radial-gradient(circle at var(--mx) var(--my), rgba(255, 255, 255, 0.62) 0%, transparent 55%),
+        repeating-linear-gradient(125deg, rgba(244, 114, 182, 0.25) 0%, rgba(250, 204, 21, 0.25) 14%, rgba(74, 222, 128, 0.25) 28%, rgba(56, 189, 248, 0.25) 42%, rgba(192, 132, 252, 0.25) 56%),
+        repeating-linear-gradient(35deg, rgba(255, 255, 255, 0.14) 0px, rgba(255, 255, 255, 0.14) 6px, transparent 6px, transparent 14px);
+      background-size: 100% 100%, 240% 240%, 100% 100%;
+      background-position: center, var(--mx) var(--my), center;
+      mix-blend-mode: overlay;
+    }
+
+    /* 3. Gold Hyper Rare */
+    .holo-finish-gold_hyper .holo-layer {
+      background:
+        radial-gradient(circle at var(--mx) var(--my), rgba(254, 249, 195, 0.72) 0%, rgba(250, 204, 21, 0.35) 35%, rgba(180, 83, 9, 0.18) 70%, transparent 90%),
+        repeating-linear-gradient(-45deg, rgba(254, 240, 138, 0.18) 0px, rgba(254, 240, 138, 0.18) 2px, transparent 2px, transparent 7px);
+      mix-blend-mode: color-dodge;
+    }
+
+    /* 4. Full-Art Textured Etch */
+    .holo-finish-alt_art .holo-layer {
+      background:
+        radial-gradient(circle at var(--mx) var(--my), rgba(255, 255, 255, 0.5) 0%, rgba(148, 163, 184, 0.2) 45%, transparent 75%),
+        repeating-radial-gradient(circle at 50% 42%, rgba(255, 255, 255, 0.16) 0px, rgba(255, 255, 255, 0.16) 1px, transparent 1px, transparent 4px),
+        linear-gradient(115deg, transparent 25%, rgba(56, 189, 248, 0.24) 45%, rgba(244, 114, 182, 0.24) 55%, transparent 75%);
+      mix-blend-mode: overlay;
+    }
+
+    /* 5. Reverse Pattern Foil (Shimmers around portrait window) */
+    .holo-finish-reverse_holo .holo-layer {
+      background:
+        radial-gradient(circle at var(--mx) var(--my), rgba(255, 255, 255, 0.58) 0%, rgba(226, 232, 240, 0.24) 38%, transparent 70%),
+        repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.14) 0px, rgba(255, 255, 255, 0.14) 4px, transparent 4px, transparent 10px),
+        repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.14) 0px, rgba(255, 255, 255, 0.14) 4px, transparent 4px, transparent 10px);
+      mix-blend-mode: soft-light;
+    }
+
+    /* 6. Cracked Ice Shatter */
+    .holo-finish-cracked_ice .holo-layer {
+      background:
+        radial-gradient(circle at var(--mx) var(--my), rgba(255, 255, 255, 0.65) 0%, rgba(125, 211, 252, 0.3) 32%, transparent 65%),
+        conic-gradient(from 15deg at 30% 30%, rgba(255, 255, 255, 0.26) 0deg 45deg, transparent 45deg 110deg, rgba(56, 189, 248, 0.25) 110deg 175deg, transparent 175deg 250deg, rgba(244, 114, 182, 0.22) 250deg 315deg, transparent 315deg 360deg),
+        conic-gradient(from 190deg at 72% 68%, rgba(250, 204, 21, 0.24) 0deg 55deg, transparent 55deg 140deg, rgba(255, 255, 255, 0.28) 140deg 210deg, transparent 210deg 360deg);
+      mix-blend-mode: overlay;
+    }
+
+    /* 7. Cyberpunk Chrome */
+    .holo-finish-cyber_neon .holo-layer {
+      background:
+        radial-gradient(circle at var(--mx) var(--my), rgba(34, 211, 238, 0.55) 0%, rgba(236, 72, 153, 0.32) 38%, transparent 72%),
+        linear-gradient(135deg, rgba(6, 182, 212, 0.22) 0%, transparent 45%, rgba(236, 72, 153, 0.25) 100%);
+      box-shadow: inset 0 0 18px rgba(34, 211, 238, 0.35);
+      mix-blend-mode: screen;
+    }
 
     .pkmn-card-inner {
       width: 100%;
@@ -384,14 +484,14 @@
               </button>
             </div>
 
-            <!-- Trainer Quote & Supporter Ability Summary -->
+            <!-- Trainer Quote & Profile Summary -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-left">
               <div class="bg-[#0b101b]/90 p-3.5 rounded-2xl border border-slate-800">
-                <div class="text-[11px] font-bold uppercase tracking-wider text-rose-400 mb-1">
-                  <i class="fa-solid fa-bolt mr-1"></i>Trainer Supporter Effect
+                <div class="text-[11px] font-bold uppercase tracking-wider text-yellow-400 mb-1">
+                  <i class="fa-solid fa-sparkles mr-1"></i>Collector Holo Finish
                 </div>
-                <p id="showcase-trainer-effect" class="text-xs text-slate-200 leading-relaxed">
-                  Draw 3 cards. If you have a favorite type Pokémon in play, draw 2 more cards.
+                <p id="showcase-trainer-finish" class="text-xs text-slate-200 font-semibold leading-relaxed">
+                  Cosmos Galaxy Holo • Collector Promo Edition
                 </p>
               </div>
               <div class="bg-[#0b101b]/90 p-3.5 rounded-2xl border border-slate-800">
@@ -871,7 +971,7 @@
         <div class="flex items-center gap-2">
           <div class="bg-[#0b101b] p-1 rounded-xl border border-slate-800 flex text-xs font-bold">
             <button type="button" id="trainer-mode-btn-builder" class="px-3 py-1.5 rounded-lg transition bg-yellow-400 text-slate-950">
-              <i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Supporter Card Maker
+              <i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Profile Card Maker
             </button>
             <button type="button" id="trainer-mode-btn-full" class="px-3 py-1.5 rounded-lg transition text-slate-400">
               <i class="fa-solid fa-file-image mr-1"></i>Full Card Image
@@ -895,7 +995,7 @@
               </div>
               <div class="text-left">
                 <div id="trainer-upload-title" class="text-xs font-bold text-white">
-                  Upload Your Trainer Portrait / Avatar Artwork
+                  Upload Your Trainer Portrait / Avatar Photo
                 </div>
                 <div class="text-[11px] text-slate-400">
                   PNG, JPG, WEBP • Auto-compressed & synced live to friends
@@ -917,41 +1017,50 @@
                 <option value="Gym Leader">Gym Leader</option>
                 <option value="Elite Four">Elite Four</option>
                 <option value="League Champion">League Champion</option>
-                <option value="Dragon Tamer">Dragon Tamer</option>
                 <option value="Master Collector">Master Collector</option>
+                <option value="Shiny Hunter">Shiny Hunter</option>
+                <option value="Dragon Tamer">Dragon Tamer</option>
+                <option value="Retro Collector">Retro Collector</option>
                 <option value="Pokémon Professor">Pokémon Professor</option>
-                <option value="Hex Maniac">Hex Maniac</option>
-                <option value="Pokémon Breeder">Pokémon Breeder</option>
               </select>
             </div>
           </div>
 
-          <!-- Builder-Specific Fields -->
+          <!-- Aesthetic Holo Finish (Available in BOTH modes) -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-bold text-yellow-400 mb-1">
+                <i class="fa-solid fa-sparkles mr-1"></i>Holographic Card Finish (7 Styles)
+              </label>
+              <select id="trainer-style-select" class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-yellow-400/40 text-xs sm:text-sm text-white font-semibold focus:outline-none focus:border-yellow-400">
+                <option value="cosmos">★ Cosmos Galaxy Holo</option>
+                <option value="prismatic">★★ Prismatic Tera Rainbow</option>
+                <option value="gold_hyper">★★★ Gold Hyper Rare</option>
+                <option value="alt_art">★★ Full-Art Textured Etch</option>
+                <option value="reverse_holo">◆ Reverse Pattern Foil</option>
+                <option value="cracked_ice">★ Cracked Ice Shatter</option>
+                <option value="cyber_neon">★★ Cyberpunk Chrome</option>
+              </select>
+            </div>
+            <div id="trainer-accent-wrapper">
+              <label class="block text-xs font-bold text-slate-300 mb-1">Card Frame Palette</label>
+              <select id="trainer-accent-select" class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-yellow-400">
+                <option value="Cobalt">Cobalt Blue</option>
+                <option value="Crimson">Crimson Red</option>
+                <option value="Emerald">Emerald Green</option>
+                <option value="Amber">Amber Gold</option>
+                <option value="Violet">Royal Violet</option>
+                <option value="Obsidian">Obsidian Dark</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Builder-Specific Aesthetic Fields -->
           <div id="trainer-builder-extra-fields" class="space-y-3">
-            <div class="grid grid-cols-3 gap-2.5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label class="block text-[11px] font-bold text-slate-300 mb-1">Card Finish</label>
-                <select id="trainer-style-select" class="w-full px-2.5 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
-                  <option value="Supporter Holo">★ Supporter Holo</option>
-                  <option value="Full Art Ultra">★★ Full Art Ultra</option>
-                  <option value="Gold Hyper Rare">★★★ Gold Hyper Rare</option>
-                  <option value="Classic Supporter">● Classic Supporter</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-slate-300 mb-1">Card Theme</label>
-                <select id="trainer-accent-select" class="w-full px-2.5 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
-                  <option value="Cobalt">Cobalt Blue</option>
-                  <option value="Crimson">Crimson Red</option>
-                  <option value="Emerald">Emerald Green</option>
-                  <option value="Amber">Amber Gold</option>
-                  <option value="Violet">Royal Violet</option>
-                  <option value="Obsidian">Obsidian Dark</option>
-                </select>
-              </div>
-              <div>
-                <label class="block text-[11px] font-bold text-slate-300 mb-1">Partner Type</label>
-                <select id="trainer-fav-type-select" class="w-full px-2.5 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
+                <label class="block text-[11px] font-bold text-slate-300 mb-1">Partner Energy Emblem</label>
+                <select id="trainer-fav-type-select" class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
                   <option value="Fire">Fire</option>
                   <option value="Water">Water</option>
                   <option value="Grass">Grass</option>
@@ -964,21 +1073,15 @@
                   <option value="Colorless">Colorless</option>
                 </select>
               </div>
+              <div>
+                <label class="block text-[11px] font-bold text-slate-300 mb-1">Hometown / Region Tag</label>
+                <input id="trainer-hometown-input" type="text" maxlength="34" value="Pallet Town • Kanto League" placeholder="e.g., Sinnoh League / Custom Arena" class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
+              </div>
             </div>
 
             <div>
-              <label class="block text-[11px] font-bold text-slate-300 mb-1">Hometown / Region Badge</label>
-              <input id="trainer-hometown-input" type="text" maxlength="34" value="Pallet Town • Kanto League" placeholder="e.g., Sinnoh League / Custom Arena" class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
-            </div>
-
-            <div>
-              <label class="block text-[11px] font-bold text-rose-400 mb-1">Custom Supporter Rule Text</label>
-              <textarea id="trainer-effect-input" rows="2" maxlength="145" placeholder="e.g., Draw 3 cards. If your Active Pokémon is your favorite type, draw 2 more cards." class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">Draw 3 cards. If your Active Pokémon matches your Partner Type, search your deck for any 1 card and put it into your hand.</textarea>
-            </div>
-
-            <div>
-              <label class="block text-[11px] font-bold text-sky-400 mb-1">Signature Quote / Flavor Motto</label>
-              <input id="trainer-quote-input" type="text" maxlength="85" value="Every deck tells the story of the Trainer who built it." placeholder="Your personal Trainer catchphrase..." class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
+              <label class="block text-[11px] font-bold text-sky-400 mb-1">Signature Quote / Profile Bio Motto</label>
+              <input id="trainer-quote-input" type="text" maxlength="95" value="Every deck tells the story of the Trainer who built it." placeholder="Your personal Trainer catchphrase or profile bio..." class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
             </div>
           </div>
 
@@ -999,11 +1102,11 @@
         <div class="lg:col-span-5 bg-[#0b101b] border border-slate-800 rounded-2xl p-5 flex flex-col items-center justify-center">
           <div class="text-[11px] font-extrabold uppercase tracking-wider text-yellow-400 mb-3 flex items-center gap-1.5">
             <i class="fa-solid fa-id-card"></i>
-            <span>Live 2.5" × 3.5" Trainer Card</span>
+            <span>Live 2.5" × 3.5" Profile Card (Hover to Tilt)</span>
           </div>
           <div id="live-trainer-card-preview-slot"></div>
           <p class="text-[11px] text-slate-400 text-center mt-3 max-w-xs">
-            Displays on your Profile page and whenever friends inspect your decks!
+            Move your cursor across the card to preview the holographic foil tilt & glare!
           </p>
         </div>
       </div>
@@ -1144,11 +1247,10 @@ service cloud.firestore {
       trainerProfile: {
         trainerName: savedTrainer?.trainerName || 'Trainer',
         trainerTitle: savedTrainer?.trainerTitle || 'Ace Trainer',
-        cardStyle: savedTrainer?.cardStyle || 'Supporter Holo',
+        cardStyle: savedTrainer?.cardStyle || 'cosmos',
         accentColor: savedTrainer?.accentColor || 'Cobalt',
         favoriteType: savedTrainer?.favoriteType || 'Fire',
         hometown: savedTrainer?.hometown || 'Pallet Town • Kanto League',
-        supporterEffect: savedTrainer?.supporterEffect || 'Draw 3 cards. If your Active Pokémon matches your Partner Type, search your deck for any 1 card and put it into your hand.',
         signatureQuote: savedTrainer?.signatureQuote || 'Every deck tells the story of the Trainer who built it.',
         avatarDataUrl: savedTrainer?.avatarDataUrl || '',
         uploadMode: savedTrainer?.uploadMode || 'builder'
@@ -1163,6 +1265,16 @@ service cloud.firestore {
       currentImageDataUrl: '',
       draftTrainerAvatarDataUrl: savedTrainer?.avatarDataUrl || '',
       draftTrainerUploadMode: savedTrainer?.uploadMode || 'builder'
+    };
+
+    const HOLO_FINISH_META = {
+      cosmos:       { label: 'Cosmos Galaxy Holo',        stars: '★',   border: 'border-silver-holo' },
+      prismatic:    { label: 'Prismatic Tera Rainbow',    stars: '★★',  border: 'border-rainbow-hyper' },
+      gold_hyper:   { label: 'Gold Hyper Rare',           stars: '★★★', border: 'border-gold-ultra' },
+      alt_art:      { label: 'Full-Art Textured Etch',    stars: '★★',  border: 'border-silver-holo' },
+      reverse_holo: { label: 'Reverse Pattern Foil',      stars: '◆',   border: 'border-classic-yellow' },
+      cracked_ice:  { label: 'Cracked Ice Shatter',       stars: '★',   border: 'border-silver-holo' },
+      cyber_neon:   { label: 'Cyberpunk Chrome',          stars: '★★',  border: 'border-cyber-chrome' }
     };
 
     const ENERGY_META = {
@@ -1237,55 +1349,14 @@ service cloud.firestore {
     }
 
     // -----------------------------------------------------------------------
-    // MONITOR DPI CALIBRATION (EXACT 2.5" x 3.5" / 5:7 SCALE)
+    // PURE AESTHETIC TRAINER PROFILE CARD RENDERER (2.5" x 3.5", ZERO BATTLE TEXT)
     // -----------------------------------------------------------------------
-    function updateCardDpiScale(dpiVal) {
-      const dpi = Number(dpiVal) || 96;
-      const scale = dpi / 96;
-      document.documentElement.style.setProperty('--dpi-scale', scale.toFixed(4));
-      const wPx = Math.round(2.5 * dpi);
-      const hPx = Math.round(3.5 * dpi);
-      document.getElementById('dpi-readout').textContent = `${dpi} DPI (${wPx}×${hPx}px)`;
-    }
-
-    // -----------------------------------------------------------------------
-    // NAVIGATION TABS
-    // -----------------------------------------------------------------------
-    function switchTab(tabName) {
-      state.activeTab = tabName;
-      ['vault', 'my-decks', 'friends-decks'].forEach(t => {
-        const view = document.getElementById(`view-${t}`);
-        const btn = document.getElementById(`tab-${t}`);
-        if (t === tabName) {
-          view?.classList.remove('hidden');
-          btn?.classList.add('bg-yellow-400', 'text-slate-950', 'shadow');
-          btn?.classList.remove('text-slate-300', 'hover:text-white', 'hover:bg-slate-800/70');
-        } else {
-          view?.classList.add('hidden');
-          btn?.classList.remove('bg-yellow-400', 'text-slate-950', 'shadow');
-          btn?.classList.add('text-slate-300', 'hover:text-white', 'hover:bg-slate-800/70');
-        }
-      });
-      if (tabName === 'my-decks') {
-        renderMyTrainerProfileShowcase();
-      }
-    }
-
-    // -----------------------------------------------------------------------
-    // TRAINER TRADING CARD RENDERER (2.5" x 3.5" SUPPORTER / FULL-ART CARD)
-    // -----------------------------------------------------------------------
-    function getTrainerBorderClass(cardStyle) {
-      if (cardStyle === 'Gold Hyper Rare') return 'border-gold-ultra';
-      if (cardStyle === 'Full Art Ultra') return 'border-rainbow-hyper';
-      if (cardStyle === 'Supporter Holo') return 'border-silver-holo';
-      return 'border-classic-yellow';
-    }
-
-    function getTrainerRarityStars(cardStyle) {
-      if (cardStyle === 'Gold Hyper Rare') return '★★★';
-      if (cardStyle === 'Full Art Ultra') return '★★';
-      if (cardStyle === 'Supporter Holo') return '★';
-      return '◆';
+    function normalizeHoloKey(cardStyle) {
+      if (HOLO_FINISH_META[cardStyle]) return cardStyle;
+      if (cardStyle === 'Gold Hyper Rare') return 'gold_hyper';
+      if (cardStyle === 'Full Art Ultra') return 'prismatic';
+      if (cardStyle === 'Classic Supporter') return 'reverse_holo';
+      return 'cosmos';
     }
 
     function buildTrainerTradingCardHTML(profile, options = {}) {
@@ -1293,28 +1364,27 @@ service cloud.firestore {
       const p = profile || {};
       const name = p.trainerName || p.displayName || 'Trainer';
       const title = p.trainerTitle || 'Ace Trainer';
-      const cardStyle = p.cardStyle || 'Supporter Holo';
+      const holoKey = normalizeHoloKey(p.cardStyle);
+      const holoMeta = HOLO_FINISH_META[holoKey];
       const accent = p.accentColor || 'Cobalt';
       const favType = p.favoriteType || 'Fire';
       const hometown = p.hometown || 'Custom Region';
-      const effect = p.supporterEffect || 'Draw 3 cards. If your Active Pokémon matches your Partner Type, draw 2 more cards.';
       const quote = p.signatureQuote || 'Every deck tells the story of the Trainer who built it.';
       const avatarUrl = p.avatarDataUrl || '';
       const mode = p.uploadMode || 'builder';
 
-      const borderClass = getTrainerBorderClass(cardStyle);
-      const isHolo = cardStyle !== 'Classic Supporter';
       const isDarkText = accent === 'Obsidian';
       const zoomAttr = (!disableClickZoom && zoomOwnerUid) ? `data-zoom-trainer-uid="${escapeHtml(zoomOwnerUid)}"` : '';
       const triggerClass = (!disableClickZoom && zoomOwnerUid) ? 'trainer-card-zoom-trigger cursor-pointer' : '';
 
-      // Mode 2: Full Custom Uploaded 2.5" x 3.5" Trainer Card Image
+      // Mode 2: Full Custom Uploaded 2.5" x 3.5" Trainer Card Image + Chosen Holo Overlay
       if (mode === 'full_image' && avatarUrl) {
         return `
           <div class="flex flex-col items-center gap-2">
-            <div ${zoomAttr} class="pkmn-card-outer ${borderClass} ${isHolo ? 'holo-shimmer' : ''} ${triggerClass}">
-              <div class="pkmn-card-inner bg-slate-950 !p-0">
-                <img src="${escapeHtml(avatarUrl)}" alt="${escapeHtml(name)} Trainer Card" class="full-art-card-img">
+            <div ${zoomAttr} class="pkmn-card-outer trainer-tilt-card holo-finish-${holoKey} ${holoMeta.border} ${triggerClass}">
+              <div class="pkmn-card-inner bg-slate-950 !p-0 relative">
+                <img src="${escapeHtml(avatarUrl)}" alt="${escapeHtml(name)} Profile Card" class="full-art-card-img">
+                <div class="holo-layer"></div>
               </div>
             </div>
             ${captionText ? `<div class="text-[11px] text-slate-400 font-semibold">${escapeHtml(captionText)}</div>` : ''}
@@ -1322,81 +1392,67 @@ service cloud.firestore {
         `;
       }
 
-      // Mode 1: Authentic Pokémon TCG Supporter-Style Trainer Card Layout
+      // Mode 1: Pure Aesthetic Collector Profile Card (Full-Art Portrait Focus, Zero Battle Rules)
       return `
         <div class="flex flex-col items-center gap-2">
-          <div ${zoomAttr} class="pkmn-card-outer ${borderClass} ${isHolo ? 'holo-shimmer' : ''} ${triggerClass}">
-            <div class="pkmn-card-inner trainer-accent-${escapeHtml(accent)}">
-              <!-- TOP BANNER: TRAINER PILL + SUPPORTER TAG -->
-              <div>
+          <div ${zoomAttr} class="pkmn-card-outer trainer-tilt-card holo-finish-${holoKey} ${holoMeta.border} ${triggerClass}">
+            <div class="pkmn-card-inner trainer-accent-${escapeHtml(accent)} relative">
+              <div class="holo-layer"></div>
+
+              <!-- TOP HEADER: COLLECTOR BADGE + TRAINER NAME & TITLE -->
+              <div class="relative z-10">
                 <div class="flex items-center justify-between gap-1 mb-0.5">
-                  <span style="font-size:calc(7px * var(--card-font-scale)); padding:calc(1.5px * var(--card-font-scale)) calc(6px * var(--card-font-scale));"
-                        class="rounded-full font-black uppercase tracking-wider bg-gradient-to-r from-amber-300 via-yellow-200 to-amber-400 text-slate-950 border border-black/30 shadow-xs">
-                    TRAINER
+                  <span style="font-size:calc(6.5px * var(--card-font-scale)); padding:calc(1.5px * var(--card-font-scale)) calc(6px * var(--card-font-scale));"
+                        class="rounded-full font-black uppercase tracking-wider bg-gradient-to-r from-amber-200 via-yellow-300 to-amber-400 text-slate-950 border border-black/30 shadow-xs">
+                    TRAINER PROFILE
                   </span>
-                  <span style="font-size:calc(7.5px * var(--card-font-scale));"
-                        class="font-black uppercase tracking-wider text-rose-100 bg-rose-700/90 px-1.5 py-0.2 rounded border border-white/25">
-                    Supporter
+                  <span style="font-size:calc(6.5px * var(--card-font-scale)); padding:calc(1px * var(--card-font-scale)) calc(5px * var(--card-font-scale));"
+                        class="rounded-full font-extrabold uppercase tracking-wider bg-black/35 text-white border border-white/20 truncate max-w-[52%]">
+                    ${escapeHtml(title)}
                   </span>
                 </div>
 
-                <!-- TRAINER NAME + PARTNER TYPE EMBLEM -->
-                <div class="flex items-center justify-between gap-1 my-0.5">
-                  <div class="min-w-0">
-                    <div style="font-size:calc(12.5px * var(--card-font-scale)); line-height:1.1;"
-                         class="font-display font-black tracking-tight truncate ${isDarkText ? 'text-white' : 'text-slate-950'}">
-                      ${escapeHtml(name)}
-                    </div>
-                    <div style="font-size:calc(7px * var(--card-font-scale));"
-                         class="font-bold uppercase tracking-wide truncate ${isDarkText ? 'text-amber-300' : 'text-slate-900/80'}">
-                      ${escapeHtml(title)}
-                    </div>
+                <div class="flex items-center justify-between gap-1.5 my-0.5">
+                  <div style="font-size:calc(13px * var(--card-font-scale)); line-height:1.15;"
+                       class="font-display font-black tracking-tight truncate ${isDarkText ? 'text-white' : 'text-slate-950'}">
+                    ${escapeHtml(name)}
                   </div>
-                  <div class="flex items-center gap-1 shrink-0">
+                  <div class="shrink-0">
                     ${renderEnergyPip(favType, 1.05)}
                   </div>
                 </div>
+              </div>
 
-                <!-- PORTRAIT ARTWORK FRAME -->
-                <div style="height:calc(132px * var(--card-font-scale)); border-width:calc(2.5px * var(--card-font-scale));"
-                     class="w-full rounded-sm border-slate-200/90 bg-slate-950 overflow-hidden shadow-inner relative">
-                  ${avatarUrl
-                    ? `<img src="${escapeHtml(avatarUrl)}" alt="${escapeHtml(name)}" class="w-full h-full object-cover">`
-                    : `<div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-slate-800 to-slate-950 text-slate-300">
-                         <div style="width:calc(46px * var(--card-font-scale)); height:calc(46px * var(--card-font-scale)); font-size:calc(18px * var(--card-font-scale));"
-                              class="rounded-full bg-yellow-400 text-slate-950 font-black flex items-center justify-center shadow-lg border-2 border-white/40 mb-1">
-                           ${escapeHtml(name.slice(0, 2).toUpperCase())}
-                         </div>
-                         <span style="font-size:calc(7.5px * var(--card-font-scale));" class="text-slate-400 font-semibold">Custom Trainer Portrait</span>
-                       </div>`
-                  }
-                </div>
-
-                <!-- REGION / LEAGUE STRIP -->
-                <div style="font-size:calc(6.2px * var(--card-font-scale)); padding:calc(1.5px * var(--card-font-scale)) calc(4px * var(--card-font-scale)); margin-top:calc(2px * var(--card-font-scale));"
-                     class="w-full bg-gradient-to-r from-slate-200 via-white to-slate-200 text-slate-800 font-bold text-center rounded-xs border border-slate-400/60 truncate">
-                  ${escapeHtml(hometown)}
+              <!-- CENTERPIECE EXPANDED PORTRAIT FRAME -->
+              <div style="border-width:calc(2.5px * var(--card-font-scale));"
+                   class="relative z-10 flex-1 my-1 w-full rounded-md border-white/80 bg-slate-950 overflow-hidden shadow-inner">
+                ${avatarUrl
+                  ? `<img src="${escapeHtml(avatarUrl)}" alt="${escapeHtml(name)}" class="w-full h-full object-cover">`
+                  : `<div class="w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-slate-800 to-slate-950 text-slate-300">
+                       <div style="width:calc(58px * var(--card-font-scale)); height:calc(58px * var(--card-font-scale)); font-size:calc(22px * var(--card-font-scale));"
+                            class="rounded-full bg-gradient-to-tr from-yellow-400 to-amber-500 text-slate-950 font-black flex items-center justify-center shadow-lg border-2 border-white/50 mb-1.5">
+                         ${escapeHtml(name.slice(0, 2).toUpperCase())}
+                       </div>
+                       <span style="font-size:calc(8px * var(--card-font-scale));" class="text-slate-300 font-bold">Upload Profile Photo</span>
+                     </div>`
+                }
+                <!-- Subtle Bottom Vignette & Region Ribbon inside Frame -->
+                <div style="font-size:calc(6.5px * var(--card-font-scale)); padding:calc(2.5px * var(--card-font-scale)) calc(6px * var(--card-font-scale));"
+                     class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/85 via-black/55 to-transparent text-white font-bold flex items-center justify-between">
+                  <span class="truncate"><i class="fa-solid fa-location-dot text-yellow-400 mr-1"></i>${escapeHtml(hometown)}</span>
                 </div>
               </div>
 
-              <!-- MIDDLE: SUPPORTER ABILITY TEXT BOX -->
-              <div style="padding:calc(4px * var(--card-font-scale)) calc(5px * var(--card-font-scale));"
-                   class="my-1 rounded bg-white/82 text-slate-900 border border-black/15 shadow-xs flex-1 flex flex-col justify-center">
-                <p style="font-size:calc(7.4px * var(--card-font-scale)); line-height:1.22;" class="font-medium line-clamp-4">
-                  ${escapeHtml(effect)}
-                </p>
-              </div>
-
-              <!-- BOTTOM: SUPPORTER RULE REMINDER, QUOTE & CARD FOOTER -->
-              <div>
-                <div style="font-size:calc(6px * var(--card-font-scale)); line-height:1.15; padding:calc(2px * var(--card-font-scale)) calc(4px * var(--card-font-scale));"
-                     class="italic bg-black/20 ${isDarkText ? 'text-slate-200' : 'text-slate-950 font-semibold'} rounded-xs line-clamp-1 mb-0.5">
+              <!-- BOTTOM AESTHETIC BIO PLAQUE & COLLECTOR STAMP -->
+              <div class="relative z-10">
+                <div style="font-size:calc(6.8px * var(--card-font-scale)); line-height:1.22; padding:calc(3.5px * var(--card-font-scale)) calc(6px * var(--card-font-scale));"
+                     class="italic rounded bg-white/80 text-slate-900 font-semibold border border-black/15 shadow-xs line-clamp-2 text-center mb-1">
                   "${escapeHtml(quote)}"
                 </div>
-                <div style="font-size:calc(5.8px * var(--card-font-scale));"
-                     class="flex items-center justify-between font-bold opacity-90 px-0.5">
-                  <span>You may play only 1 Supporter card during your turn.</span>
-                  <span class="shrink-0 ml-1">${getTrainerRarityStars(cardStyle)}</span>
+                <div style="font-size:calc(6px * var(--card-font-scale));"
+                     class="flex items-center justify-between font-extrabold uppercase tracking-wider opacity-90 px-0.5">
+                  <span>POKÉVAULT • PROMO 2026</span>
+                  <span>${holoMeta.stars}</span>
                 </div>
               </div>
             </div>
@@ -1440,18 +1496,21 @@ service cloud.firestore {
 
     function renderMyTrainerProfileShowcase() {
       const tp = state.trainerProfile;
+      const holoKey = normalizeHoloKey(tp.cardStyle);
+      const holoMeta = HOLO_FINISH_META[holoKey];
       const showcaseSlot = document.getElementById('my-trainer-card-showcase');
       if (showcaseSlot) {
         showcaseSlot.innerHTML = buildTrainerTradingCardHTML(tp, {
           zoomOwnerUid: state.user?.uid || null,
-          captionText: 'Click card to inspect close-up'
+          captionText: 'Hover to tilt • Click for close-up'
         });
       }
 
       document.getElementById('showcase-trainer-title').textContent = tp.trainerTitle;
       document.getElementById('showcase-trainer-name').textContent = tp.trainerName;
       document.getElementById('showcase-trainer-region').innerHTML = `<i class="fa-solid fa-location-dot text-rose-400 mr-1"></i>${escapeHtml(tp.hometown)}`;
-      document.getElementById('showcase-trainer-effect').textContent = tp.supporterEffect;
+      const finishEl = document.getElementById('showcase-trainer-finish');
+      if (finishEl) finishEl.textContent = `${holoMeta.label} (${holoMeta.stars}) • ${tp.accentColor} Frame`;
       document.getElementById('showcase-trainer-quote').textContent = `"${tp.signatureQuote}"`;
 
       const myCardsCount = state.user ? state.cards.filter(c => c.ownerId === state.user.uid).length : 0;
@@ -1466,6 +1525,7 @@ service cloud.firestore {
       const btnBuilder = document.getElementById('trainer-mode-btn-builder');
       const btnFull = document.getElementById('trainer-mode-btn-full');
       const extraFields = document.getElementById('trainer-builder-extra-fields');
+      const accentWrapper = document.getElementById('trainer-accent-wrapper');
       const uploadTitle = document.getElementById('trainer-upload-title');
 
       if (mode === 'full_image') {
@@ -1474,14 +1534,16 @@ service cloud.firestore {
         btnBuilder.classList.remove('bg-yellow-400', 'text-slate-950');
         btnBuilder.classList.add('text-slate-400');
         extraFields.classList.add('hidden');
-        uploadTitle.textContent = 'Upload Complete 2.5" × 3.5" Custom Trainer Card Image';
+        accentWrapper?.classList.add('opacity-40', 'pointer-events-none');
+        uploadTitle.textContent = 'Upload Complete 2.5" × 3.5" Custom Profile Card Image';
       } else {
         btnBuilder.classList.add('bg-yellow-400', 'text-slate-950');
         btnBuilder.classList.remove('text-slate-400');
         btnFull.classList.remove('bg-yellow-400', 'text-slate-950');
         btnFull.classList.add('text-slate-400');
         extraFields.classList.remove('hidden');
-        uploadTitle.textContent = 'Upload Your Trainer Portrait / Avatar Artwork';
+        accentWrapper?.classList.remove('opacity-40', 'pointer-events-none');
+        uploadTitle.textContent = 'Upload Your Trainer Portrait / Avatar Photo';
       }
       updateLiveTrainerCardPreview();
     }
@@ -1490,12 +1552,11 @@ service cloud.firestore {
       return {
         trainerName: document.getElementById('profile-name-input').value.trim() || state.trainerProfile.trainerName || 'Trainer',
         trainerTitle: document.getElementById('trainer-title-select').value,
-        cardStyle: document.getElementById('trainer-style-select').value,
+        cardStyle: normalizeHoloKey(document.getElementById('trainer-style-select').value),
         accentColor: document.getElementById('trainer-accent-select').value,
         favoriteType: document.getElementById('trainer-fav-type-select').value,
         hometown: document.getElementById('trainer-hometown-input').value.trim() || 'Custom Region',
-        supporterEffect: document.getElementById('trainer-effect-input').value.trim() || 'Draw 3 cards.',
-        signatureQuote: document.getElementById('trainer-quote-input').value.trim() || 'Ready for battle!',
+        signatureQuote: document.getElementById('trainer-quote-input').value.trim() || 'Ready for adventure!',
         avatarDataUrl: state.draftTrainerAvatarDataUrl,
         uploadMode: state.draftTrainerUploadMode
       };
@@ -1510,16 +1571,15 @@ service cloud.firestore {
     function openProfileModal(isFirstVisit = false) {
       const tp = state.trainerProfile;
       document.getElementById('profile-modal-heading').textContent = isFirstVisit
-        ? 'Welcome! Design Your Trainer Card'
-        : 'Trainer Trading Card Studio';
+        ? 'Welcome! Design Your Trainer Profile Card'
+        : 'Trainer Profile Card Studio';
 
       document.getElementById('profile-name-input').value = isFirstVisit ? '' : tp.trainerName;
       document.getElementById('trainer-title-select').value = tp.trainerTitle;
-      document.getElementById('trainer-style-select').value = tp.cardStyle;
+      document.getElementById('trainer-style-select').value = normalizeHoloKey(tp.cardStyle);
       document.getElementById('trainer-accent-select').value = tp.accentColor;
       document.getElementById('trainer-fav-type-select').value = tp.favoriteType;
       document.getElementById('trainer-hometown-input').value = tp.hometown;
-      document.getElementById('trainer-effect-input').value = tp.supporterEffect;
       document.getElementById('trainer-quote-input').value = tp.signatureQuote;
       document.getElementById('profile-full-uid').textContent = state.user ? state.user.uid : 'Connecting...';
 
@@ -2734,40 +2794,35 @@ service cloud.firestore {
       [
         'profile-name-input', 'trainer-title-select', 'trainer-style-select',
         'trainer-accent-select', 'trainer-fav-type-select', 'trainer-hometown-input',
-        'trainer-effect-input', 'trainer-quote-input'
+        'trainer-quote-input'
       ].forEach(id => {
         const el = document.getElementById(id);
         el?.addEventListener('input', updateLiveTrainerCardPreview);
         el?.addEventListener('change', updateLiveTrainerCardPreview);
       });
 
-      document.getElementById('profile-form')?.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const updatedProfile = collectTrainerFormDraft();
-        state.trainerProfile = updatedProfile;
+      // Interactive 3D Pointer-Tracking Tilt & Specular Holo Glare on Trainer Profile Cards
+      document.addEventListener('pointermove', (e) => {
+        const card = e.target.closest('.trainer-tilt-card');
+        if (!card) return;
+        const rect = card.getBoundingClientRect();
+        const px = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        const py = Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height));
+        const rx = ((0.5 - py) * 18).toFixed(2);
+        const ry = ((px - 0.5) * 22).toFixed(2);
+        card.style.setProperty('--mx', `${(px * 100).toFixed(1)}%`);
+        card.style.setProperty('--my', `${(py * 100).toFixed(1)}%`);
+        card.style.setProperty('--rx', `${rx}deg`);
+        card.style.setProperty('--ry', `${ry}deg`);
+      });
 
-        localStorage.setItem(STORAGE_KEY_TRAINER, JSON.stringify(updatedProfile));
-        updateHeaderProfileUI();
-        renderMyTrainerProfileShowcase();
-        closeModal('profile-modal');
-        showToast(`Trainer Card saved for "${updatedProfile.trainerName}"!`, 'success');
-
-        if (state.user) {
-          try {
-            await setDoc(doc(db, 'users', state.user.uid), {
-              uid: state.user.uid,
-              displayName: updatedProfile.trainerName,
-              ...updatedProfile,
-              lastActive: Date.now()
-            }, { merge: true });
-
-            const myDecks = state.decks.filter(d => d.ownerId === state.user.uid);
-            for (const deck of myDecks) {
-              await updateDoc(doc(db, 'decks', deck.id), { ownerName: updatedProfile.trainerName });
-            }
-          } catch (err) {
-            console.error('Trainer profile sync error:', err);
-          }
+      document.addEventListener('pointerout', (e) => {
+        const card = e.target.closest('.trainer-tilt-card');
+        if (card && !card.contains(e.relatedTarget)) {
+          card.style.setProperty('--mx', '50%');
+          card.style.setProperty('--my', '50%');
+          card.style.setProperty('--rx', '0deg');
+          card.style.setProperty('--ry', '0deg');
         }
       });
 
