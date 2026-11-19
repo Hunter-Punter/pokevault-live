@@ -1122,6 +1122,30 @@
             <code id="profile-full-uid" class="text-yellow-400 truncate max-w-[230px] select-all">Signing in...</code>
           </div>
 
+          <!-- Cross-Device Profile Passcode & Sync Link -->
+          <div class="bg-[#0b101b] p-3.5 rounded-2xl border border-sky-500/30 space-y-2.5">
+            <div class="flex items-center justify-between gap-2">
+              <span class="text-[11px] font-extrabold uppercase tracking-wider text-sky-400">
+                <i class="fa-solid fa-laptop-mobile mr-1"></i>Cross-Device Profile Sync
+              </span>
+              <button type="button" id="btn-open-claim-profile" class="px-2.5 py-1 rounded-lg bg-sky-500/15 hover:bg-sky-500/25 text-sky-300 border border-sky-500/35 text-[11px] font-bold transition">
+                <i class="fa-solid fa-right-to-bracket mr-1"></i>Load Existing Profile
+              </button>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 items-center">
+              <div>
+                <label class="block text-[10px] font-bold text-slate-400 mb-1">Optional 4-Digit Device PIN</label>
+                <input id="trainer-pin-input" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="e.g., 1234 (protects profile)" class="w-full px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs font-mono text-white focus:outline-none focus:border-sky-400">
+              </div>
+              <div>
+                <label class="block text-[10px] font-bold text-slate-400 mb-1">1-Click Device Transfer Link</label>
+                <button type="button" id="btn-copy-profile-link" class="w-full px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 text-xs font-bold transition">
+                  <i class="fa-regular fa-copy mr-1"></i>Copy Profile Sync Link
+                </button>
+              </div>
+            </div>
+          </div>
+
           <div class="pt-1 flex justify-end gap-2">
             <button type="button" data-close-modal="profile-modal" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-bold text-slate-300">Cancel</button>
             <button type="submit" class="px-5 py-2.5 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-xs sm:text-sm shadow-lg shadow-yellow-500/20">
@@ -1177,56 +1201,53 @@
       </div>
 
       <div class="mt-5 flex justify-end">
-        <button type="button" data-close-modal="invite-modal" class="px-5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold text-xs">Done</button>
+        <button type="button" data-close-modal="rules-modal" class="px-5 py-2 rounded-xl bg-yellow-400 text-slate-950 font-extrabold text-xs">Close</button>
       </div>
     </div>
   </div>
 
   <!-- ===================================================================== -->
-  <!-- MODAL 7: FIRESTORE SECURITY RULES REFERENCE                           -->
+  <!-- MODAL 8: LOAD / CLAIM EXISTING TRAINER PROFILE ON NEW DEVICE          -->
   <!-- ===================================================================== -->
-  <div id="rules-modal" class="fixed inset-0 z-50 hidden bg-black/85 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-    <div class="bg-[#141c2e] border border-slate-700 rounded-2xl max-w-2xl w-full p-6 shadow-2xl my-auto">
+  <div id="claim-profile-modal" class="fixed inset-0 z-50 hidden bg-black/90 backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-[#141c2e] border border-sky-500/40 rounded-3xl max-w-lg w-full p-6 shadow-2xl my-auto">
       <div class="flex items-center justify-between pb-3 border-b border-slate-800">
-        <h3 class="font-display text-lg font-extrabold text-white">
-          <i class="fa-solid fa-shield-halved text-yellow-400 mr-1.5"></i>Firestore Security Rules (Root Collections)
-        </h3>
-        <button type="button" data-close-modal="rules-modal" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+        <div class="flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-xl bg-sky-500/15 text-sky-400 border border-sky-500/30 flex items-center justify-center">
+            <i class="fa-solid fa-user-check"></i>
+          </div>
+          <div>
+            <h3 class="font-display text-lg font-extrabold text-white">Use an Existing Trainer Profile</h3>
+            <p class="text-[11px] text-slate-400">Select your profile below to load your Trainer Card, decks, and cards on this device.</p>
+          </div>
+        </div>
+        <button type="button" data-close-modal="claim-profile-modal" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <div class="mt-4 space-y-3 text-xs text-slate-300">
-        <p>These rules enforce that any signed-in friend can view all cards, decks, and Trainer cards live, while <strong>only the creator/owner</strong> can edit or delete their own items:</p>
-        <textarea id="rules-textarea" readonly rows="16" class="w-full bg-[#0b101b] p-3.5 rounded-xl border border-slate-800 text-[11px] font-mono text-emerald-300 focus:outline-none select-all">rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /cards/{cardId} {
-      allow read: if request.auth != null;
-      allow create: if request.auth != null
-                    && request.resource.data.ownerId == request.auth.uid;
-      allow update, delete: if request.auth != null
-                            && resource.data.ownerId == request.auth.uid;
-    }
 
-    match /decks/{deckId} {
-      allow read: if request.auth != null;
-      allow create: if request.auth != null
-                    && request.resource.data.ownerId == request.auth.uid;
-      allow update, delete: if request.auth != null
-                            && resource.data.ownerId == request.auth.uid;
-    }
+      <div class="mt-4 space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-2">1. Choose Your Existing Profile</label>
+          <div id="existing-profiles-list" class="max-h-60 overflow-y-auto space-y-2 pr-1"></div>
+        </div>
 
-    match /users/{userId} {
-      allow read: if request.auth != null;
-      allow write: if request.auth != null && request.auth.uid == userId;
-    }
-  }
-}</textarea>
-      </div>
-      <div class="mt-4 flex justify-between items-center gap-2">
-        <button type="button" id="btn-copy-rules" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-emerald-300 border border-emerald-500/30 font-bold text-xs flex items-center gap-1.5">
-          <i class="fa-regular fa-copy"></i>
-          <span>Copy Rules</span>
-        </button>
-        <button type="button" data-close-modal="rules-modal" class="px-5 py-2 rounded-xl bg-yellow-400 text-slate-950 font-extrabold text-xs">Close</button>
+        <div id="claim-pin-box" class="hidden bg-[#0b101b] p-3.5 rounded-2xl border border-amber-500/40 space-y-2">
+          <div class="text-xs font-bold text-amber-300">
+            <i class="fa-solid fa-key mr-1"></i>Enter PIN for <span id="claim-pin-target-name" class="text-white">Trainer</span>
+          </div>
+          <div class="flex gap-2">
+            <input id="claim-pin-verify-input" type="password" inputmode="numeric" maxlength="6" placeholder="Enter PIN..." class="flex-1 px-3 py-2 rounded-xl bg-[#141c2e] border border-slate-700 text-xs font-mono text-white focus:outline-none focus:border-amber-400">
+            <button type="button" id="btn-confirm-claim-pin" class="px-4 py-2 rounded-xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-extrabold text-xs">
+              Unlock & Load
+            </button>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-slate-800 flex items-center justify-between gap-2">
+          <span class="text-[11px] text-slate-400">New here?</span>
+          <button type="button" id="btn-create-fresh-profile" class="px-4 py-2 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-xs">
+            Create Brand New Profile Instead
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -1263,6 +1284,7 @@ service cloud.firestore {
     const db = getFirestore(app);
 
     const STORAGE_KEY_TRAINER = 'pokevault_trainer_profile_v3';
+    const STORAGE_KEY_ACTIVE_UID = 'pokevault_active_profile_uid_v1';
 
     function loadLocalTrainerProfile() {
       try {
@@ -1276,6 +1298,8 @@ service cloud.firestore {
 
     const state = {
       user: null,
+      activeProfileUid: localStorage.getItem(STORAGE_KEY_ACTIVE_UID) || null,
+      pendingClaimUid: null,
       trainerProfile: {
         trainerName: savedTrainer?.trainerName || 'Trainer',
         trainerTitle: savedTrainer?.trainerTitle || 'Ace Trainer',
@@ -1284,7 +1308,8 @@ service cloud.firestore {
         favoriteType: savedTrainer?.favoriteType || 'Fire',
         hometown: savedTrainer?.hometown || 'Pallet Town • Kanto League',
         signatureQuote: savedTrainer?.signatureQuote || 'Every deck tells the story of the Trainer who built it.',
-        avatarDataUrl: savedTrainer?.avatarDataUrl || ''
+        avatarDataUrl: savedTrainer?.avatarDataUrl || '',
+        profilePin: savedTrainer?.profilePin || ''
       },
       usersById: {},
       cards: [],
@@ -1307,6 +1332,17 @@ service cloud.firestore {
         startPanY: 0
       }
     };
+
+    function getEffectiveUid() {
+      return state.activeProfileUid || state.user?.uid || '';
+    }
+
+    function canModifyItem(itemOwnerId) {
+      if (!itemOwnerId) return false;
+      const effUid = getEffectiveUid();
+      const authUid = state.user?.uid;
+      return itemOwnerId === effUid || itemOwnerId === authUid;
+    }
 
     const ENERGY_META = {
       Fire:      { bg: '#ef4444', icon: 'fa-fire',          text: '#fff' },
@@ -1446,7 +1482,7 @@ service cloud.firestore {
       const avatarUrl = p.avatarDataUrl || '';
 
       const isObsidian = accent === 'Obsidian';
-      const zoomUid = zoomOwnerUid || p.uid || state.user?.uid || '';
+      const zoomUid = zoomOwnerUid || p.uid || getEffectiveUid();
       const clickAttr = disableClickZoom
         ? ''
         : `data-zoom-trainer-uid="${escapeHtml(zoomUid)}"`;
@@ -1544,7 +1580,7 @@ service cloud.firestore {
       const holoMeta = HOLO_FINISH_META[holoKey] || HOLO_FINISH_META.cosmos;
 
       showcaseSlot.innerHTML = buildTrainerTradingCardHTML(p, {
-        zoomOwnerUid: state.user?.uid || 'self',
+        zoomOwnerUid: getEffectiveUid() || 'self',
         captionText: 'Hover to tilt • Click to zoom'
       });
 
@@ -1566,9 +1602,9 @@ service cloud.firestore {
         quoteEl.textContent = `"${p.signatureQuote || 'Every deck tells the story of the Trainer who built it.'}"`;
       }
 
-      const myUid = state.user?.uid;
-      const myCardsCount = myUid ? state.cards.filter(c => c.ownerId === myUid).length : 0;
-      const myDecksCount = myUid ? state.decks.filter(d => d.ownerId === myUid).length : 0;
+      const myUid = getEffectiveUid();
+      const myCardsCount = myUid ? state.cards.filter(c => canModifyItem(c.ownerId)).length : 0;
+      const myDecksCount = myUid ? state.decks.filter(d => canModifyItem(d.ownerId)).length : 0;
       const favType = p.favoriteType || 'Fire';
 
       const cardsStatEl = document.getElementById('stat-my-cards-count');
@@ -1598,11 +1634,11 @@ service cloud.firestore {
       document.getElementById('trainer-fav-type-select').value = p.favoriteType || 'Fire';
       document.getElementById('trainer-hometown-input').value = p.hometown || 'Pallet Town • Kanto League';
       document.getElementById('trainer-quote-input').value = p.signatureQuote || 'Every deck tells the story of the Trainer who built it.';
+      const pinInput = document.getElementById('trainer-pin-input');
+      if (pinInput) pinInput.value = p.profilePin || '';
 
       const uidEl = document.getElementById('profile-full-uid');
-      if (uidEl) uidEl.textContent = state.user ? state.user.uid : 'Signing in...';
-
-      state.draftTrainerAvatarDataUrl = p.avatarDataUrl || '';
+      if (uidEl) uidEl.textContent = getEffectiveUid() || 'Signing in...';
       state.cropEditor = {
         img: null,
         zoom: 1,
@@ -1736,7 +1772,7 @@ service cloud.firestore {
 
     function zoomTrainerCardByUid(ownerUid) {
       let profile = null;
-      if (state.user && ownerUid === state.user.uid) {
+      if (ownerUid === getEffectiveUid() || (state.user && ownerUid === state.user.uid)) {
         profile = state.trainerProfile;
       } else if (state.usersById[ownerUid]) {
         profile = state.usersById[ownerUid];
@@ -1760,10 +1796,18 @@ service cloud.firestore {
     async function handleSaveTrainerProfile(e) {
       e.preventDefault();
       const updated = collectDraftTrainerProfile();
+      const rawPin = document.getElementById('trainer-pin-input')?.value.trim() || '';
+      const targetUid = getEffectiveUid();
+
       state.trainerProfile = {
         ...state.trainerProfile,
-        ...updated
+        ...updated,
+        profilePin: rawPin
       };
+      if (targetUid) {
+        state.activeProfileUid = targetUid;
+        localStorage.setItem(STORAGE_KEY_ACTIVE_UID, targetUid);
+      }
 
       try {
         localStorage.setItem(STORAGE_KEY_TRAINER, JSON.stringify(state.trainerProfile));
@@ -1772,16 +1816,17 @@ service cloud.firestore {
       updateHeaderProfileUI();
       renderMyTrainerProfileShowcase();
 
-      if (state.user) {
+      if (state.user && targetUid) {
         try {
-          await setDoc(doc(db, 'users', state.user.uid), {
-            uid: state.user.uid,
+          await setDoc(doc(db, 'users', targetUid), {
+            uid: targetUid,
+            linkedAuthUids: Array.from(new Set([...(state.usersById[targetUid]?.linkedAuthUids || []), state.user.uid])),
             displayName: state.trainerProfile.trainerName,
             ...state.trainerProfile,
             lastActive: Date.now()
           }, { merge: true });
 
-          const myDecks = state.decks.filter(d => d.ownerId === state.user.uid);
+          const myDecks = state.decks.filter(d => canModifyItem(d.ownerId));
           for (const deck of myDecks) {
             if (deck.ownerName !== state.trainerProfile.trainerName) {
               await updateDoc(doc(db, 'decks', deck.id), {
@@ -1789,7 +1834,7 @@ service cloud.firestore {
               });
             }
           }
-          showToast('Trainer Profile Card saved & synced live!', 'success');
+          showToast('Trainer Profile Card saved & synced across devices!', 'success');
         } catch (err) {
           console.error('Save trainer card error:', err);
           showToast('Saved locally, but cloud sync failed: ' + err.message, 'error');
@@ -1801,10 +1846,107 @@ service cloud.firestore {
       closeModal('profile-modal');
     }
 
+    function openClaimProfileModal() {
+      state.pendingClaimUid = null;
+      document.getElementById('claim-pin-box')?.classList.add('hidden');
+      const listEl = document.getElementById('existing-profiles-list');
+      if (!listEl) return;
+
+      const profiles = Object.values(state.usersById).filter(u => u && u.trainerName);
+      profiles.sort((a, b) => (b.lastActive || 0) - (a.lastActive || 0));
+
+      if (profiles.length === 0) {
+        listEl.innerHTML = `<div class="text-xs text-slate-400 bg-[#0b101b] p-4 rounded-xl border border-slate-800 text-center">No existing profiles found yet. Create your profile to get started!</div>`;
+      } else {
+        listEl.innerHTML = profiles.map(u => {
+          const isCurrent = u.uid === getEffectiveUid();
+          const hasPin = Boolean(u.profilePin);
+          return `
+            <div data-claim-uid="${escapeHtml(u.uid)}" class="btn-select-claim-profile cursor-pointer flex items-center justify-between gap-3 p-3 rounded-2xl bg-[#0b101b] hover:bg-slate-900 border ${isCurrent ? 'border-emerald-500/50' : 'border-slate-800 hover:border-sky-400/50'} transition">
+              <div class="flex items-center gap-3 min-w-0">
+                ${u.avatarDataUrl
+                  ? `<img src="${escapeHtml(u.avatarDataUrl)}" class="w-10 h-10 rounded-xl object-cover border border-yellow-400/50 shrink-0">`
+                  : `<div class="w-10 h-10 rounded-xl bg-slate-800 text-yellow-400 flex items-center justify-center font-extrabold text-xs shrink-0">${escapeHtml((u.trainerName || 'TR').slice(0, 2).toUpperCase())}</div>`
+                }
+                <div class="min-w-0">
+                  <div class="text-xs sm:text-sm font-extrabold text-white truncate flex items-center gap-1.5">
+                    <span>${escapeHtml(u.trainerName)}</span>
+                    ${hasPin ? '<i class="fa-solid fa-lock text-[10px] text-amber-400" title="PIN Protected"></i>' : ''}
+                  </div>
+                  <div class="text-[11px] text-slate-400 truncate">${escapeHtml(u.trainerTitle || 'Ace Trainer')} • ${escapeHtml(u.hometown || 'Custom Region')}</div>
+                </div>
+              </div>
+              <span class="px-3 py-1.5 rounded-xl ${isCurrent ? 'bg-emerald-500/20 text-emerald-300' : 'bg-sky-500/20 text-sky-300'} text-[11px] font-extrabold shrink-0">
+                ${isCurrent ? 'Active' : 'Use Profile'}
+              </span>
+            </div>
+          `;
+        }).join('');
+      }
+
+      openModal('claim-profile-modal');
+    }
+
+    async function applyClaimedProfile(targetUid) {
+      const chosen = state.usersById[targetUid];
+      if (!chosen) return;
+
+      state.activeProfileUid = targetUid;
+      localStorage.setItem(STORAGE_KEY_ACTIVE_UID, targetUid);
+
+      state.trainerProfile = {
+        trainerName: chosen.trainerName || 'Trainer',
+        trainerTitle: chosen.trainerTitle || 'Ace Trainer',
+        cardStyle: chosen.cardStyle || 'cosmos',
+        accentColor: chosen.accentColor || 'Cobalt',
+        favoriteType: chosen.favoriteType || 'Fire',
+        hometown: chosen.hometown || 'Pallet Town • Kanto League',
+        signatureQuote: chosen.signatureQuote || 'Every deck tells the story of the Trainer who built it.',
+        avatarDataUrl: chosen.avatarDataUrl || '',
+        profilePin: chosen.profilePin || ''
+      };
+      localStorage.setItem(STORAGE_KEY_TRAINER, JSON.stringify(state.trainerProfile));
+
+      if (state.user) {
+        try {
+          await setDoc(doc(db, 'users', targetUid), {
+            linkedAuthUids: Array.from(new Set([...(chosen.linkedAuthUids || []), state.user.uid])),
+            lastActive: Date.now()
+          }, { merge: true });
+        } catch (_) {}
+      }
+
+      updateHeaderProfileUI();
+      renderMyTrainerProfileShowcase();
+      renderVault();
+      renderMyDecks();
+      renderFriendsDecks();
+
+      const myCount = state.decks.filter(d => canModifyItem(d.ownerId)).length;
+      const friendCount = state.decks.filter(d => !canModifyItem(d.ownerId)).length;
+      document.getElementById('badge-my-decks-count').textContent = myCount;
+      document.getElementById('badge-friends-decks-count').textContent = friendCount;
+
+      closeModal('claim-profile-modal');
+      closeModal('profile-modal');
+      showToast(`Welcome back, ${state.trainerProfile.trainerName}! Profile loaded.`, 'success');
+    }
+
     // -----------------------------------------------------------------------
     // FIREBASE AUTH & REAL-TIME ROOT COLLECTIONS (cards, decks, users)
     // -----------------------------------------------------------------------
     async function initFirebaseLive() {
+      // Check if opened via a 1-Click Profile Sync URL (?profile=UID)
+      const urlParams = new URLSearchParams(window.location.search);
+      const paramProfileUid = urlParams.get('profile');
+      if (paramProfileUid) {
+        state.activeProfileUid = paramProfileUid;
+        localStorage.setItem(STORAGE_KEY_ACTIVE_UID, paramProfileUid);
+        try {
+          history.replaceState(null, '', window.location.pathname);
+        } catch (_) {}
+      }
+
       try {
         await signInAnonymously(auth);
       } catch (err) {
@@ -1817,22 +1959,32 @@ service cloud.firestore {
         if (!user) return;
         state.user = user;
 
+        if (!state.activeProfileUid) {
+          state.activeProfileUid = user.uid;
+          localStorage.setItem(STORAGE_KEY_ACTIVE_UID, user.uid);
+        }
+
         const existingLocal = loadLocalTrainerProfile();
-        if (!existingLocal?.trainerName) {
+        if (!existingLocal?.trainerName && !paramProfileUid) {
           state.trainerProfile.trainerName = `Trainer_${user.uid.slice(0, 5)}`;
         }
         updateHeaderProfileUI();
         renderMyTrainerProfileShowcase();
 
-        try {
-          await setDoc(doc(db, 'users', user.uid), {
-            uid: user.uid,
-            displayName: state.trainerProfile.trainerName,
-            ...state.trainerProfile,
-            lastActive: Date.now()
-          }, { merge: true });
-        } catch (err) {
-          console.error('Profile sync error:', err);
+        // Only write a new profile doc automatically if this device already owns a saved profile
+        if (existingLocal?.trainerName) {
+          try {
+            const effUid = getEffectiveUid();
+            await setDoc(doc(db, 'users', effUid), {
+              uid: effUid,
+              linkedAuthUids: Array.from(new Set([...(state.usersById[effUid]?.linkedAuthUids || []), user.uid])),
+              displayName: state.trainerProfile.trainerName,
+              ...state.trainerProfile,
+              lastActive: Date.now()
+            }, { merge: true });
+          } catch (err) {
+            console.error('Profile sync error:', err);
+          }
         }
 
         const pill = document.getElementById('live-status-pill');
@@ -1840,16 +1992,13 @@ service cloud.firestore {
         document.getElementById('live-status-dot').className = 'w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse';
         document.getElementById('live-status-text').textContent = 'Live Sync';
 
-        attachRealtimeListeners();
-
-        if (!existingLocal?.trainerName) {
-          openProfileModal(true);
-        }
+        attachRealtimeListeners(!existingLocal?.trainerName && !paramProfileUid);
       });
     }
 
-    function attachRealtimeListeners() {
+    function attachRealtimeListeners(promptFirstTimeUser = false) {
       if (!state.user) return;
+      let initialPromptHandled = false;
 
       // 1. Live Users & Trainer Cards Listener (/users)
       onSnapshot(collection(db, 'users'), (snapshot) => {
@@ -1859,8 +2008,9 @@ service cloud.firestore {
         });
         state.usersById = map;
 
-        // Hydrate own profile from Firestore if saved in another session
-        const remoteSelf = map[state.user.uid];
+        // Hydrate active profile from Firestore (works across devices!)
+        const effUid = getEffectiveUid();
+        const remoteSelf = map[effUid];
         if (remoteSelf && remoteSelf.trainerName) {
           state.trainerProfile = {
             ...state.trainerProfile,
@@ -1869,6 +2019,14 @@ service cloud.firestore {
           localStorage.setItem(STORAGE_KEY_TRAINER, JSON.stringify(state.trainerProfile));
           updateHeaderProfileUI();
           renderMyTrainerProfileShowcase();
+        } else if (promptFirstTimeUser && !initialPromptHandled) {
+          initialPromptHandled = true;
+          const existingList = Object.values(map).filter(u => u && u.trainerName);
+          if (existingList.length > 0) {
+            openClaimProfileModal();
+          } else {
+            openProfileModal(true);
+          }
         }
         renderFriendsDecks();
       }, (err) => {
@@ -1899,8 +2057,8 @@ service cloud.firestore {
         list.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
         state.decks = list;
 
-        const myDecks = list.filter(d => d.ownerId === state.user.uid);
-        const friendDecks = list.filter(d => d.ownerId !== state.user.uid);
+        const myDecks = list.filter(d => canModifyItem(d.ownerId));
+        const friendDecks = list.filter(d => !canModifyItem(d.ownerId));
 
         document.getElementById('badge-my-decks-count').textContent = myDecks.length;
         document.getElementById('badge-friends-decks-count').textContent = friendDecks.length;
@@ -1978,7 +2136,7 @@ service cloud.firestore {
         disableClickZoom = false
       } = options;
 
-      const isMine = state.user && card.ownerId === state.user.uid;
+      const isMine = canModifyItem(card.ownerId);
       const isHolo = card.rarity === 'Rare Holo' || card.rarity === 'Ultra Rare';
       const borderClass = getBorderClassForCard(card);
       const zoomAttr = disableClickZoom ? '' : `data-zoom-card-id="${escapeHtml(card.id)}"`;
@@ -2303,7 +2461,7 @@ service cloud.firestore {
 
     function openEditCardModal(cardId) {
       const card = state.cards.find(c => c.id === cardId);
-      if (!card || card.ownerId !== state.user?.uid) {
+      if (!card || !canModifyItem(card.ownerId)) {
         showToast('Only the card creator can edit this card.', 'error');
         return;
       }
@@ -2425,7 +2583,7 @@ service cloud.firestore {
       try {
         if (editId) {
           const existing = state.cards.find(c => c.id === editId);
-          if (!existing || existing.ownerId !== state.user.uid) {
+          if (!existing || !canModifyItem(existing.ownerId)) {
             showToast('Unauthorized: Only the creator can edit this card.', 'error');
             return;
           }
@@ -2434,7 +2592,7 @@ service cloud.firestore {
         } else {
           await addDoc(collection(db, 'cards'), {
             ...data,
-            ownerId: state.user.uid,
+            ownerId: getEffectiveUid(),
             createdAt: Date.now()
           });
           showToast(`Published "${data.name}" to the live Card Vault!`, 'success');
@@ -2449,7 +2607,7 @@ service cloud.firestore {
     async function deleteCard(cardId) {
       if (!state.user) return;
       const card = state.cards.find(c => c.id === cardId);
-      if (!card || card.ownerId !== state.user.uid) {
+      if (!card || !canModifyItem(card.ownerId)) {
         showToast('Only the creator can delete this card.', 'error');
         return;
       }
@@ -2468,7 +2626,7 @@ service cloud.firestore {
       const container = document.getElementById('my-decks-list');
       if (!container || !state.user) return;
 
-      const myDecks = state.decks.filter(d => d.ownerId === state.user.uid);
+      const myDecks = state.decks.filter(d => canModifyItem(d.ownerId));
       if (myDecks.length === 0) {
         container.innerHTML = `
           <div class="col-span-full bg-[#141c2e] border border-dashed border-slate-700 rounded-2xl p-8 text-center">
@@ -2510,7 +2668,7 @@ service cloud.firestore {
 
     function openEditDeckMetaModal() {
       const deck = state.decks.find(d => d.id === state.activeDeckId);
-      if (!deck || deck.ownerId !== state.user?.uid) return;
+      if (!deck || !canModifyItem(deck.ownerId)) return;
       document.getElementById('deck-meta-modal-title').textContent = 'Deck Settings';
       document.getElementById('deck-meta-mode').value = 'edit';
       document.getElementById('deck-meta-name').value = deck.name || '';
@@ -2531,7 +2689,7 @@ service cloud.firestore {
       try {
         if (mode === 'edit' && state.activeDeckId) {
           const deck = state.decks.find(d => d.id === state.activeDeckId);
-          if (!deck || deck.ownerId !== state.user.uid) return;
+          if (!deck || !canModifyItem(deck.ownerId)) return;
           await updateDoc(doc(db, 'decks', deck.id), {
             name, format, description, updatedAt: Date.now()
           });
@@ -2541,7 +2699,7 @@ service cloud.firestore {
             name,
             format,
             description,
-            ownerId: state.user.uid,
+            ownerId: getEffectiveUid(),
             ownerName: state.trainerProfile.trainerName,
             cards: {},
             updatedAt: Date.now()
@@ -2557,7 +2715,7 @@ service cloud.firestore {
 
     function selectDeckForBuilding(deckId) {
       const deck = state.decks.find(d => d.id === deckId);
-      if (!deck || deck.ownerId !== state.user?.uid) return;
+      if (!deck || !canModifyItem(deck.ownerId)) return;
       state.activeDeckId = deckId;
       renderMyDecks();
       renderDeckBuilder();
@@ -2573,7 +2731,7 @@ service cloud.firestore {
     async function deleteActiveDeck() {
       if (!state.activeDeckId || !state.user) return;
       const deck = state.decks.find(d => d.id === state.activeDeckId);
-      if (!deck || deck.ownerId !== state.user.uid) return;
+      if (!deck || !canModifyItem(deck.ownerId)) return;
       try {
         await deleteDoc(doc(db, 'decks', deck.id));
         showToast(`Deleted "${deck.name}".`, 'info');
@@ -2604,7 +2762,7 @@ service cloud.firestore {
     function renderDeckBuilder() {
       const workspace = document.getElementById('deck-builder-workspace');
       const deck = state.decks.find(d => d.id === state.activeDeckId);
-      if (!deck || deck.ownerId !== state.user?.uid) {
+      if (!deck || !canModifyItem(deck.ownerId)) {
         workspace.classList.add('hidden');
         return;
       }
@@ -2703,7 +2861,7 @@ service cloud.firestore {
     async function updateDeckCardQty(cardId, delta) {
       if (!state.user || !state.activeDeckId) return;
       const deck = state.decks.find(d => d.id === state.activeDeckId);
-      if (!deck || deck.ownerId !== state.user.uid) {
+      if (!deck || !canModifyItem(deck.ownerId)) {
         showToast('Unauthorized: Only the deck owner can edit this deck.', 'error');
         return;
       }
@@ -2735,7 +2893,7 @@ service cloud.firestore {
 
       const q = (document.getElementById('friends-deck-search')?.value || '').toLowerCase().trim();
       const friendDecks = state.decks.filter(d =>
-        d.ownerId !== state.user.uid &&
+        !canModifyItem(d.ownerId) &&
         (!q || (d.name || '').toLowerCase().includes(q) || (d.ownerName || '').toLowerCase().includes(q))
       );
 
@@ -2955,86 +3113,24 @@ service cloud.firestore {
       // Trainer Trading Card Studio Controls
       // Trainer Trading Card Studio Controls (Single Unified Photo Upload)
       document.getElementById('profile-form')?.addEventListener('submit', handleSaveTrainerProfile);
-
-      const trainerDrop = document.getElementById('trainer-drop-zone');
-      const trainerFile = document.getElementById('trainer-image-input');
-      trainerDrop?.addEventListener('click', () => trainerFile?.click());
-      trainerFile?.addEventListener('change', (e) => {
-        const file = e.target.files?.[0];
-        if (file) processTrainerAvatarFile(file);
+      document.getElementById('btn-open-claim-profile')?.addEventListener('click', openClaimProfileModal);
+      document.getElementById('btn-create-fresh-profile')?.addEventListener('click', () => {
+        closeModal('claim-profile-modal');
+        openProfileModal(true);
       });
-      trainerDrop?.addEventListener('dragover', (e) => {
-        e.preventDefault();
-        trainerDrop.classList.add('border-yellow-400', 'bg-slate-900');
+      document.getElementById('btn-copy-profile-link')?.addEventListener('click', () => {
+        const effUid = getEffectiveUid();
+        const syncUrl = `${window.location.origin}${window.location.pathname}?profile=${encodeURIComponent(effUid)}`;
+        copyTextSafe(syncUrl, 'Personal Profile Sync Link copied! Open it on any device to load your profile.');
       });
-      trainerDrop?.addEventListener('dragleave', () => {
-        trainerDrop.classList.remove('border-yellow-400', 'bg-slate-900');
-      });
-      trainerDrop?.addEventListener('drop', (e) => {
-        e.preventDefault();
-        trainerDrop.classList.remove('border-yellow-400', 'bg-slate-900');
-        const file = e.dataTransfer?.files?.[0];
-        if (file) processTrainerAvatarFile(file);
-      });
-
-      // Zoom slider, reset & nudge buttons for 2.5" x 3.5" photo framing
-      document.getElementById('trainer-zoom-slider')?.addEventListener('input', (e) => {
-        if (!state.cropEditor.img) return;
-        state.cropEditor.zoom = Math.max(1, Math.min(3, parseFloat(e.target.value) || 1));
-        syncCropSliderUI();
-        renderCroppedTrainerDataUrl();
-        updateLiveTrainerCardPreview();
-      });
-
-      document.getElementById('btn-reset-trainer-crop')?.addEventListener('click', () => {
-        if (!state.cropEditor.img) return;
-        state.cropEditor.zoom = 1;
-        state.cropEditor.panX = 0;
-        state.cropEditor.panY = 0;
-        syncCropSliderUI();
-        renderCroppedTrainerDataUrl();
-        updateLiveTrainerCardPreview();
-      });
-
-      document.querySelectorAll('.btn-nudge-crop').forEach(btn => {
-        btn.addEventListener('click', () => {
-          if (!state.cropEditor.img) return;
-          state.cropEditor.panX += Number(btn.dataset.nudgeX) || 0;
-          state.cropEditor.panY += Number(btn.dataset.nudgeY) || 0;
-          renderCroppedTrainerDataUrl();
-          updateLiveTrainerCardPreview();
-        });
-      });
-
-      // Interactive pointer drag-to-pan & wheel-to-zoom directly on the Studio preview photo
-      const studioPreviewSlot = document.getElementById('live-trainer-card-preview-slot');
-      studioPreviewSlot?.addEventListener('pointerdown', (e) => {
-        if (!state.cropEditor.img) return;
-        const frame = e.target.closest('.trainer-photo-frame-5-7');
-        if (!frame) return;
-        e.preventDefault();
-        state.cropEditor.isDragging = true;
-        state.cropEditor.dragStartX = e.clientX;
-        state.cropEditor.dragStartY = e.clientY;
-        state.cropEditor.startPanX = state.cropEditor.panX;
-        state.cropEditor.startPanY = state.cropEditor.panY;
-        frame.style.cursor = 'grabbing';
-      });
-
-      window.addEventListener('pointermove', (e) => {
-        if (!state.cropEditor.isDragging || !state.cropEditor.img) return;
-        // Scale screen drag pixels proportionally to 500x700 output canvas (~3.5x preview frame)
-        const scaleFactor = 3.5;
-        state.cropEditor.panX = state.cropEditor.startPanX + (e.clientX - state.cropEditor.dragStartX) * scaleFactor;
-        state.cropEditor.panY = state.cropEditor.startPanY + (e.clientY - state.cropEditor.dragStartY) * scaleFactor;
-        renderCroppedTrainerDataUrl();
-        updateLiveTrainerCardPreview();
-      });
-
-      window.addEventListener('pointerup', () => {
-        if (state.cropEditor.isDragging) {
-          state.cropEditor.isDragging = false;
-          updateLiveTrainerCardPreview();
+      document.getElementById('btn-confirm-claim-pin')?.addEventListener('click', () => {
+        if (!state.pendingClaimUid) return;
+        const target = state.usersById[state.pendingClaimUid];
+        const entered = document.getElementById('claim-pin-verify-input')?.value.trim() || '';
+        if (target && target.profilePin === entered) {
+          applyClaimedProfile(state.pendingClaimUid);
+        } else {
+          showToast('Incorrect PIN. Please try again.', 'error');
         }
       });
 
@@ -3141,6 +3237,23 @@ service cloud.firestore {
         const inspectDeckBtn = e.target.closest('.btn-inspect-friend-deck');
         if (inspectDeckBtn) {
           openFriendDeckInspector(inspectDeckBtn.dataset.inspectDeckId);
+          return;
+        }
+
+        const claimProfileBtn = e.target.closest('.btn-select-claim-profile');
+        if (claimProfileBtn) {
+          const targetUid = claimProfileBtn.dataset.claimUid;
+          const targetUser = state.usersById[targetUid];
+          if (!targetUser) return;
+          if (targetUser.profilePin) {
+            state.pendingClaimUid = targetUid;
+            document.getElementById('claim-pin-target-name').textContent = targetUser.trainerName || 'Trainer';
+            document.getElementById('claim-pin-verify-input').value = '';
+            document.getElementById('claim-pin-box')?.classList.remove('hidden');
+            document.getElementById('claim-pin-verify-input')?.focus();
+          } else {
+            applyClaimedProfile(targetUid);
+          }
         }
       });
     }
