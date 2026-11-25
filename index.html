@@ -2276,6 +2276,11 @@ service cloud.firestore {
 
     function getRaritySymbol(rarity) {
       if (rarity === 'Ultra Rare') return '★★';
+      if (rarity === 'Rare Holo') return '★';
+      if (rarity === 'Uncommon') return '◆';
+      return '●';
+    }
+
     function getBorderClassForCard(card, resolvedHolo = 'none') {
       if (card.borderStyle === 'silver-holo') return 'border-silver-holo';
       if (card.borderStyle === 'gold-ultra') return 'border-gold-ultra';
