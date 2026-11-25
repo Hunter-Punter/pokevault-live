@@ -784,21 +784,36 @@
               </div>
             </div>
 
-            <!-- Ability -->
+            <!-- Move 1 -->
             <div class="bg-[#0b101b] p-3 rounded-xl border border-slate-800 space-y-2">
-              <div class="text-[11px] font-bold text-rose-400 uppercase tracking-wider">Ability (Optional)</div>
-              <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                <input id="field-ability-name" type="text" maxlength="24" placeholder="Ability Name" class="px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
-                <input id="field-ability-desc" type="text" maxlength="110" placeholder="Ability passive effect..." class="sm:col-span-2 px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
-              </div>
-            </div>
-
-            <!-- Primary Attack -->
-            <div class="bg-[#0b101b] p-3 rounded-xl border border-slate-800 space-y-2">
-              <div class="text-[11px] font-bold text-yellow-400 uppercase tracking-wider">Primary Attack</div>
+              <div class="text-[11px] font-bold text-yellow-400 uppercase tracking-wider">Move 1</div>
               <div class="grid grid-cols-12 gap-2">
                 <div class="col-span-3">
                   <select id="field-atk1-cost" class="w-full px-2 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
+                    <option value="0">0 Energy</option>
+                    <option value="1" selected>1 Energy</option>
+                    <option value="2">2 Energy</option>
+                    <option value="3">3 Energy</option>
+                    <option value="4">4 Energy</option>
+                  </select>
+                </div>
+                <div class="col-span-6">
+                  <input id="field-atk1-name" type="text" maxlength="24" value="Quick Strike" placeholder="Move 1 Name" class="w-full px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
+                </div>
+                <div class="col-span-3">
+                  <input id="field-atk1-dmg" type="text" maxlength="6" value="30" placeholder="Power" class="w-full px-2.5 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white text-right font-bold">
+                </div>
+              </div>
+              <input id="field-atk1-desc" type="text" maxlength="110" value="Draw 1 card." placeholder="Move 1 description & effect..." class="w-full px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
+            </div>
+
+            <!-- Move 2 -->
+            <div class="bg-[#0b101b] p-3 rounded-xl border border-slate-800 space-y-2">
+              <div class="text-[11px] font-bold text-sky-400 uppercase tracking-wider">Move 2 (Optional)</div>
+              <div class="grid grid-cols-12 gap-2">
+                <div class="col-span-3">
+                  <select id="field-atk2-cost" class="w-full px-2 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
+                    <option value="0">None</option>
                     <option value="1">1 Energy</option>
                     <option value="2" selected>2 Energy</option>
                     <option value="3">3 Energy</option>
@@ -806,21 +821,21 @@
                   </select>
                 </div>
                 <div class="col-span-6">
-                  <input id="field-atk1-name" type="text" maxlength="24" value="Flare Blitz" placeholder="Attack Name" class="w-full px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
+                  <input id="field-atk2-name" type="text" maxlength="24" value="Flare Blitz" placeholder="Move 2 Name" class="w-full px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
                 </div>
                 <div class="col-span-3">
-                  <input id="field-atk1-dmg" type="text" maxlength="6" value="80+" placeholder="Dmg" class="w-full px-2.5 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white text-right font-bold">
+                  <input id="field-atk2-dmg" type="text" maxlength="6" value="80+" placeholder="Power" class="w-full px-2.5 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white text-right font-bold">
                 </div>
               </div>
-              <input id="field-atk1-desc" type="text" maxlength="110" value="Flip a coin. If heads, this attack does 30 more damage." placeholder="Attack effect description..." class="w-full px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
+              <input id="field-atk2-desc" type="text" maxlength="110" value="Flip a coin. If heads, this move does 30 more damage." placeholder="Move 2 description & effect..." class="w-full px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
             </div>
 
-            <!-- Secondary Attack -->
+            <!-- Move 3 -->
             <div class="bg-[#0b101b] p-3 rounded-xl border border-slate-800 space-y-2">
-              <div class="text-[11px] font-bold text-sky-400 uppercase tracking-wider">Secondary Attack (Optional)</div>
+              <div class="text-[11px] font-bold text-rose-400 uppercase tracking-wider">Move 3 (Optional)</div>
               <div class="grid grid-cols-12 gap-2">
                 <div class="col-span-3">
-                  <select id="field-atk2-cost" class="w-full px-2 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
+                  <select id="field-atk3-cost" class="w-full px-2 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
                     <option value="0" selected>None</option>
                     <option value="1">1 Energy</option>
                     <option value="2">2 Energy</option>
@@ -829,13 +844,13 @@
                   </select>
                 </div>
                 <div class="col-span-6">
-                  <input id="field-atk2-name" type="text" maxlength="24" placeholder="Second Attack Name" class="w-full px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
+                  <input id="field-atk3-name" type="text" maxlength="24" placeholder="Move 3 Name" class="w-full px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
                 </div>
                 <div class="col-span-3">
-                  <input id="field-atk2-dmg" type="text" maxlength="6" placeholder="Dmg" class="w-full px-2.5 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white text-right font-bold">
+                  <input id="field-atk3-dmg" type="text" maxlength="6" placeholder="Power" class="w-full px-2.5 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white text-right font-bold">
                 </div>
               </div>
-              <input id="field-atk2-desc" type="text" maxlength="110" placeholder="Second attack effect..." class="w-full px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
+              <input id="field-atk3-desc" type="text" maxlength="110" placeholder="Move 3 description & effect..." class="w-full px-3 py-1.5 rounded-lg bg-[#141c2e] border border-slate-700 text-xs text-white">
             </div>
 
             <!-- Weakness, Resistance, Retreat & Flavor -->
@@ -2277,19 +2292,36 @@ service cloud.firestore {
       const isDarkText = card.type === 'Dark' || card.type === 'Poison' || card.type === 'Ground/Rock' || card.type === 'Psychic/Ghost' || card.type === 'Darkness' || card.type === 'Dragon';
       const atk1CostCount = Math.max(0, Number(card.atk1Cost) || 0);
       const atk2CostCount = Math.max(0, Number(card.atk2Cost) || 0);
+      const atk3CostCount = Math.max(0, Number(card.atk3Cost) || 0);
       const retreatCount = Math.max(0, Number(card.retreatCost) || 0);
 
       const atk1Pips = Array.from({ length: atk1CostCount }, () =>
-        renderEnergyPip(card.type, 0.85)
+        renderEnergyPip(card.type, 0.8)
       ).join('');
 
       const atk2Pips = Array.from({ length: atk2CostCount }, () =>
-        renderEnergyPip(card.type, 0.85)
+        renderEnergyPip(card.type, 0.8)
+      ).join('');
+
+      const atk3Pips = Array.from({ length: atk3CostCount }, () =>
+        renderEnergyPip(card.type, 0.8)
       ).join('');
 
       const retreatPips = retreatCount > 0
         ? Array.from({ length: retreatCount }, () => renderEnergyPip(card.type, 0.72)).join('')
         : `<span style="font-size:calc(7px * var(--card-font-scale));" class="opacity-60">—</span>`;
+
+      // Support both 3-move cards and legacy cards that previously stored abilityName/abilityDesc
+      const m1Name = card.atk1Name || card.abilityName || '';
+      const m1Dmg = card.atk1Name ? (card.atk1Dmg || '') : (card.abilityName ? 'Ability' : (card.atk1Dmg || ''));
+      const m1Desc = card.atk1Desc || card.abilityDesc || '';
+      const m1Pips = card.atk1Name ? atk1Pips : '';
+
+      const showMove1 = Boolean(m1Name || m1Dmg || m1Desc || atk1CostCount > 0);
+      const showMove2 = Boolean(card.atk2Name || card.atk2Dmg || card.atk2Desc || atk2CostCount > 0);
+      const showMove3 = Boolean(card.atk3Name || card.atk3Dmg || card.atk3Desc || atk3CostCount > 0);
+      const activeMoveCount = (showMove1 ? 1 : 0) + (showMove2 ? 1 : 0) + (showMove3 ? 1 : 0);
+      const artHeightPx = activeMoveCount >= 3 ? 106 : 122;
 
       return `
         <div class="flex flex-col items-center gap-2">
@@ -2327,7 +2359,7 @@ service cloud.firestore {
                 </div>
 
                 <!-- Artwork Frame -->
-                <div style="height:calc(126px * var(--card-font-scale)); border-width:calc(2.5px * var(--card-font-scale));"
+                <div style="height:calc(${artHeightPx}px * var(--card-font-scale)); border-width:calc(2.5px * var(--card-font-scale));"
                      class="w-full rounded-sm border-slate-300/90 bg-slate-950 overflow-hidden shadow-inner relative">
                   ${card.imageUrl
                     ? `<img src="${escapeHtml(card.imageUrl)}" alt="${escapeHtml(card.name)}" class="card-preview-crop-target w-full h-full object-cover">`
@@ -2345,55 +2377,60 @@ service cloud.firestore {
                 </div>
               </div>
 
-              <!-- Ability & Attacks -->
-              <div class="flex-1 flex flex-col justify-center gap-1.5 my-1 overflow-hidden">
-                ${card.abilityName ? `
-                  <div style="padding:calc(2px * var(--card-font-scale)) calc(3px * var(--card-font-scale));"
-                       class="rounded bg-white/35 backdrop-blur-[1px] border border-black/10">
-                    <div class="flex items-center gap-1">
-                      <span style="font-size:calc(6.5px * var(--card-font-scale)); padding:0 calc(4px * var(--card-font-scale));"
-                            class="rounded-sm bg-rose-700 text-white font-black uppercase tracking-wider">Ability</span>
-                      <span style="font-size:calc(8.5px * var(--card-font-scale));"
-                            class="font-extrabold truncate ${isDarkText ? 'text-rose-200' : 'text-rose-900'}">${escapeHtml(card.abilityName)}</span>
-                    </div>
-                    <p style="font-size:calc(7px * var(--card-font-scale)); line-height:1.18;"
-                       class="mt-0.5 line-clamp-2 ${isDarkText ? 'text-slate-100' : 'text-slate-900'}">${escapeHtml(card.abilityDesc || '')}</p>
-                  </div>
-                ` : ''}
-
-                ${card.atk1Name ? `
-                  <div style="padding:calc(2px * var(--card-font-scale)) calc(2px * var(--card-font-scale));">
+              <!-- 3 Customizable Moves Section -->
+              <div class="flex-1 flex flex-col justify-center gap-1 my-0.5 overflow-hidden">
+                ${showMove1 ? `
+                  <div style="padding:calc(1.5px * var(--card-font-scale)) calc(2px * var(--card-font-scale));">
                     <div class="flex items-center justify-between gap-1">
                       <div class="flex items-center gap-1 min-w-0">
-                        <div class="flex items-center gap-0.5 shrink-0">${atk1Pips}</div>
-                        <span style="font-size:calc(9.5px * var(--card-font-scale));"
-                              class="font-extrabold truncate ${isDarkText ? 'text-white' : 'text-slate-950'}">${escapeHtml(card.atk1Name)}</span>
+                        ${m1Pips ? `<div class="flex items-center gap-0.5 shrink-0">${m1Pips}</div>` : ''}
+                        <span style="font-size:calc(9px * var(--card-font-scale));"
+                              class="font-extrabold truncate ${isDarkText ? 'text-white' : 'text-slate-950'}">${escapeHtml(m1Name || 'Move 1')}</span>
                       </div>
-                      <span style="font-size:calc(10.5px * var(--card-font-scale));"
-                            class="font-black shrink-0 ${isDarkText ? 'text-white' : 'text-slate-950'}">${escapeHtml(card.atk1Dmg || '')}</span>
+                      <span style="font-size:calc(10px * var(--card-font-scale));"
+                            class="font-black shrink-0 ${isDarkText ? 'text-white' : 'text-slate-950'}">${escapeHtml(m1Dmg)}</span>
                     </div>
-                    ${card.atk1Desc ? `
-                      <p style="font-size:calc(7px * var(--card-font-scale)); line-height:1.18;"
-                         class="mt-0.5 line-clamp-2 ${isDarkText ? 'text-slate-200' : 'text-slate-900'}">${escapeHtml(card.atk1Desc)}</p>
+                    ${m1Desc ? `
+                      <p style="font-size:calc(6.6px * var(--card-font-scale)); line-height:1.15;"
+                         class="mt-0.5 line-clamp-2 ${isDarkText ? 'text-slate-200' : 'text-slate-900'}">${escapeHtml(m1Desc)}</p>
                     ` : ''}
                   </div>
                 ` : ''}
 
-                ${(card.atk2Name && atk2CostCount > 0) ? `
-                  <div style="padding:calc(2px * var(--card-font-scale)) calc(2px * var(--card-font-scale));"
-                       class="border-t border-black/15 pt-1">
+                ${showMove2 ? `
+                  <div style="padding:calc(1.5px * var(--card-font-scale)) calc(2px * var(--card-font-scale));"
+                       class="border-t border-black/15 pt-0.5">
                     <div class="flex items-center justify-between gap-1">
                       <div class="flex items-center gap-1 min-w-0">
-                        <div class="flex items-center gap-0.5 shrink-0">${atk2Pips}</div>
-                        <span style="font-size:calc(9.5px * var(--card-font-scale));"
-                              class="font-extrabold truncate ${isDarkText ? 'text-white' : 'text-slate-950'}">${escapeHtml(card.atk2Name)}</span>
+                        ${atk2Pips ? `<div class="flex items-center gap-0.5 shrink-0">${atk2Pips}</div>` : ''}
+                        <span style="font-size:calc(9px * var(--card-font-scale));"
+                              class="font-extrabold truncate ${isDarkText ? 'text-white' : 'text-slate-950'}">${escapeHtml(card.atk2Name || 'Move 2')}</span>
                       </div>
-                      <span style="font-size:calc(10.5px * var(--card-font-scale));"
+                      <span style="font-size:calc(10px * var(--card-font-scale));"
                             class="font-black shrink-0 ${isDarkText ? 'text-white' : 'text-slate-950'}">${escapeHtml(card.atk2Dmg || '')}</span>
                     </div>
                     ${card.atk2Desc ? `
-                      <p style="font-size:calc(7px * var(--card-font-scale)); line-height:1.18;"
+                      <p style="font-size:calc(6.6px * var(--card-font-scale)); line-height:1.15;"
                          class="mt-0.5 line-clamp-2 ${isDarkText ? 'text-slate-200' : 'text-slate-900'}">${escapeHtml(card.atk2Desc)}</p>
+                    ` : ''}
+                  </div>
+                ` : ''}
+
+                ${showMove3 ? `
+                  <div style="padding:calc(1.5px * var(--card-font-scale)) calc(2px * var(--card-font-scale));"
+                       class="border-t border-black/15 pt-0.5">
+                    <div class="flex items-center justify-between gap-1">
+                      <div class="flex items-center gap-1 min-w-0">
+                        ${atk3Pips ? `<div class="flex items-center gap-0.5 shrink-0">${atk3Pips}</div>` : ''}
+                        <span style="font-size:calc(9px * var(--card-font-scale));"
+                              class="font-extrabold truncate ${isDarkText ? 'text-white' : 'text-slate-950'}">${escapeHtml(card.atk3Name || 'Move 3')}</span>
+                      </div>
+                      <span style="font-size:calc(10px * var(--card-font-scale));"
+                            class="font-black shrink-0 ${isDarkText ? 'text-white' : 'text-slate-950'}">${escapeHtml(card.atk3Dmg || '')}</span>
+                    </div>
+                    ${card.atk3Desc ? `
+                      <p style="font-size:calc(6.6px * var(--card-font-scale)); line-height:1.15;"
+                         class="mt-0.5 line-clamp-2 ${isDarkText ? 'text-slate-200' : 'text-slate-900'}">${escapeHtml(card.atk3Desc)}</p>
                     ` : ''}
                   </div>
                 ` : ''}
@@ -2499,7 +2536,8 @@ service cloud.firestore {
         const matchesQuery = !q ||
           (card.name || '').toLowerCase().includes(q) ||
           (card.atk1Name || '').toLowerCase().includes(q) ||
-          (card.abilityName || '').toLowerCase().includes(q) ||
+          (card.atk2Name || '').toLowerCase().includes(q) ||
+          (card.atk3Name || '').toLowerCase().includes(q) ||
           (card.creatorName || '').toLowerCase().includes(q);
         const matchesType = typeFilter === 'ALL' || card.type === typeFilter;
         const matchesRarity = rarityFilter === 'ALL' || card.rarity === rarityFilter;
@@ -2602,9 +2640,7 @@ service cloud.firestore {
       document.getElementById('field-rarity').value = card.rarity || 'Rare Holo';
       document.getElementById('field-border').value = card.borderStyle || 'classic-yellow';
       document.getElementById('field-spec').value = card.specLine || '';
-      document.getElementById('field-ability-name').value = card.abilityName || '';
-      document.getElementById('field-ability-desc').value = card.abilityDesc || '';
-      document.getElementById('field-atk1-cost').value = card.atk1Cost ?? 2;
+      document.getElementById('field-atk1-cost').value = card.atk1Cost ?? 1;
       document.getElementById('field-atk1-name').value = card.atk1Name || '';
       document.getElementById('field-atk1-dmg').value = card.atk1Dmg || '';
       document.getElementById('field-atk1-desc').value = card.atk1Desc || '';
@@ -2612,6 +2648,10 @@ service cloud.firestore {
       document.getElementById('field-atk2-name').value = card.atk2Name || '';
       document.getElementById('field-atk2-dmg').value = card.atk2Dmg || '';
       document.getElementById('field-atk2-desc').value = card.atk2Desc || '';
+      document.getElementById('field-atk3-cost').value = card.atk3Cost ?? 0;
+      document.getElementById('field-atk3-name').value = card.atk3Name || '';
+      document.getElementById('field-atk3-dmg').value = card.atk3Dmg || '';
+      document.getElementById('field-atk3-desc').value = card.atk3Desc || '';
       document.getElementById('field-weakness').value = card.weakness || 'Water';
       document.getElementById('field-resistance').value = card.resistance || 'None';
       document.getElementById('field-retreat').value = card.retreatCost ?? 1;
@@ -2716,8 +2756,6 @@ service cloud.firestore {
         rarity: document.getElementById('field-rarity').value,
         borderStyle: document.getElementById('field-border').value,
         specLine: document.getElementById('field-spec').value.trim(),
-        abilityName: document.getElementById('field-ability-name').value.trim(),
-        abilityDesc: document.getElementById('field-ability-desc').value.trim(),
         atk1Cost: parseInt(document.getElementById('field-atk1-cost').value, 10) || 0,
         atk1Name: document.getElementById('field-atk1-name').value.trim(),
         atk1Dmg: document.getElementById('field-atk1-dmg').value.trim(),
@@ -2726,6 +2764,10 @@ service cloud.firestore {
         atk2Name: document.getElementById('field-atk2-name').value.trim(),
         atk2Dmg: document.getElementById('field-atk2-dmg').value.trim(),
         atk2Desc: document.getElementById('field-atk2-desc').value.trim(),
+        atk3Cost: parseInt(document.getElementById('field-atk3-cost').value, 10) || 0,
+        atk3Name: document.getElementById('field-atk3-name').value.trim(),
+        atk3Dmg: document.getElementById('field-atk3-dmg').value.trim(),
+        atk3Desc: document.getElementById('field-atk3-desc').value.trim(),
         weakness: document.getElementById('field-weakness').value,
         resistance: document.getElementById('field-resistance').value,
         retreatCost: parseInt(document.getElementById('field-retreat').value, 10) || 0,
@@ -3351,9 +3393,10 @@ service cloud.firestore {
       // Live Card Preview Input Listeners
       [
         'field-name', 'field-hp', 'field-type', 'field-stage', 'field-rarity',
-        'field-border', 'field-spec', 'field-ability-name', 'field-ability-desc',
+        'field-border', 'field-spec',
         'field-atk1-cost', 'field-atk1-name', 'field-atk1-dmg', 'field-atk1-desc',
         'field-atk2-cost', 'field-atk2-name', 'field-atk2-dmg', 'field-atk2-desc',
+        'field-atk3-cost', 'field-atk3-name', 'field-atk3-dmg', 'field-atk3-desc',
         'field-weakness', 'field-resistance', 'field-retreat', 'field-flavor'
       ].forEach(id => {
         const el = document.getElementById(id);
