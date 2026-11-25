@@ -90,6 +90,7 @@
     /* ===================================================================== */
     /* 7 INTERACTIVE HOLOGRAPHIC CARD FINISHES & 3D TILT GLARE               */
     /* ===================================================================== */
+    .card-3d-tilt,
     .trainer-tilt-card {
       --mx: 50%;
       --my: 50%;
@@ -99,10 +100,13 @@
       will-change: transform;
     }
 
+    .card-3d-tilt:hover,
     .trainer-tilt-card:hover {
       transform: perspective(750px) rotateX(var(--rx)) rotateY(var(--ry)) translateY(-5px) scale(1.03);
+      z-index: 15;
     }
 
+    .zoomed-card-wrapper .card-3d-tilt:hover,
     .zoomed-card-wrapper .trainer-tilt-card:hover {
       transform: perspective(900px) rotateX(var(--rx)) rotateY(var(--ry)) scale(1.01) !important;
     }
@@ -182,6 +186,21 @@
         linear-gradient(135deg, rgba(6, 182, 212, 0.22) 0%, transparent 45%, rgba(236, 72, 153, 0.25) 100%);
       box-shadow: inset 0 0 18px rgba(34, 211, 238, 0.35);
       mix-blend-mode: screen;
+    }
+
+    /* 8. Radiant Crosshatch Starburst (Playable Card Exclusive) */
+    .holo-finish-radiant_burst .holo-layer {
+      background:
+        radial-gradient(circle at var(--mx) var(--my), rgba(255, 255, 255, 0.72) 0%, rgba(250, 204, 21, 0.28) 28%, rgba(56, 189, 248, 0.22) 55%, transparent 80%),
+        repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.14) 0px, rgba(255, 255, 255, 0.14) 1px, transparent 1px, transparent 6px),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.14) 0px, rgba(255, 255, 255, 0.14) 1px, transparent 1px, transparent 6px);
+      mix-blend-mode: overlay;
+    }
+
+    /* 9. Subtle Matte Specular Glare (Non-Holo Cards Still Get Smooth 3D Light Reflection) */
+    .holo-finish-none .holo-layer {
+      background: radial-gradient(circle at var(--mx) var(--my), rgba(255, 255, 255, 0.22) 0%, transparent 58%);
+      mix-blend-mode: soft-light;
     }
 
     .pkmn-card-inner {
@@ -759,12 +778,31 @@
             <div>
               <label class="block text-xs font-bold text-slate-300 mb-1">Rarity & Foil</label>
               <select id="field-rarity" class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-yellow-400">
-                <option value="Common">● Common</option>
-                <option value="Uncommon">◆ Uncommon</option>
+                <option value="Common">● Common (Matte)</option>
+                <option value="Uncommon">◆ Uncommon (Matte)</option>
                 <option value="Rare Holo">★ Rare Holo</option>
                 <option value="Ultra Rare">★★ Ultra Rare</option>
               </select>
             </div>
+          </div>
+
+          <!-- Holographic Foil Finish Selector (Applies to Both Full Card Image & Card Maker) -->
+          <div class="bg-[#0b101b] p-3 rounded-xl border border-yellow-400/30">
+            <label class="block text-xs font-bold text-yellow-400 mb-1">
+              <i class="fa-solid fa-sparkles mr-1"></i>Holographic Foil Effect (Interactive 3D Tilt)
+            </label>
+            <select id="field-holo-finish" class="w-full px-3 py-2 rounded-xl bg-[#141c2e] border border-slate-700 text-xs sm:text-sm text-white font-semibold focus:outline-none focus:border-yellow-400">
+              <option value="auto">Auto (Match Rarity)</option>
+              <option value="none">Matte Non-Holo (Subtle 3D Glare)</option>
+              <option value="cosmos">★ Cosmos Galaxy Holo</option>
+              <option value="prismatic">★★ Prismatic Tera Rainbow</option>
+              <option value="gold_hyper">★★★ Gold Hyper Rare</option>
+              <option value="alt_art">★★ Full-Art Textured Etch</option>
+              <option value="reverse_holo">◆ Reverse Pattern Foil</option>
+              <option value="cracked_ice">★ Cracked Ice Shatter</option>
+              <option value="cyber_neon">★★ Cyberpunk Chrome</option>
+              <option value="radiant_burst">★★★ Radiant Crosshatch Starburst</option>
+            </select>
           </div>
 
           <!-- Extra Fields for Mode 2: Pokémon-Style Card Maker -->
@@ -1470,19 +1508,22 @@ service cloud.firestore {
     };
 
     const HOLO_FINISH_META = {
-      cosmos:       { label: 'Cosmos Galaxy Holo',      stars: '★',   border: 'border-silver-holo' },
-      prismatic:    { label: 'Prismatic Tera Rainbow',  stars: '★★',  border: 'border-rainbow-hyper' },
-      gold_hyper:   { label: 'Gold Hyper Rare',         stars: '★★★', border: 'border-gold-ultra' },
-      alt_art:      { label: 'Full-Art Textured Etch',  stars: '★★',  border: 'border-silver-holo' },
-      reverse_holo: { label: 'Reverse Pattern Foil',    stars: '◆',   border: 'border-classic-yellow' },
-      cracked_ice:  { label: 'Cracked Ice Shatter',     stars: '★',   border: 'border-silver-holo' },
-      cyber_neon:   { label: 'Cyberpunk Chrome',        stars: '★★',  border: 'border-cyber-chrome' }
+      cosmos:        { label: 'Cosmos Galaxy Holo',          stars: '★',   border: 'border-silver-holo' },
+      prismatic:     { label: 'Prismatic Tera Rainbow',      stars: '★★',  border: 'border-rainbow-hyper' },
+      gold_hyper:    { label: 'Gold Hyper Rare',             stars: '★★★', border: 'border-gold-ultra' },
+      alt_art:       { label: 'Full-Art Textured Etch',      stars: '★★',  border: 'border-silver-holo' },
+      reverse_holo:  { label: 'Reverse Pattern Foil',        stars: '◆',   border: 'border-classic-yellow' },
+      cracked_ice:   { label: 'Cracked Ice Shatter',         stars: '★',   border: 'border-silver-holo' },
+      cyber_neon:    { label: 'Cyberpunk Chrome',            stars: '★★',  border: 'border-cyber-chrome' },
+      radiant_burst: { label: 'Radiant Crosshatch Starburst',stars: '★★★', border: 'border-rainbow-hyper' }
     };
 
     function normalizeHoloKey(rawStyle) {
       if (!rawStyle) return 'cosmos';
+      if (rawStyle === 'none') return 'none';
       if (HOLO_FINISH_META[rawStyle]) return rawStyle;
       const lower = String(rawStyle).toLowerCase();
+      if (lower.includes('radiant')) return 'radiant_burst';
       if (lower.includes('gold')) return 'gold_hyper';
       if (lower.includes('prism') || lower.includes('rainbow')) return 'prismatic';
       if (lower.includes('alt') || lower.includes('full')) return 'alt_art';
@@ -1490,6 +1531,15 @@ service cloud.firestore {
       if (lower.includes('ice') || lower.includes('cracked')) return 'cracked_ice';
       if (lower.includes('cyber') || lower.includes('neon')) return 'cyber_neon';
       return 'cosmos';
+    }
+
+    function resolveCardHoloFinish(card) {
+      if (card.holoFinish && card.holoFinish !== 'auto') {
+        return normalizeHoloKey(card.holoFinish);
+      }
+      if (card.rarity === 'Ultra Rare') return 'prismatic';
+      if (card.rarity === 'Rare Holo') return 'cosmos';
+      return 'none';
     }
 
     function escapeHtml(str) {
@@ -2226,14 +2276,12 @@ service cloud.firestore {
 
     function getRaritySymbol(rarity) {
       if (rarity === 'Ultra Rare') return '★★';
-      if (rarity === 'Rare Holo') return '★';
-      if (rarity === 'Uncommon') return '◆';
-      return '●';
-    }
-
-    function getBorderClassForCard(card) {
+    function getBorderClassForCard(card, resolvedHolo = 'none') {
       if (card.borderStyle === 'silver-holo') return 'border-silver-holo';
       if (card.borderStyle === 'gold-ultra') return 'border-gold-ultra';
+      if (resolvedHolo !== 'none' && HOLO_FINISH_META[resolvedHolo]?.border) {
+        return HOLO_FINISH_META[resolvedHolo].border;
+      }
       if (!card.borderStyle) {
         if (card.rarity === 'Ultra Rare') return 'border-gold-ultra';
         if (card.rarity === 'Rare Holo') return 'border-silver-holo';
@@ -2249,15 +2297,17 @@ service cloud.firestore {
       } = options;
 
       const isMine = canModifyItem(card.ownerId);
-      const isHolo = card.rarity === 'Rare Holo' || card.rarity === 'Ultra Rare';
-      const borderClass = getBorderClassForCard(card);
+      const resolvedHolo = resolveCardHoloFinish(card);
+      const isHolo = resolvedHolo !== 'none';
+      const borderClass = getBorderClassForCard(card, resolvedHolo);
       const zoomAttr = disableClickZoom ? '' : `data-zoom-card-id="${escapeHtml(card.id)}"`;
 
       // Mode 1: Full Custom Card Image Upload
       if (card.uploadMode === 'full-image' && card.imageUrl) {
         return `
           <div class="flex flex-col items-center gap-2">
-            <div ${zoomAttr} class="pkmn-card-outer ${borderClass} ${isHolo ? 'holo-shimmer' : ''} ${disableClickZoom ? '' : 'card-zoom-trigger cursor-pointer'}">
+            <div ${zoomAttr} class="pkmn-card-outer card-3d-tilt ${borderClass} holo-finish-${escapeHtml(resolvedHolo)} ${isHolo ? 'holo-shimmer' : ''} ${disableClickZoom ? '' : 'card-zoom-trigger cursor-pointer'}">
+              <div class="holo-layer"></div>
               <div class="pkmn-card-inner bg-slate-950 !p-0">
                 <img src="${escapeHtml(card.imageUrl)}" alt="${escapeHtml(card.name)}" class="full-art-card-img">
                 ${quantityBadge !== null ? `
@@ -2325,7 +2375,8 @@ service cloud.firestore {
 
       return `
         <div class="flex flex-col items-center gap-2">
-          <div ${zoomAttr} class="pkmn-card-outer ${borderClass} ${isHolo ? 'holo-shimmer' : ''} ${disableClickZoom ? '' : 'card-zoom-trigger cursor-pointer'}">
+          <div ${zoomAttr} class="pkmn-card-outer card-3d-tilt ${borderClass} holo-finish-${escapeHtml(resolvedHolo)} ${isHolo ? 'holo-shimmer' : ''} ${disableClickZoom ? '' : 'card-zoom-trigger cursor-pointer'}">
+            <div class="holo-layer"></div>
             <div class="pkmn-card-inner type-theme-${escapeHtml(card.type || 'Fire')}">
               ${quantityBadge !== null ? `
                 <span style="font-size:calc(11px * var(--card-font-scale)); padding:calc(2px * var(--card-font-scale)) calc(7px * var(--card-font-scale));"
@@ -2638,6 +2689,7 @@ service cloud.firestore {
       document.getElementById('field-type').value = ENERGY_META[card.type] ? card.type : 'Fire';
       document.getElementById('field-stage').value = card.stage || 'BASIC';
       document.getElementById('field-rarity').value = card.rarity || 'Rare Holo';
+      document.getElementById('field-holo-finish').value = card.holoFinish || 'auto';
       document.getElementById('field-border').value = card.borderStyle || 'classic-yellow';
       document.getElementById('field-spec').value = card.specLine || '';
       document.getElementById('field-atk1-cost').value = card.atk1Cost ?? 1;
@@ -2754,6 +2806,7 @@ service cloud.firestore {
         type: document.getElementById('field-type').value,
         stage: document.getElementById('field-stage').value,
         rarity: document.getElementById('field-rarity').value,
+        holoFinish: document.getElementById('field-holo-finish').value,
         borderStyle: document.getElementById('field-border').value,
         specLine: document.getElementById('field-spec').value.trim(),
         atk1Cost: parseInt(document.getElementById('field-atk1-cost').value, 10) || 0,
@@ -3393,7 +3446,7 @@ service cloud.firestore {
       // Live Card Preview Input Listeners
       [
         'field-name', 'field-hp', 'field-type', 'field-stage', 'field-rarity',
-        'field-border', 'field-spec',
+        'field-holo-finish', 'field-border', 'field-spec',
         'field-atk1-cost', 'field-atk1-name', 'field-atk1-dmg', 'field-atk1-desc',
         'field-atk2-cost', 'field-atk2-name', 'field-atk2-dmg', 'field-atk2-desc',
         'field-atk3-cost', 'field-atk3-name', 'field-atk3-dmg', 'field-atk3-desc',
@@ -3558,9 +3611,9 @@ service cloud.firestore {
         el?.addEventListener('change', updateLiveTrainerCardPreview);
       });
 
-      // Interactive 3D Pointer-Tracking Tilt & Specular Holo Glare on Trainer Profile Cards
+      // Interactive 3D Pointer-Tracking Tilt & Specular Holo Glare on All Cards & Trainer Profile Cards
       document.addEventListener('pointermove', (e) => {
-        const card = e.target.closest('.trainer-tilt-card');
+        const card = e.target.closest('.card-3d-tilt, .trainer-tilt-card');
         if (!card) return;
         const rect = card.getBoundingClientRect();
         const px = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
@@ -3574,7 +3627,7 @@ service cloud.firestore {
       });
 
       document.addEventListener('pointerout', (e) => {
-        const card = e.target.closest('.trainer-tilt-card');
+        const card = e.target.closest('.card-3d-tilt, .trainer-tilt-card');
         if (card && !card.contains(e.relatedTarget)) {
           card.style.setProperty('--mx', '50%');
           card.style.setProperty('--my', '50%');
