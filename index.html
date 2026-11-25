@@ -198,38 +198,34 @@
       box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.25);
     }
 
-    /* Authentic Pokémon TCG Energy Type Card Backgrounds */
+    /* Custom Pokémon TCG Energy Type Card Backgrounds */
+    .type-theme-Ice\/Crystal {
+      background: radial-gradient(circle at 80% 15%, rgba(224, 242, 254, 0.85), transparent 50%), linear-gradient(165deg, #67e8f9 0%, #06b6d4 52%, #155e75 100%);
+    }
+    .type-theme-Ground\/Rock {
+      background: radial-gradient(circle at 80% 15%, rgba(254, 243, 199, 0.72), transparent 50%), linear-gradient(165deg, #d97706 0%, #92400e 55%, #451a03 100%);
+      color: #fefce8;
+    }
+    .type-theme-Poison {
+      background: radial-gradient(circle at 80% 15%, rgba(233, 213, 255, 0.7), transparent 50%), linear-gradient(165deg, #a855f7 0%, #6b21a8 55%, #3b0764 100%);
+      color: #faf5ff;
+    }
     .type-theme-Fire {
       background: radial-gradient(circle at 80% 15%, rgba(254, 215, 170, 0.7), transparent 50%), linear-gradient(165deg, #fb923c 0%, #ea580c 52%, #9a3412 100%);
     }
-    .type-theme-Water {
-      background: radial-gradient(circle at 80% 15%, rgba(186, 230, 253, 0.72), transparent 50%), linear-gradient(165deg, #38bdf8 0%, #0284c7 52%, #075985 100%);
+    .type-theme-Electric {
+      background: radial-gradient(circle at 80% 15%, rgba(254, 249, 195, 0.85), transparent 50%), linear-gradient(165deg, #fde047 0%, #eab308 55%, #a16207 100%);
     }
-    .type-theme-Grass {
-      background: radial-gradient(circle at 80% 15%, rgba(187, 247, 208, 0.72), transparent 50%), linear-gradient(165deg, #4ade80 0%, #16a34a 52%, #14532d 100%);
-    }
-    .type-theme-Lightning {
-      background: radial-gradient(circle at 80% 15%, rgba(254, 249, 195, 0.82), transparent 50%), linear-gradient(165deg, #fde047 0%, #eab308 55%, #a16207 100%);
-    }
-    .type-theme-Psychic {
-      background: radial-gradient(circle at 80% 15%, rgba(243, 232, 255, 0.72), transparent 50%), linear-gradient(165deg, #c084fc 0%, #9333ea 52%, #581c87 100%);
-    }
-    .type-theme-Fighting {
-      background: radial-gradient(circle at 80% 15%, rgba(254, 215, 170, 0.65), transparent 50%), linear-gradient(165deg, #d97706 0%, #b45309 55%, #78350f 100%);
-    }
-    .type-theme-Darkness {
-      background: radial-gradient(circle at 80% 15%, rgba(148, 163, 184, 0.35), transparent 50%), linear-gradient(165deg, #475569 0%, #1e293b 55%, #0f172a 100%);
+    .type-theme-Dark {
+      background: radial-gradient(circle at 80% 15%, rgba(148, 163, 184, 0.35), transparent 50%), linear-gradient(165deg, #475569 0%, #1e293b 55%, #090d16 100%);
       color: #f8fafc;
     }
-    .type-theme-Metal {
-      background: radial-gradient(circle at 80% 15%, rgba(255, 255, 255, 0.75), transparent 50%), linear-gradient(165deg, #cbd5e1 0%, #94a3b8 52%, #475569 100%);
+    .type-theme-Water {
+      background: radial-gradient(circle at 80% 15%, rgba(186, 230, 253, 0.75), transparent 50%), linear-gradient(165deg, #38bdf8 0%, #0284c7 52%, #075985 100%);
     }
-    .type-theme-Dragon {
-      background: radial-gradient(circle at 80% 15%, rgba(254, 240, 138, 0.65), transparent 50%), linear-gradient(165deg, #ca8a04 0%, #854d0e 52%, #422006 100%);
-      color: #fefce8;
-    }
-    .type-theme-Colorless {
-      background: radial-gradient(circle at 80% 15%, rgba(255, 255, 255, 0.85), transparent 50%), linear-gradient(165deg, #f8fafc 0%, #e2e8f0 52%, #94a3b8 100%);
+    .type-theme-Psychic\/Ghost {
+      background: radial-gradient(circle at 80% 15%, rgba(252, 231, 243, 0.75), transparent 50%), linear-gradient(165deg, #e879f9 0%, #a21caf 52%, #4a044e 100%);
+      color: #fdf4ff;
     }
 
     /* Trainer Supporter Card Accent Palettes */
@@ -425,16 +421,14 @@
           </div>
           <select id="vault-filter-type" class="px-3 py-2.5 rounded-xl bg-[#0b101b] border border-slate-700/80 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-yellow-400">
             <option value="ALL">All Energy Types</option>
+            <option value="Ice/Crystal">Ice/Crystal</option>
+            <option value="Ground/Rock">Ground/Rock</option>
+            <option value="Poison">Poison</option>
             <option value="Fire">Fire</option>
+            <option value="Electric">Electric</option>
+            <option value="Dark">Dark</option>
             <option value="Water">Water</option>
-            <option value="Grass">Grass</option>
-            <option value="Lightning">Lightning</option>
-            <option value="Psychic">Psychic</option>
-            <option value="Fighting">Fighting</option>
-            <option value="Darkness">Darkness</option>
-            <option value="Metal">Metal</option>
-            <option value="Dragon">Dragon</option>
-            <option value="Colorless">Colorless</option>
+            <option value="Psychic/Ghost">Psychic/Ghost</option>
           </select>
           <select id="vault-filter-rarity" class="px-3 py-2.5 rounded-xl bg-[#0b101b] border border-slate-700/80 text-xs sm:text-sm text-slate-200 focus:outline-none focus:border-yellow-400">
             <option value="ALL">All Rarities</option>
@@ -676,15 +670,50 @@
           <!-- Drag & Drop / File Upload Zone -->
           <div id="drop-zone" class="cursor-pointer rounded-2xl border-2 border-dashed border-yellow-400/50 hover:border-yellow-400 bg-[#0b101b]/90 hover:bg-[#0b101b] p-4 text-center transition">
             <input id="custom-image-input" type="file" accept="image/*" class="hidden">
-            <div class="flex flex-col items-center gap-1.5">
-              <div class="w-10 h-10 rounded-full bg-yellow-400/15 text-yellow-400 flex items-center justify-center text-base">
-                <i class="fa-solid fa-cloud-arrow-up"></i>
+            <div class="flex items-center justify-between gap-3">
+              <div class="flex items-center gap-3 min-w-0">
+                <div class="w-10 h-10 rounded-full bg-yellow-400/15 text-yellow-400 flex items-center justify-center text-base shrink-0">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                </div>
+                <div class="text-left min-w-0">
+                  <div id="upload-zone-title" class="text-xs sm:text-sm font-bold text-white">
+                    Upload Custom Card Image
+                  </div>
+                  <div class="text-[11px] text-slate-400">
+                    PNG, JPG, WEBP • Drag & zoom directly on the preview to crop & frame!
+                  </div>
+                </div>
               </div>
-              <div id="upload-zone-title" class="text-xs sm:text-sm font-bold text-white">
-                Click or Drag & Drop Your Custom Card Image
-              </div>
-              <div class="text-[11px] text-slate-400">
-                Supports PNG, JPG, WEBP • Auto-compressed & fitted to 2.5" × 3.5" (5:7) ratio
+              <button type="button" id="btn-trigger-card-upload" class="px-3.5 py-2 rounded-xl bg-yellow-400 hover:bg-yellow-300 text-slate-950 font-extrabold text-xs shrink-0 transition">
+                Choose Photo
+              </button>
+            </div>
+          </div>
+
+          <!-- Interactive Card Photo Zoom & Pan Framing Controls -->
+          <div id="card-crop-controls" class="hidden bg-[#0b101b] border border-yellow-400/35 rounded-2xl p-3.5 space-y-2.5">
+            <div class="flex items-center justify-between text-[11px]">
+              <span class="font-extrabold text-yellow-400 flex items-center gap-1.5">
+                <i class="fa-solid fa-crop-simple"></i>
+                <span>Crop & Frame Uploaded Photo (Drag Preview or Slide)</span>
+              </span>
+              <button type="button" id="btn-reset-card-crop" class="text-slate-400 hover:text-yellow-400 font-bold underline">
+                Reset Fit
+              </button>
+            </div>
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-magnifying-glass-minus text-slate-400 text-xs"></i>
+              <input id="card-zoom-slider" type="range" min="1" max="3" step="0.02" value="1" class="flex-1 accent-yellow-400 cursor-pointer">
+              <i class="fa-solid fa-magnifying-glass-plus text-yellow-400 text-xs"></i>
+              <span id="card-zoom-readout" class="font-mono text-[11px] text-slate-300 w-12 text-right">1.00×</span>
+            </div>
+            <div class="flex items-center justify-between gap-2 text-[11px] text-slate-400">
+              <span>Tip: Drag directly on the card preview on the right to reposition!</span>
+              <div class="flex items-center gap-1 shrink-0">
+                <button type="button" data-card-nudge-x="0" data-card-nudge-y="-14" class="btn-nudge-card-crop w-6 h-6 rounded bg-slate-800 hover:bg-slate-700 text-slate-200" title="Move Up"><i class="fa-solid fa-arrow-up text-[10px]"></i></button>
+                <button type="button" data-card-nudge-x="0" data-card-nudge-y="14" class="btn-nudge-card-crop w-6 h-6 rounded bg-slate-800 hover:bg-slate-700 text-slate-200" title="Move Down"><i class="fa-solid fa-arrow-down text-[10px]"></i></button>
+                <button type="button" data-card-nudge-x="-14" data-card-nudge-y="0" class="btn-nudge-card-crop w-6 h-6 rounded bg-slate-800 hover:bg-slate-700 text-slate-200" title="Move Left"><i class="fa-solid fa-arrow-left text-[10px]"></i></button>
+                <button type="button" data-card-nudge-x="14" data-card-nudge-y="0" class="btn-nudge-card-crop w-6 h-6 rounded bg-slate-800 hover:bg-slate-700 text-slate-200" title="Move Right"><i class="fa-solid fa-arrow-right text-[10px]"></i></button>
               </div>
             </div>
           </div>
@@ -705,16 +734,14 @@
             <div>
               <label class="block text-xs font-bold text-slate-300 mb-1">Energy Type</label>
               <select id="field-type" class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs sm:text-sm text-white focus:outline-none focus:border-yellow-400">
-                <option value="Fire">Fire</option>
+                <option value="Ice/Crystal">Ice/Crystal</option>
+                <option value="Ground/Rock">Ground/Rock</option>
+                <option value="Poison">Poison</option>
+                <option value="Fire" selected>Fire</option>
+                <option value="Electric">Electric</option>
+                <option value="Dark">Dark</option>
                 <option value="Water">Water</option>
-                <option value="Grass">Grass</option>
-                <option value="Lightning">Lightning</option>
-                <option value="Psychic">Psychic</option>
-                <option value="Fighting">Fighting</option>
-                <option value="Darkness">Darkness</option>
-                <option value="Metal">Metal</option>
-                <option value="Dragon">Dragon</option>
-                <option value="Colorless">Colorless</option>
+                <option value="Psychic/Ghost">Psychic/Ghost</option>
               </select>
             </div>
             <div>
@@ -816,14 +843,14 @@
               <div>
                 <label class="block text-[11px] font-bold text-slate-400 mb-1">Weakness (×2)</label>
                 <select id="field-weakness" class="w-full px-2.5 py-1.5 rounded-lg bg-[#0b101b] border border-slate-700 text-xs text-white">
-                  <option value="Water">Water ×2</option>
+                  <option value="Ice/Crystal">Ice/Crystal ×2</option>
+                  <option value="Ground/Rock">Ground/Rock ×2</option>
+                  <option value="Poison">Poison ×2</option>
                   <option value="Fire">Fire ×2</option>
-                  <option value="Grass">Grass ×2</option>
-                  <option value="Lightning">Lightning ×2</option>
-                  <option value="Psychic">Psychic ×2</option>
-                  <option value="Fighting">Fighting ×2</option>
-                  <option value="Darkness">Darkness ×2</option>
-                  <option value="Metal">Metal ×2</option>
+                  <option value="Electric">Electric ×2</option>
+                  <option value="Dark">Dark ×2</option>
+                  <option value="Water" selected>Water ×2</option>
+                  <option value="Psychic/Ghost">Psychic/Ghost ×2</option>
                   <option value="None">None</option>
                 </select>
               </div>
@@ -831,11 +858,14 @@
                 <label class="block text-[11px] font-bold text-slate-400 mb-1">Resistance (-30)</label>
                 <select id="field-resistance" class="w-full px-2.5 py-1.5 rounded-lg bg-[#0b101b] border border-slate-700 text-xs text-white">
                   <option value="None" selected>None</option>
-                  <option value="Fighting">Fighting -30</option>
-                  <option value="Grass">Grass -30</option>
-                  <option value="Metal">Metal -30</option>
-                  <option value="Psychic">Psychic -30</option>
-                  <option value="Darkness">Darkness -30</option>
+                  <option value="Ice/Crystal">Ice/Crystal -30</option>
+                  <option value="Ground/Rock">Ground/Rock -30</option>
+                  <option value="Poison">Poison -30</option>
+                  <option value="Fire">Fire -30</option>
+                  <option value="Electric">Electric -30</option>
+                  <option value="Dark">Dark -30</option>
+                  <option value="Water">Water -30</option>
+                  <option value="Psychic/Ghost">Psychic/Ghost -30</option>
                 </select>
               </div>
               <div>
@@ -1098,16 +1128,14 @@
               <div>
                 <label class="block text-[11px] font-bold text-slate-300 mb-1">Partner Energy Emblem</label>
                 <select id="trainer-fav-type-select" class="w-full px-3 py-2 rounded-xl bg-[#0b101b] border border-slate-700 text-xs text-white focus:outline-none focus:border-yellow-400">
-                  <option value="Fire">Fire</option>
+                  <option value="Ice/Crystal">Ice/Crystal</option>
+                  <option value="Ground/Rock">Ground/Rock</option>
+                  <option value="Poison">Poison</option>
+                  <option value="Fire" selected>Fire</option>
+                  <option value="Electric">Electric</option>
+                  <option value="Dark">Dark</option>
                   <option value="Water">Water</option>
-                  <option value="Grass">Grass</option>
-                  <option value="Lightning">Lightning</option>
-                  <option value="Psychic">Psychic</option>
-                  <option value="Fighting">Fighting</option>
-                  <option value="Darkness">Darkness</option>
-                  <option value="Metal">Metal</option>
-                  <option value="Dragon">Dragon</option>
-                  <option value="Colorless">Colorless</option>
+                  <option value="Psychic/Ghost">Psychic/Ghost</option>
                 </select>
               </div>
               <div>
@@ -1370,6 +1398,17 @@ service cloud.firestore {
       inspectedFriendDeckId: null,
       uploadMode: 'full-image',
       currentImageDataUrl: '',
+      cardCropEditor: {
+        img: null,
+        zoom: 1,
+        panX: 0,
+        panY: 0,
+        isDragging: false,
+        dragStartX: 0,
+        dragStartY: 0,
+        startPanX: 0,
+        startPanY: 0
+      },
       draftTrainerAvatarDataUrl: savedTrainer?.avatarDataUrl || '',
       cropEditor: {
         img: null,
@@ -1396,16 +1435,23 @@ service cloud.firestore {
     }
 
     const ENERGY_META = {
-      Fire:      { bg: '#ef4444', icon: 'fa-fire',          text: '#fff' },
-      Water:     { bg: '#0ea5e9', icon: 'fa-droplet',       text: '#fff' },
-      Grass:     { bg: '#22c55e', icon: 'fa-leaf',          text: '#fff' },
-      Lightning: { bg: '#eab308', icon: 'fa-bolt',          text: '#111' },
-      Psychic:   { bg: '#a855f7', icon: 'fa-eye',           text: '#fff' },
-      Fighting:  { bg: '#c2410c', icon: 'fa-hand-fist',     text: '#fff' },
-      Darkness:  { bg: '#1e293b', icon: 'fa-moon',          text: '#fff' },
-      Metal:     { bg: '#64748b', icon: 'fa-shield-halved', text: '#fff' },
-      Dragon:    { bg: '#b45309', icon: 'fa-dragon',        text: '#fff' },
-      Colorless: { bg: '#e2e8f0', icon: 'fa-star-of-life',  text: '#111' }
+      'Ice/Crystal':   { bg: '#06b6d4', icon: 'fa-snowflake',     text: '#fff' },
+      'Ground/Rock':   { bg: '#b45309', icon: 'fa-mountain',      text: '#fff' },
+      'Poison':        { bg: '#7e22ce', icon: 'fa-skull-crossbones', text: '#fff' },
+      'Fire':          { bg: '#ef4444', icon: 'fa-fire',          text: '#fff' },
+      'Electric':      { bg: '#eab308', icon: 'fa-bolt',          text: '#111' },
+      'Dark':          { bg: '#1e293b', icon: 'fa-moon',          text: '#fff' },
+      'Water':         { bg: '#0ea5e9', icon: 'fa-droplet',       text: '#fff' },
+      'Psychic/Ghost': { bg: '#c026d3', icon: 'fa-ghost',         text: '#fff' },
+      // Legacy fallback mappings
+      'Lightning':     { bg: '#eab308', icon: 'fa-bolt',          text: '#111' },
+      'Darkness':      { bg: '#1e293b', icon: 'fa-moon',          text: '#fff' },
+      'Psychic':       { bg: '#c026d3', icon: 'fa-ghost',         text: '#fff' },
+      'Fighting':      { bg: '#b45309', icon: 'fa-mountain',      text: '#fff' },
+      'Grass':         { bg: '#7e22ce', icon: 'fa-skull-crossbones', text: '#fff' },
+      'Metal':         { bg: '#06b6d4', icon: 'fa-snowflake',     text: '#fff' },
+      'Dragon':        { bg: '#b45309', icon: 'fa-mountain',      text: '#fff' },
+      'Colorless':     { bg: '#e2e8f0', icon: 'fa-star-of-life',  text: '#111' }
     };
 
     const HOLO_FINISH_META = {
@@ -2154,7 +2200,7 @@ service cloud.firestore {
     // TRUE-TO-SIZE 2.5" x 3.5" POKÉMON TCG CARD RENDERER
     // -----------------------------------------------------------------------
     function renderEnergyPip(type, sizeEm = 1) {
-      const meta = ENERGY_META[type] || ENERGY_META.Colorless;
+      const meta = ENERGY_META[type] || ENERGY_META.Fire;
       return `
         <span style="background:${meta.bg}; color:${meta.text}; width:calc(14px * var(--card-font-scale) * ${sizeEm}); height:calc(14px * var(--card-font-scale) * ${sizeEm}); font-size:calc(8px * var(--card-font-scale) * ${sizeEm});"
               class="inline-flex items-center justify-center rounded-full shadow-sm border border-black/30 shrink-0" title="${escapeHtml(type)}">
@@ -2228,21 +2274,21 @@ service cloud.firestore {
       }
 
       // Mode 2: Structured Pokémon TCG Card Layout
-      const isDarkText = card.type === 'Darkness' || card.type === 'Dragon';
+      const isDarkText = card.type === 'Dark' || card.type === 'Poison' || card.type === 'Ground/Rock' || card.type === 'Psychic/Ghost' || card.type === 'Darkness' || card.type === 'Dragon';
       const atk1CostCount = Math.max(0, Number(card.atk1Cost) || 0);
       const atk2CostCount = Math.max(0, Number(card.atk2Cost) || 0);
       const retreatCount = Math.max(0, Number(card.retreatCost) || 0);
 
-      const atk1Pips = Array.from({ length: atk1CostCount }, (_, i) =>
-        renderEnergyPip(i === 0 ? card.type : 'Colorless', 0.85)
+      const atk1Pips = Array.from({ length: atk1CostCount }, () =>
+        renderEnergyPip(card.type, 0.85)
       ).join('');
 
-      const atk2Pips = Array.from({ length: atk2CostCount }, (_, i) =>
-        renderEnergyPip(i < 2 ? card.type : 'Colorless', 0.85)
+      const atk2Pips = Array.from({ length: atk2CostCount }, () =>
+        renderEnergyPip(card.type, 0.85)
       ).join('');
 
       const retreatPips = retreatCount > 0
-        ? Array.from({ length: retreatCount }, () => renderEnergyPip('Colorless', 0.72)).join('')
+        ? Array.from({ length: retreatCount }, () => renderEnergyPip(card.type, 0.72)).join('')
         : `<span style="font-size:calc(7px * var(--card-font-scale));" class="opacity-60">—</span>`;
 
       return `
@@ -2284,7 +2330,7 @@ service cloud.firestore {
                 <div style="height:calc(126px * var(--card-font-scale)); border-width:calc(2.5px * var(--card-font-scale));"
                      class="w-full rounded-sm border-slate-300/90 bg-slate-950 overflow-hidden shadow-inner relative">
                   ${card.imageUrl
-                    ? `<img src="${escapeHtml(card.imageUrl)}" alt="${escapeHtml(card.name)}" class="w-full h-full object-cover">`
+                    ? `<img src="${escapeHtml(card.imageUrl)}" alt="${escapeHtml(card.name)}" class="card-preview-crop-target w-full h-full object-cover">`
                     : `<div class="w-full h-full flex flex-col items-center justify-center text-slate-500 bg-slate-900">
                          <i style="font-size:calc(18px * var(--card-font-scale));" class="fa-regular fa-image mb-1"></i>
                          <span style="font-size:calc(8px * var(--card-font-scale));">Upload Artwork</span>
@@ -2497,6 +2543,9 @@ service cloud.firestore {
         extraFields.classList.remove('hidden');
         zoneTitle.textContent = 'Click or Drag & Drop Artwork for Your Custom Card';
       }
+      if (state.cardCropEditor.img) {
+        renderCroppedCardDataUrl();
+      }
       updateLiveCardPreview();
     }
 
@@ -2506,6 +2555,11 @@ service cloud.firestore {
       document.getElementById('edit-card-id').value = '';
       document.getElementById('custom-card-form').reset();
       state.currentImageDataUrl = '';
+      state.cardCropEditor = {
+        img: null, zoom: 1, panX: 0, panY: 0,
+        isDragging: false, dragStartX: 0, dragStartY: 0, startPanX: 0, startPanY: 0
+      };
+      document.getElementById('card-crop-controls')?.classList.add('hidden');
       setUploadMode(mode);
       openModal('card-upload-modal');
     }
@@ -2522,9 +2576,28 @@ service cloud.firestore {
       document.getElementById('edit-card-id').value = card.id;
 
       state.currentImageDataUrl = card.imageUrl || '';
+      state.cardCropEditor = {
+        img: null, zoom: 1, panX: 0, panY: 0,
+        isDragging: false, dragStartX: 0, dragStartY: 0, startPanX: 0, startPanY: 0
+      };
+
+      const cropControls = document.getElementById('card-crop-controls');
+      if (card.imageUrl) {
+        const existingImg = new Image();
+        existingImg.onload = () => {
+          state.cardCropEditor.img = existingImg;
+          cropControls?.classList.remove('hidden');
+          syncCardCropSliderUI();
+          updateLiveCardPreview();
+        };
+        existingImg.src = card.imageUrl;
+      } else {
+        cropControls?.classList.add('hidden');
+      }
+
       document.getElementById('field-name').value = card.name || '';
       document.getElementById('field-hp').value = card.hp || 120;
-      document.getElementById('field-type').value = card.type || 'Fire';
+      document.getElementById('field-type').value = ENERGY_META[card.type] ? card.type : 'Fire';
       document.getElementById('field-stage').value = card.stage || 'BASIC';
       document.getElementById('field-rarity').value = card.rarity || 'Rare Holo';
       document.getElementById('field-border').value = card.borderStyle || 'classic-yellow';
@@ -2548,6 +2621,58 @@ service cloud.firestore {
       openModal('card-upload-modal');
     }
 
+    function syncCardCropSliderUI() {
+      const slider = document.getElementById('card-zoom-slider');
+      const readout = document.getElementById('card-zoom-readout');
+      if (slider) slider.value = state.cardCropEditor.zoom.toFixed(2);
+      if (readout) readout.textContent = `${state.cardCropEditor.zoom.toFixed(2)}×`;
+    }
+
+    function getCardCropTargetDimensions() {
+      // Full card mode = 5:7 TCG card ratio (500x700); Card Maker artwork window = 208x126 ratio (624x378)
+      return state.uploadMode === 'full-image'
+        ? { outW: 500, outH: 700 }
+        : { outW: 624, outH: 378 };
+    }
+
+    function clampCardCropPan() {
+      const ce = state.cardCropEditor;
+      if (!ce.img) return;
+      const { outW, outH } = getCardCropTargetDimensions();
+      const baseScale = Math.max(outW / ce.img.width, outH / ce.img.height);
+      const drawW = ce.img.width * baseScale * ce.zoom;
+      const drawH = ce.img.height * baseScale * ce.zoom;
+      const maxPanX = Math.max(0, (drawW - outW) / 2);
+      const maxPanY = Math.max(0, (drawH - outH) / 2);
+      ce.panX = Math.max(-maxPanX, Math.min(maxPanX, ce.panX));
+      ce.panY = Math.max(-maxPanY, Math.min(maxPanY, ce.panY));
+    }
+
+    function renderCroppedCardDataUrl() {
+      const ce = state.cardCropEditor;
+      if (!ce.img) return state.currentImageDataUrl || '';
+      clampCardCropPan();
+
+      const { outW, outH } = getCardCropTargetDimensions();
+      const canvas = document.createElement('canvas');
+      canvas.width = outW;
+      canvas.height = outH;
+      const ctx = canvas.getContext('2d');
+
+      const baseScale = Math.max(outW / ce.img.width, outH / ce.img.height);
+      const drawW = ce.img.width * baseScale * ce.zoom;
+      const drawH = ce.img.height * baseScale * ce.zoom;
+      const dx = (outW - drawW) / 2 + ce.panX;
+      const dy = (outH - drawH) / 2 + ce.panY;
+
+      ctx.fillStyle = '#090d16';
+      ctx.fillRect(0, 0, outW, outH);
+      ctx.drawImage(ce.img, dx, dy, drawW, drawH);
+
+      state.currentImageDataUrl = canvas.toDataURL('image/jpeg', 0.84);
+      return state.currentImageDataUrl;
+    }
+
     function processImageFile(file) {
       if (!file || !file.type.startsWith('image/')) {
         showToast('Please select a valid PNG, JPG, or WEBP image file.', 'error');
@@ -2558,15 +2683,14 @@ service cloud.firestore {
       reader.onload = (e) => {
         const img = new Image();
         img.onload = () => {
-          const canvas = document.createElement('canvas');
-          const maxDim = state.uploadMode === 'full-image' ? 700 : 480;
-          const scale = Math.min(1, maxDim / Math.max(img.width, img.height));
-          canvas.width = Math.round(img.width * scale);
-          canvas.height = Math.round(img.height * scale);
+          state.cardCropEditor.img = img;
+          state.cardCropEditor.zoom = 1;
+          state.cardCropEditor.panX = 0;
+          state.cardCropEditor.panY = 0;
 
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-          state.currentImageDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+          document.getElementById('card-crop-controls')?.classList.remove('hidden');
+          syncCardCropSliderUI();
+          renderCroppedCardDataUrl();
 
           const nameInput = document.getElementById('field-name');
           if (!nameInput.value.trim()) {
@@ -2574,7 +2698,7 @@ service cloud.firestore {
           }
 
           updateLiveCardPreview();
-          showToast('Image loaded into 2.5" × 3.5" preview!', 'success');
+          showToast('Photo loaded! Drag on the card preview or slide to crop & zoom.', 'success');
         };
         img.src = e.target.result;
       };
@@ -2614,6 +2738,13 @@ service cloud.firestore {
       const previewSlot = document.getElementById('live-card-preview-slot');
       if (!previewSlot) return;
       previewSlot.innerHTML = buildPokemonCardHTML(collectFormCardData(), { disableClickZoom: true });
+
+      const targetImg = previewSlot.querySelector('.full-art-card-img, .card-preview-crop-target');
+      if (targetImg && state.cardCropEditor.img) {
+        targetImg.style.cursor = state.cardCropEditor.isDragging ? 'grabbing' : 'grab';
+        targetImg.style.touchAction = 'none';
+        targetImg.title = 'Drag to pan photo • Scroll to zoom';
+      }
     }
 
     async function handlePublishCard(e) {
@@ -3114,7 +3245,21 @@ service cloud.firestore {
 
       const dropZone = document.getElementById('drop-zone');
       const fileInput = document.getElementById('custom-image-input');
-      dropZone?.addEventListener('click', () => fileInput?.click());
+      const triggerCardUploadBtn = document.getElementById('btn-trigger-card-upload');
+      triggerCardUploadBtn?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (fileInput) {
+          fileInput.value = '';
+          fileInput.click();
+        }
+      });
+      dropZone?.addEventListener('click', (e) => {
+        if (e.target === fileInput) return;
+        if (fileInput) {
+          fileInput.value = '';
+          fileInput.click();
+        }
+      });
       fileInput?.addEventListener('change', (e) => {
         const file = e.target.files?.[0];
         if (file) processImageFile(file);
@@ -3133,6 +3278,77 @@ service cloud.firestore {
         if (file) processImageFile(file);
       });
 
+      // Custom Card Photo Crop / Zoom / Pan Controls
+      const cardZoomSlider = document.getElementById('card-zoom-slider');
+      cardZoomSlider?.addEventListener('input', (e) => {
+        state.cardCropEditor.zoom = parseFloat(e.target.value) || 1;
+        syncCardCropSliderUI();
+        renderCroppedCardDataUrl();
+        updateLiveCardPreview();
+      });
+
+      document.getElementById('btn-reset-card-crop')?.addEventListener('click', () => {
+        state.cardCropEditor.zoom = 1;
+        state.cardCropEditor.panX = 0;
+        state.cardCropEditor.panY = 0;
+        syncCardCropSliderUI();
+        renderCroppedCardDataUrl();
+        updateLiveCardPreview();
+      });
+
+      document.querySelectorAll('.btn-nudge-card-crop').forEach(btn => {
+        btn.addEventListener('click', () => {
+          if (!state.cardCropEditor.img) return;
+          state.cardCropEditor.panX += Number(btn.dataset.cardNudgeX) || 0;
+          state.cardCropEditor.panY += Number(btn.dataset.cardNudgeY) || 0;
+          renderCroppedCardDataUrl();
+          updateLiveCardPreview();
+        });
+      });
+
+      const cardPreviewSlot = document.getElementById('live-card-preview-slot');
+      cardPreviewSlot?.addEventListener('pointerdown', (e) => {
+        if (!state.cardCropEditor.img) return;
+        const target = e.target.closest('.full-art-card-img, .card-preview-crop-target');
+        if (!target) return;
+        e.preventDefault();
+        state.cardCropEditor.isDragging = true;
+        state.cardCropEditor.dragStartX = e.clientX;
+        state.cardCropEditor.dragStartY = e.clientY;
+        state.cardCropEditor.startPanX = state.cardCropEditor.panX;
+        state.cardCropEditor.startPanY = state.cardCropEditor.panY;
+        target.style.cursor = 'grabbing';
+      });
+
+      window.addEventListener('pointermove', (e) => {
+        if (!state.cardCropEditor.isDragging) return;
+        const dx = (e.clientX - state.cardCropEditor.dragStartX) * 2.4;
+        const dy = (e.clientY - state.cardCropEditor.dragStartY) * 2.4;
+        state.cardCropEditor.panX = state.cardCropEditor.startPanX + dx;
+        state.cardCropEditor.panY = state.cardCropEditor.startPanY + dy;
+        renderCroppedCardDataUrl();
+        updateLiveCardPreview();
+      });
+
+      window.addEventListener('pointerup', () => {
+        if (!state.cardCropEditor.isDragging) return;
+        state.cardCropEditor.isDragging = false;
+        updateLiveCardPreview();
+      });
+
+      cardPreviewSlot?.addEventListener('wheel', (e) => {
+        if (!state.cardCropEditor.img) return;
+        const target = e.target.closest('.full-art-card-img, .card-preview-crop-target');
+        if (!target) return;
+        e.preventDefault();
+        const delta = e.deltaY < 0 ? 0.1 : -0.1;
+        state.cardCropEditor.zoom = Math.max(1, Math.min(3, Number((state.cardCropEditor.zoom + delta).toFixed(2))));
+        syncCardCropSliderUI();
+        renderCroppedCardDataUrl();
+        updateLiveCardPreview();
+      }, { passive: false });
+
+      // Live Card Preview Input Listeners
       [
         'field-name', 'field-hp', 'field-type', 'field-stage', 'field-rarity',
         'field-border', 'field-spec', 'field-ability-name', 'field-ability-desc',
@@ -3145,15 +3361,13 @@ service cloud.firestore {
         el?.addEventListener('change', updateLiveCardPreview);
       });
 
-      // My Decks & Builder Controls
+      // Deck Builder & Friend Inspector Controls
       document.getElementById('btn-create-deck')?.addEventListener('click', openCreateDeckModal);
-      document.getElementById('deck-meta-form')?.addEventListener('submit', handleSaveDeckMeta);
       document.getElementById('btn-edit-deck-meta')?.addEventListener('click', openEditDeckMetaModal);
       document.getElementById('btn-delete-deck')?.addEventListener('click', deleteActiveDeck);
       document.getElementById('btn-close-builder')?.addEventListener('click', closeDeckBuilder);
+      document.getElementById('deck-meta-form')?.addEventListener('submit', handleSaveDeckMeta);
       document.getElementById('builder-vault-search')?.addEventListener('input', renderBuilderVaultPicker);
-
-      // Friends' Decks Controls
       document.getElementById('friends-deck-search')?.addEventListener('input', renderFriendsDecks);
       document.getElementById('btn-close-inspector')?.addEventListener('click', closeFriendInspector);
       document.getElementById('btn-inspector-view-trainer-card')?.addEventListener('click', (e) => {
@@ -3161,34 +3375,11 @@ service cloud.firestore {
         if (ownerUid) zoomTrainerCardByUid(ownerUid);
       });
 
-      // Trainer Trading Card Studio Controls
-      // Trainer Trading Card Studio Controls (Single Unified Photo Upload)
+      // Trainer Profile Card Studio Controls, Upload & Interactive Framing
       document.getElementById('profile-form')?.addEventListener('submit', handleSaveTrainerProfile);
-      document.getElementById('btn-open-claim-profile')?.addEventListener('click', openClaimProfileModal);
-      document.getElementById('btn-create-fresh-profile')?.addEventListener('click', () => {
-        closeModal('claim-profile-modal');
-        openProfileModal(true);
-      });
-      document.getElementById('btn-copy-profile-link')?.addEventListener('click', () => {
-        const effUid = getEffectiveUid();
-        const syncUrl = `${window.location.origin}${window.location.pathname}?profile=${encodeURIComponent(effUid)}`;
-        copyTextSafe(syncUrl, 'Personal Profile Sync Link copied! Open it on any device to load your profile.');
-      });
-      document.getElementById('btn-confirm-claim-pin')?.addEventListener('click', () => {
-        if (!state.pendingClaimUid) return;
-        const target = state.usersById[state.pendingClaimUid];
-        const entered = document.getElementById('claim-pin-verify-input')?.value.trim() || '';
-        if (target && target.profilePin === entered) {
-          applyClaimedProfile(state.pendingClaimUid);
-        } else {
-          showToast('Incorrect PIN. Please try again.', 'error');
-        }
-      });
-
       const trainerDropZone = document.getElementById('trainer-drop-zone');
       const trainerFileInput = document.getElementById('trainer-image-input');
-      const triggerTrainerUploadBtn = document.getElementById('btn-trigger-trainer-upload');
-      triggerTrainerUploadBtn?.addEventListener('click', (e) => {
+      document.getElementById('btn-trigger-trainer-upload')?.addEventListener('click', (e) => {
         e.stopPropagation();
         if (trainerFileInput) {
           trainerFileInput.value = '';
@@ -3220,8 +3411,7 @@ service cloud.firestore {
         if (file) processTrainerAvatarFile(file);
       });
 
-      const zoomSlider = document.getElementById('trainer-zoom-slider');
-      zoomSlider?.addEventListener('input', (e) => {
+      document.getElementById('trainer-zoom-slider')?.addEventListener('input', (e) => {
         state.cropEditor.zoom = parseFloat(e.target.value) || 1;
         syncCropSliderUI();
         renderCroppedTrainerDataUrl();
@@ -3247,18 +3437,18 @@ service cloud.firestore {
         });
       });
 
-      const studioPreviewSlot = document.getElementById('live-trainer-card-preview-slot');
-      studioPreviewSlot?.addEventListener('pointerdown', (e) => {
+      const trainerPreviewSlot = document.getElementById('live-trainer-card-preview-slot');
+      trainerPreviewSlot?.addEventListener('pointerdown', (e) => {
         if (!state.cropEditor.img) return;
-        const frame = e.target.closest('.trainer-photo-frame-5-7');
-        if (!frame) return;
+        const photoImg = e.target.closest('.trainer-photo-frame-5-7');
+        if (!photoImg) return;
         e.preventDefault();
         state.cropEditor.isDragging = true;
         state.cropEditor.dragStartX = e.clientX;
         state.cropEditor.dragStartY = e.clientY;
         state.cropEditor.startPanX = state.cropEditor.panX;
         state.cropEditor.startPanY = state.cropEditor.panY;
-        frame.style.cursor = 'grabbing';
+        photoImg.style.cursor = 'grabbing';
       });
 
       window.addEventListener('pointermove', (e) => {
@@ -3277,10 +3467,10 @@ service cloud.firestore {
         updateLiveTrainerCardPreview();
       });
 
-      studioPreviewSlot?.addEventListener('wheel', (e) => {
+      trainerPreviewSlot?.addEventListener('wheel', (e) => {
         if (!state.cropEditor.img) return;
-        const frame = e.target.closest('.trainer-photo-frame-5-7');
-        if (!frame) return;
+        const photoImg = e.target.closest('.trainer-photo-frame-5-7');
+        if (!photoImg) return;
         e.preventDefault();
         const delta = e.deltaY < 0 ? 0.1 : -0.1;
         state.cropEditor.zoom = Math.max(1, Math.min(3, Number((state.cropEditor.zoom + delta).toFixed(2))));
@@ -3288,6 +3478,32 @@ service cloud.firestore {
         renderCroppedTrainerDataUrl();
         updateLiveTrainerCardPreview();
       }, { passive: false });
+
+      // Cross-Device Profile Claim & Sync Link Controls
+      document.getElementById('btn-open-claim-profile')?.addEventListener('click', openClaimProfileModal);
+      document.getElementById('btn-copy-profile-link')?.addEventListener('click', () => {
+        const effUid = getEffectiveUid();
+        if (!effUid) {
+          showToast('Still connecting to Firebase...', 'info');
+          return;
+        }
+        const syncUrl = `${window.location.origin}${window.location.pathname}?profile=${encodeURIComponent(effUid)}`;
+        copyTextSafe(syncUrl, 'Profile Sync Link copied! Open it on any device to load your profile.');
+      });
+      document.getElementById('btn-confirm-claim-pin')?.addEventListener('click', () => {
+        const targetUid = state.pendingClaimUid;
+        const targetUser = state.usersById[targetUid];
+        const entered = document.getElementById('claim-pin-verify-input')?.value.trim() || '';
+        if (targetUser && entered === String(targetUser.profilePin)) {
+          applyClaimedProfile(targetUid);
+        } else {
+          showToast('Incorrect PIN. Try again.', 'error');
+        }
+      });
+      document.getElementById('btn-create-fresh-profile')?.addEventListener('click', () => {
+        closeModal('claim-profile-modal');
+        openProfileModal(true);
+      });
 
       [
         'profile-name-input', 'trainer-title-select', 'trainer-style-select',
